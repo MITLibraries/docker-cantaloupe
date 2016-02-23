@@ -16,8 +16,8 @@ RUN wget https://github.com/medusa-project/cantaloupe/releases/download/${ctl_ve
 
 WORKDIR Cantaloupe-${ctl_ver}
 
-# Configure image path to mapped volume
-RUN sed -e 's+home\/myself\/images+imageroot+' < cantaloupe.properties.sample > ctl.props \
+# Configure image path to mapped volume and enable filesystem cache
+RUN sed -e 's+home\/myself\/images+imageroot+' -e 's/#cache.server/cache.server/' < cantaloupe.properties.sample > ctl.props \
     && mv Cantaloupe-${ctl_ver}.jar Cantaloupe.jar
 
 EXPOSE 8182
