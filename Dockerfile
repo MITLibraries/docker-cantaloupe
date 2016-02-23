@@ -21,4 +21,4 @@ RUN sed -e 's+home\/myself\/images+imageroot+' -e 's/#cache.server/cache.server/
     && mv Cantaloupe-${ctl_ver}.jar Cantaloupe.jar
 
 EXPOSE 8182
-CMD ["java", "-Dcantaloupe.config=ctl.props", "-Xmx2g", "-jar", "Cantaloupe.jar"]
+CMD ["java", "-Dcantaloupe.config=ctl.props", "-Xmx800m", "-jar", "Cantaloupe.jar"]
