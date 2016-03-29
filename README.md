@@ -6,7 +6,7 @@ Rudimentary containerization of the [Cantaloupe server](https://medusa-project.g
 
     docker build -t cantaloupe .
 
-This invocation will download the 2.1.1 (current at time of writing) release of the software. To override for
+This invocation will download the 2.2 (current at time of writing) release of the software. To override for
 newer (or older) versions:
 
     docker build --build_arg ctl_ver=<desired version> -t cantaloupe .

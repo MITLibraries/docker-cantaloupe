@@ -10,7 +10,7 @@ VOLUME /imageroot
 RUN apt-get update -y && apt-get install -y wget unzip
 
 # Get and unpack Cantaloupe release archive
-RUN wget https://github.com/medusa-project/cantaloupe/releases/download/${ctl_ver}/Cantaloupe-${ctl_ver}.zip \
+RUN wget https://github.com/medusa-project/cantaloupe/releases/download/v${ctl_ver}/Cantaloupe-${ctl_ver}.zip \
     && unzip Cantaloupe-${ctl_ver}.zip \
     && rm Cantaloupe-${ctl_ver}.zip
 
