@@ -2,7 +2,7 @@ FROM mostalive/ubuntu-14.04-oracle-jdk8
 
 MAINTAINER Richard Rodgers <http://orcid.org/0000-0003-1412-5595>
 
-ARG ctl_ver=2.1.1
+ARG ctl_ver=2.2
 
 VOLUME /imageroot
 
