@@ -1,0 +1,565 @@
+###########################################################################
+# run with the `-Dcantaloupe.config=cantaloupe.properties` argument:
+#
+# java -Dcantaloupe.config=cantaloupe.properties -jar Cantaloupe-x.x.jar
+#
+# Most changes will take effect without restarting. Those that won't are
+# marked with "!!".
+###########################################################################
+
+# Enables the Control Panel, at /admin.
+admin.enabled = true
+# Password to access the Control Panel. (The username is always "admin".)
+admin.password = popcorn
+
+# !! Whether to enable HTTP access (http://), and on what TCP port.
+# (Standalone mode only.)
+http.enabled = true
+http.port = 8182
+
+# !! Whether to enable HTTPS access (https://), and on what TCP port.
+# (Standalone mode only.)
+https.enabled = false
+https.port = 8183
+
+# !! Available values are `JKS` and `PKCS12`. (Standalone mode only.)
+https.key_store_type = JKS
+https.key_store_password = myPassword
+https.key_store_path = /path/to/keystore.jks
+https.key_password = myPassword
+
+# !! Configures HTTP Basic authentication.
+auth.basic.enabled = false
+auth.basic.username = myself
+auth.basic.secret = mypassword
+
+# Base URI to use for internal links, such as Link headers and JSON-LD @id
+# values, in a reverse-proxy context. This should only be used when
+# X-Forwarded-* headers cannot be used instead (see the user manual).
+base_uri =
+
+# Normally, slashes in a URI path component must be percent-encoded as
+# "%2F". If your proxy is incapable of passing these through without
+# decoding them, you can define an alternate character or character
+# sequence to substitute for a slash. Supply the non-percent-encoded
+# version here, and use the percent-encoded version in URLs.
+slash_substitute =
+
+# Maximum number of pixels to return in a response, to prevent overloading
+# the server. Requests for more pixels than this will receive an HTTP 403
+# response. Set to 0 for no maximum.
+# Note: this is ignored when requesting an unmodified source image.
+max_pixels = 400000000
+
+# Enables the delegate script: a Ruby script containing various delegate
+# methods. (See the user manual.)
+delegate_script.enabled = true
+
+# This can be an absolute path, or a filename; if only a
+# filename is specified, it will be searched for in the same folder as this
+# file, and then the current working directory.
+delegate_script.pathname = delegates.rb
+
+# Sometimes helpful.
+print_stack_trace_on_error_pages = true
+
+###########################################################################
+# ENDPOINTS
+###########################################################################
+
+endpoint.iiif.1.enabled = true
+
+endpoint.iiif.2.enabled = true
+
+# Controls the response Content-Disposition header for images. Allowed
+# values are `inline`, `attachment`, and `none`.
+endpoint.iiif.content_disposition = inline
+
+# Minimum size that will be used in info.json "tiles" keys. See the user
+# manual for an explanation of how these are calculated.
+endpoint.iiif.min_tile_size = 1024
+
+# If true, requests for sizes other than those specified in an info.json
+# response will be denied.
+endpoint.iiif.2.restrict_to_sizes = false
+
+###########################################################################
+# RESOLVERS
+###########################################################################
+
+# Specifies one resolver to translate the identifier in the URL to an image
+# source for all requests. Available values are `FilesystemResolver`,
+# `HttpResolver`, `JdbcResolver`, `AmazonS3Resolver`, and
+# `AzureStorageResolver`.
+resolver.static = HttpResolver
+
+# If true, `resolver.static` will be overridden, and the
+# `get_resolver(identifier)` delegate script method will be used to select
+# a resolver per-request.
+resolver.delegate = false
+
+#----------------------------------------
+# FilesystemResolver
+#----------------------------------------
+
+# Tells FilesystemResolver how to look up files. Allowed values are
+# `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
+# uses the delegate script for dynamic lookups--see the user manual for
+# details.
+FilesystemResolver.lookup_strategy = BasicLookupStrategy
+
+# Server-side path that will be prefixed to the identifier in the URL.
+# Trailing slash is important.
+FilesystemResolver.BasicLookupStrategy.path_prefix = /imageroot/
+
+# Server-side path or extension that will be suffixed to the identifier in
+# the URL.
+FilesystemResolver.BasicLookupStrategy.path_suffix =
+
+#----------------------------------------
+# HttpResolver
+#----------------------------------------
+
+# Tells HttpResolver how to look up resources. Allowed values are
+# `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
+# uses the delegate script for dynamic lookups--see the user manual for
+# details.
+HttpResolver.lookup_strategy = ScriptLookupStrategy
+
+# URL that will be prefixed to the identifier in the request URL. Trailing
+# slash is important.
+HttpResolver.BasicLookupStrategy.url_prefix =
+
+# Path, extension, query string, etc. that will be suffixed to the
+# identifier in the request URL.
+HttpResolver.BasicLookupStrategy.url_suffix =
+
+# Used for HTTP Basic authentication.
+HttpResolver.auth.basic.username =
+HttpResolver.auth.basic.secret =
+
+#----------------------------------------
+# JdbcResolver
+#----------------------------------------
+
+# Note: JdbcResolver requires some delegate script methods to be implemented
+# in addition to the configuration here. See the user manual.
+
+# !!
+JdbcResolver.url = jdbc:postgresql://localhost:5432/my_database
+# !!
+JdbcResolver.user = postgres
+# !!
+JdbcResolver.password = postgres
+
+# !! Maximum number of connections allowed in the connection pool. A good
+# starting point is (number of CPU cores * 2) + 1.
+JdbcResolver.max_pool_size = 9
+
+# !! Connection timeout in seconds.
+JdbcResolver.connection_timeout = 10
+
+#----------------------------------------
+# AmazonS3Resolver
+#----------------------------------------
+
+# !! Access key ID and secret key associated with your AWS account.
+# See: http://aws.amazon.com/security-credentials
+AmazonS3Resolver.access_key_id =
+AmazonS3Resolver.secret_key =
+
+# !! Name of the bucket containing images to be served.
+AmazonS3Resolver.bucket.name =
+
+# !! Can be left blank.
+# See: http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+AmazonS3Resolver.bucket.region =
+
+# Tells AmazonS3Resolver how to look up objects. Allowed values are
+# `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
+# uses the delegate script for dynamic lookups--see the user manual for
+# details.
+AmazonS3Resolver.lookup_strategy = BasicLookupStrategy
+
+#----------------------------------------
+# AzureStorageResolver
+#----------------------------------------
+
+# !! Name of your Azure account.
+AzureStorageResolver.account_name =
+
+# !! Key of your Azure account.
+AzureStorageResolver.account_key =
+
+# !! Name of the container containing images to be served.
+AzureStorageResolver.container_name =
+
+# Tells AzureStorageResolver how to look up objects. Allowed values are
+# `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
+# uses the delegate script for dynamic lookups--see the user manual for
+# details.
+AzureStorageResolver.lookup_strategy = BasicLookupStrategy
+
+###########################################################################
+# PROCESSORS
+###########################################################################
+
+# Image processors to use for various source formats. Available values are
+# `Java2dProcessor`, `GraphicsMagickProcessor`, `ImageMagickProcessor`,
+# `KakaduProcessor`, `OpenJpegProcessor`, `JaiProcessor`, `PdfBoxProcessor`,
+# and `FfmpegProcessor`.
+
+# These extension-specific definitions are optional.
+processor.avi = FfmpegProcessor
+processor.bmp =
+processor.gif =
+processor.jp2 = KakaduProcessor
+processor.jpg = 
+processor.mov = FfmpegProcessor
+processor.mp4 = FfmpegProcessor
+processor.mpg = FfmpegProcessor
+processor.pdf = PdfBoxProcessor
+processor.png =
+processor.tif =
+processor.webm = FfmpegProcessor
+processor.webp = ImageMagickProcessor
+
+# Fall back to this processor for any formats not assigned above.
+processor.fallback = Java2dProcessor
+
+# This option is kind of hard to explain; see the user manual.
+# Available values are `StreamStrategy` and `CacheStrategy` If CacheStrategy
+# is selected, FilesystemCache will also need to be configured, below.
+StreamProcessor.retrieval_strategy = StreamStrategy
+
+#----------------------------------------
+# FfmpegProcessor
+#----------------------------------------
+
+# Optional absolute path of the directory containing the FFmpeg binaries.
+# Overrides the PATH.
+FfmpegProcessor.path_to_binaries =
+
+#----------------------------------------
+# GraphicsMagickProcessor
+#----------------------------------------
+
+# Optional absolute path of the directory containing the GraphicsMagick binary.
+# Overrides the PATH.
+GraphicsMagickProcessor.path_to_binaries =
+
+# Color of the background when an image is rotated. Only affects output
+# formats that do not support transparency.
+GraphicsMagickProcessor.background_color = black
+
+#----------------------------------------
+# ImageMagickProcessor
+#----------------------------------------
+
+# Optional absolute path of the directory containing the ImageMagick binaries.
+# Overrides the PATH.
+ImageMagickProcessor.path_to_binaries = /usr/local/bin
+
+# Color of the background when an image is rotated. Only affects output
+# formats that do not support transparency.
+ImageMagickProcessor.background_color = black
+
+#----------------------------------------
+# JaiProcessor
+#----------------------------------------
+
+# JPEG output quality. Should be a number between 0-1.
+JaiProcessor.jpg.quality = 0.7
+
+# TIFF output compression type. Available values are `LZW`, `Deflate`,
+# `ZLib`, `JPEG`, and `PackBits`. Leave blank for no compression.
+JaiProcessor.tif.compression = LZW
+
+#----------------------------------------
+# Java2dProcessor
+#----------------------------------------
+
+# Available values are `quality` and `speed`. `speed` is ~10-20% faster at
+# the expense of visible aliasing at small scales.
+Java2dProcessor.scale_mode = speed
+
+# JPEG output quality. Should be a number between 0-1.
+Java2dProcessor.jpg.quality = 0.7
+
+# TIFF output compression type. Available values are `LZW`, `Deflate`,
+# `ZLib`, `JPEG`, and `PackBits`. Leave blank for no compression.
+Java2dProcessor.tif.compression = LZW
+
+#----------------------------------------
+# KakaduProcessor
+#----------------------------------------
+
+# Optional absolute path of the directory containing the Kakadu binaries.
+# Overrides the PATH.
+KakaduProcessor.path_to_binaries =
+
+# Available values are `jai` and `java2d`.
+KakaduProcessor.post_processor = java2d
+
+# Available values are `quality` and `speed`. `speed` is ~10-20% faster at
+# the expense of visible aliasing at small scales.
+KakaduProcessor.post_processor.java2d.scale_mode = speed
+
+#----------------------------------------
+# OpenJpegProcessor
+#----------------------------------------
+
+# Optional absolute path of the directory containing the OpenJPEG binaries.
+# Overrides the PATH.
+OpenJpegProcessor.path_to_binaries =
+
+# Available values are `jai` and `java2d`.
+OpenJpegProcessor.post_processor = java2d
+
+# Available values are `quality` and `speed`. `speed` is ~10-20% faster at
+# the expense of visible aliasing at small scales.
+OpenJpegProcessor.post_processor.java2d.scale_mode = speed
+
+#----------------------------------------
+# PdfBoxProcessor
+#----------------------------------------
+
+# Controls the resolution of the PDF rasterization at a scale factor of 1.
+# Requests for scales less than 0.5 or larger than 2 will automatically
+# use a lower or higher factor of this.
+PdfBoxProcessor.dpi = 150
+
+# Available values are `quality` and `speed`. `speed` is ~10-20% faster at
+# the expense of visible aliasing at small scales.
+PdfBoxProcessor.post_processor.java2d.scale_mode = speed
+
+###########################################################################
+# CLIENT-SIDE CACHING
+###########################################################################
+
+# Whether to enable the response Cache-Control header.
+cache.client.enabled = true
+
+cache.client.max_age = 2592000
+cache.client.shared_max_age =
+cache.client.public = true
+cache.client.private = false
+cache.client.no_cache = false
+cache.client.no_store = false
+cache.client.must_revalidate = false
+cache.client.proxy_revalidate = false
+cache.client.no_transform = true
+
+###########################################################################
+# SERVER-SIDE CACHING
+###########################################################################
+
+# Enables the source cache. The only available value is `FilesystemCache`.
+# Set blank to disable source image caching.
+# Note that source images will only be cached when a FileProcessor is used
+# with a StreamResolver, or when a StreamProcessor is used with
+# `StreamProcessor.retrieval_strategy` set to `CacheStrategy`.
+cache.source = FilesystemCache
+
+# Enables the derivative (processed image) cache. Available values are
+# `FilesystemCache`, `JdbcCache`, `AmazonS3Cache`, and `AzureStorageCache`.
+# Set blank to disable derivative caching.
+cache.derivative = FilesystemCache
+
+# If true, when a resolver reports that the requested source image has gone
+# missing, all cached information relating to it (if any) will be deleted.
+# (This is effectively always false when cache.server.resolve_first is also
+# false.)
+cache.server.purge_missing = false
+
+# If true, the source image will be confirmed to exist before a cached copy
+# is returned. If false, the cached copy will be returned without any
+# checking. Resolving first is slower but safer.
+cache.server.resolve_first = false
+
+# !! Enables the cache worker, which periodically purges expired cache
+# items in the background.
+cache.server.worker.enabled = false
+
+# !! The cache worker will wait this many seconds between purgings.
+cache.server.worker.interval = 86400
+
+#----------------------------------------
+# FilesystemCache
+#----------------------------------------
+
+# If this directory does not exist, it will be created automatically.
+FilesystemCache.pathname = /var/cache/cantaloupe
+
+# Time before a cached image becomes stale and needs to be reloaded. Set to
+# blank or 0 for "never"
+FilesystemCache.ttl_seconds = 2592000
+
+# Levels of folder hierarchy in which to store cached images. Deeper depth
+# results in fewer files per directory. Set to 0 to disable subfolders.
+# Purge the cache after changing this.
+FilesystemCache.dir.depth = 3
+
+# Number of characters in hierarchy directory names. Should be set to
+# 16^n < {max number of directory entries your filesystem can deal with}.
+# Purge the cache after changing this.
+FilesystemCache.dir.name_length = 2
+
+#----------------------------------------
+# JdbcCache
+#----------------------------------------
+
+# !!
+JdbcCache.url = jdbc:postgresql://localhost:5432/cantaloupe
+# !!
+JdbcCache.user = postgres
+# !!
+JdbcCache.password =
+
+# !! Maximum number of JDBC connections allowed in the pool. A good
+# starting point is (CPU core count * 2) + 1.
+JdbcCache.max_pool_size = 9
+
+# !! Connection timeout in seconds.
+JdbcCache.connection_timeout = 10
+
+# These must be created manually; see the user manual.
+JdbcCache.derivative_image_table = derivative_cache
+JdbcCache.info_table = info_cache
+
+# Time before a cached image becomes stale and needs to be reloaded. Set to
+# blank or 0 for "never"
+JdbcCache.ttl_seconds = 2592000
+
+#----------------------------------------
+# AmazonS3Cache
+#----------------------------------------
+
+# !! Access key ID and secret key associated with your AWS account.
+# See: http://aws.amazon.com/security-credentials
+AmazonS3Cache.access_key_id =
+AmazonS3Cache.secret_key =
+
+# !! Name of a bucket to use to hold cached data.
+AmazonS3Cache.bucket.name =
+
+# !! Can be left blank.
+# See: http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+AmazonS3Cache.bucket.region =
+
+# !! String that will be prefixed to object keys.
+AmazonS3Cache.object_key_prefix =
+
+# Time before a cached image becomes stale and needs to be reloaded. Set to
+# blank or 0 for "never"
+AmazonS3Cache.ttl_seconds = 2592000
+
+#----------------------------------------
+# AzureStorageCache
+#----------------------------------------
+
+# !! Name of your Azure account.
+AzureStorageCache.account_name =
+
+# !! Key of your Azure account.
+AzureStorageCache.account_key =
+
+# !! Name of the container containing cached images.
+AzureStorageCache.container_name =
+
+# !! String that will be prefixed to object keys.
+AzureStorageCache.object_key_prefix =
+
+# Time before a cached image becomes stale and needs to be reloaded. Set to
+# blank or 0 for "never"
+AzureStorageCache.ttl_seconds = 2592000
+
+###########################################################################
+# WATERMARKING
+###########################################################################
+
+# Whether to enable watermarking.
+watermark.enabled = false
+
+# Configures how watermarking works. `BasicStrategy` will use the
+# `watermark.BasicStrategy.*` keys in this section. `ScriptStrategy` will
+# use the `watermark` delegate script method. See the user manual for more
+# information.
+watermark.strategy = BasicStrategy
+
+# Absolute path of the watermark image. Must be a .png file.
+watermark.BasicStrategy.image = /path/to/watermark.png
+
+# Allowed values: `top left`, `top center`, `top right`, `left center`,
+# `center`, `right center`, `bottom left`, `bottom center`, `bottom right`.
+watermark.BasicStrategy.position = bottom right
+
+# Pixel margin between the watermark and the image edge.
+watermark.BasicStrategy.inset = 10
+
+# Output images less than this many pixels wide will not receive a watermark.
+# Set to 0 to add the watermark regardless.
+watermark.BasicStrategy.output_width_threshold = 400
+
+# Output images less than this many pixels tall will not receive a watermark.
+# Set to 0 to add the watermark regardless.
+watermark.BasicStrategy.output_height_threshold = 300
+
+###########################################################################
+# REDACTION
+###########################################################################
+
+# Whether to enable redactions. See the user manual for information about
+# how these work.
+redaction.enabled = false
+
+###########################################################################
+# LOGGING
+###########################################################################
+
+#----------------------------------------
+# Application Log
+#----------------------------------------
+
+# `trace`, `debug`, `info`, `warn`, `error`, `all`, or `off`
+log.application.level = debug
+
+log.application.ConsoleAppender.enabled = true
+
+log.application.FileAppender.enabled = false
+log.application.FileAppender.pathname = /path/to/logs/cantaloupe.log
+
+log.application.RollingFileAppender.enabled = false
+log.application.RollingFileAppender.pathname = /path/to/logs/cantaloupe.log
+log.application.RollingFileAppender.policy = TimeBasedRollingPolicy
+log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /path/to/logs/cantaloupe-%d{yyyy-MM-dd}.log
+log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = 30
+
+# See the "SyslogAppender" section for a list of facilities:
+# http://logback.qos.ch/manual/appenders.html
+log.application.SyslogAppender.enabled = false
+log.application.SyslogAppender.host =
+log.application.SyslogAppender.port = 514
+log.application.SyslogAppender.facility = LOCAL0
+
+#----------------------------------------
+# Access Log
+#----------------------------------------
+
+log.access.ConsoleAppender.enabled = true
+
+log.access.FileAppender.enabled = false
+log.access.FileAppender.pathname = /path/to/logs/access.log
+
+log.access.RollingFileAppender.enabled = false
+log.access.RollingFileAppender.pathname = /path/to/logs/access.log
+log.access.RollingFileAppender.policy = TimeBasedRollingPolicy
+log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /path/to/logs/access-%d{yyyy-MM-dd}.log
+log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = 30
+
+# See the "SyslogAppender" section for a list of facilities:
+# http://logback.qos.ch/manual/appenders.html
+log.access.SyslogAppender.enabled = false
+log.access.SyslogAppender.host =
+log.access.SyslogAppender.port = 514
+log.access.SyslogAppender.facility = LOCAL0

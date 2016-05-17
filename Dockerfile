@@ -1,13 +1,13 @@
-FROM mostalive/ubuntu-14.04-oracle-jdk8
+FROM java:8-jdk
 
 MAINTAINER Richard Rodgers <http://orcid.org/0000-0003-1412-5595>
 
-ARG ctl_ver=2.2
+ARG ctl_ver=3.1.1
 
 VOLUME /imageroot
 
 # Update packages and install tools
-RUN apt-get update -y && apt-get install -y wget unzip
+RUN apt-get update -y && apt-get install -y wget unzip graphicsmagick imagemagick
 
 # Get and unpack Cantaloupe release archive
 RUN wget https://github.com/medusa-project/cantaloupe/releases/download/v${ctl_ver}/Cantaloupe-${ctl_ver}.zip \
@@ -16,9 +16,13 @@ RUN wget https://github.com/medusa-project/cantaloupe/releases/download/v${ctl_v
 
 WORKDIR Cantaloupe-${ctl_ver}
 
-# Configure image path to mapped volume and enable filesystem cache
-RUN sed -e 's+home\/myself\/images+imageroot+' -e 's/#cache.server/cache.server/' < cantaloupe.properties.sample > ctl.props \
-    && mv Cantaloupe-${ctl_ver}.jar Cantaloupe.jar
+
+# Drop in config
+COPY ctl.props ctl.props
+COPY delegates.rb delegates.rb
+
+# cleanup
+RUN mv Cantaloupe-${ctl_ver}.war Cantaloupe.war
 
 EXPOSE 8182
-CMD ["java", "-Dcantaloupe.config=ctl.props", "-Xmx800m", "-jar", "Cantaloupe.jar"]
+CMD ["java", "-Dcantaloupe.config=ctl.props", "-Xmx800m", "-jar", "Cantaloupe.war"]
