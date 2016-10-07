@@ -25,4 +25,4 @@ COPY delegates.rb delegates.rb
 RUN mv Cantaloupe-${ctl_ver}.war Cantaloupe.war
 
 EXPOSE 8182
-CMD ["java", "-Dcantaloupe.config=ctl.props", "-Xmx800m", "-jar", "Cantaloupe.war"]
+CMD ["java", "-Dcantaloupe.config=ctl.props", "-Xmx1800m", "-jar", "Cantaloupe.war"]
