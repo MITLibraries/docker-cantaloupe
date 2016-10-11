@@ -2,7 +2,7 @@ FROM java:8-jdk
 
 MAINTAINER Richard Rodgers <http://orcid.org/0000-0003-1412-5595>
 
-ARG ctl_ver=3.1.1
+ARG ctl_ver=3.2
 
 VOLUME /imageroot
 
