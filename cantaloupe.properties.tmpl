@@ -26,25 +26,25 @@ https.key_password = myPassword
 
 # !! Maximum size of the HTTP(S) request queue. Leave blank to use the
 # default.
-#http.accept_queue_limit = {{ getenv "HTTP_ACCEPT_QUEUE_LIMIT" }}
+#http.accept_queue_limit = $HTTP_ACCEPT_QUEUE_LIMIT
 
 # Base URI to use for internal links, such as Link headers and JSON-LD
 # @id values, in a reverse-proxy context. This should only be used when
 # X-Forwarded-* headers cannot be used instead. (See the user manual.)
-#base_uri = {{ getenv "BASE_URI" }}
+#base_uri = $BASE_URI
 
 # Normally, slashes in a URI path component must be percent-encoded as
 # "%2F". If your proxy is not able to pass these through without decoding,
 # you can define an alternate character or character sequence to substitute
 # for a slash. Supply the non-percent-encoded version here, and use the
 # percent-encoded version in URLs.
-#slash_substitute = {{ getenv "SLASH_SUBSTITUTE" }}
+#slash_substitute = $SLASH_SUBSTITUTE
 
 # Maximum number of pixels to return in a response, to prevent overloading
 # the server. Requests for more pixels than this will receive an error
 # response. Set to 0 for no maximum.
 max_pixels = 400000000
-#max_pixels = {{ getenv "MAX_PIXELS" }}
+#max_pixels = $MAX_PIXELS
 
 # Errors will also be logged to the error log (if enabled).
 print_stack_trace_on_error_pages = true
@@ -72,9 +72,9 @@ delegate_script.cache.enabled = false
 
 # !! Configures HTTP Basic authentication in all public endpoints.
 endpoint.public.auth.basic.enabled = false
-#endpoint.public.auth.basic.enabled = {{ getenv "ENDPOINT_PUBLIC_AUTH_BASIC_ENABLED" }}
-#endpoint.public.auth.basic.username = {{ getenv "ENDPOINT_PUBLIC_AUTH_BASIC_USERNAME" }}
-#endpoint.public.auth.basic.secret = {{ getenv "ENDPOINT_PUBLIC_AUTH_BASIC_SECRET" }}
+#endpoint.public.auth.basic.enabled = $ENDPOINT_PUBLIC_AUTH_BASIC_ENABLED
+#endpoint.public.auth.basic.username = $ENDPOINT_PUBLIC_AUTH_BASIC_USERNAME
+#endpoint.public.auth.basic.secret = $ENDPOINT_PUBLIC_AUTH_BASIC_SECRET
 
 # Enables the IIIF Image API 1.x endpoint, at /iiif/1.
 endpoint.iiif.1.enabled = false
@@ -99,9 +99,9 @@ endpoint.iiif.min_tile_size = 512
 endpoint.iiif.2.restrict_to_sizes = false
 
 # Enables the Control Panel, at /admin.
-endpoint.admin.enabled = {{ getenv "ENDPOINT_ADMIN_ENABLED" }}
+endpoint.admin.enabled = $ENDPOINT_ADMIN_ENABLED
 endpoint.admin.username = admin
-endpoint.admin.secret = {{ getenv "ENDPOINT_ADMIN_SECRET" }}
+endpoint.admin.secret = $ENDPOINT_ADMIN_SECRET
 
 # Enables the administrative HTTP API. (See the user manual.)
 endpoint.api.enabled = false
@@ -116,7 +116,7 @@ endpoint.api.enabled = false
 
 # Uses one source for all requests. Available values are `FilesystemSource`,
 # `HttpSource`, `JdbcSource`, `S3Source`, and `AzureStorageSource`.
-source.static = {{ getenv "SOURCE_STATIC" }}
+source.static = $SOURCE_STATIC
 
 # If true, `source.static` will be overridden, and the `source()` delegate
 # method will be used to select a source per-request.
@@ -133,11 +133,11 @@ FilesystemSource.lookup_strategy = BasicLookupStrategy
 
 # Server-side path that will be prefixed to the identifier in the URL.
 # Trailing slash is important!
-FilesystemSource.BasicLookupStrategy.path_prefix = {{ getenv "FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX" }}
+FilesystemSource.BasicLookupStrategy.path_prefix = $FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
 
 # Server-side path or extension that will be suffixed to the identifier in
 # the URL.
-FilesystemSource.BasicLookupStrategy.path_suffix = {{ getenv "FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX" }}
+FilesystemSource.BasicLookupStrategy.path_suffix = $FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
 
 #----------------------------------------
 # HttpSource
@@ -170,33 +170,33 @@ FilesystemSource.BasicLookupStrategy.path_suffix = {{ getenv "FILESYSTEMSOURCE_B
 # !! Endpoint URI.
 # For AWS endpoints, see:
 # https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
-S3Source.endpoint = {{ getenv "S3SOURCE_ENDPOINT" }}
+S3Source.endpoint = $S3SOURCE_ENDPOINT
 
 # !! Credentials for your AWS account.
 # See: http://aws.amazon.com/security-credentials
 # Note that this info can be obtained from elsewhere rather than setting
 # it here; see the user manual.
-S3Source.access_key_id = {{ getenv "S3SOURCE_ACCESS_KEY_ID" }}
-S3Source.secret_key = {{ getenv "S3SOURCE_SECRET_KEY" }}
+S3Source.access_key_id = $S3SOURCE_ACCESS_KEY_ID
+S3Source.secret_key = $S3SOURCE_SECRET_KEY
 
 # !! Maximum number of concurrent HTTP connections to AWS. Leave blank to
 # use the default.
-S3Source.max_connections = {{ getenv "S3SOURCE_MAX_CONNECTIONS" }}
+S3Source.max_connections = $S3SOURCE_MAX_CONNECTIONS
 
 # Tells S3Source how to look up objects. Allowed values are
 # `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
 # uses a delegate method for dynamic lookups; see the user manual.
-S3Source.lookup_strategy = {{ getenv "S3SOURCE_LOOKUP_STRATEGY" }}
+S3Source.lookup_strategy = $S3SOURCE_LOOKUP_STRATEGY
 
 # !! Name of the bucket containing images to be served.
-S3Source.BasicLookupStrategy.bucket.name = {{ getenv "S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME" }}
+S3Source.BasicLookupStrategy.bucket.name = $S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME
 
 # Path within the bucket that will be prefixed to the identifier in the URL.
 # Trailing slash is important!
-S3Source.BasicLookupStrategy.path_prefix = {{ getenv "S3SOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX" }}
+S3Source.BasicLookupStrategy.path_prefix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
 
 # Path or extension that will be suffixed to the identifier in the URL.
-S3Source.BasicLookupStrategy.path_suffix = {{ getenv "S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX" }}
+S3Source.BasicLookupStrategy.path_suffix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
 
 ###########################################################################
 # PROCESSORS
@@ -219,24 +219,24 @@ processor.selection_strategy = AutomaticSelectionStrategy
 # `JaiProcessor`, `PdfBoxProcessor`, and `FfmpegProcessor`.
 
 # These extension-specific definitions are optional.
-processor.avi = {{ getenv "PROCESSOR_AVI" }}
+processor.avi =  FfmpegProcessor
 processor.bmp = {{ getenv "PROCESSOR_BMP" }}
-processor.dcm = {{ getenv "PROCESSOR_DCM" }}
-processor.flv = {{ getenv "PROCESSOR_FLV" }}
+processor.dcm = ImageMagickProcessor
+processor.flv =  FfmpegProcessor
 processor.gif = {{ getenv "PROCESSOR_GIF" }}
-processor.jp2 = {{ getenv "PROCESSOR_JP2" }}
+processor.jp2 = $PROCESSOR_JP2
 processor.jpg = {{ getenv "PROCESSOR_JPG" }}
-processor.mov = {{ getenv "PROCESSOR_MOV" }}
-processor.mp4 = {{ getenv "PROCESSOR_MP4" }}
-processor.mpg = {{ getenv "PROCESSOR_MPG" }}
-processor.pdf = {{ getenv "PROCESSOR_PDF" }}
+processor.mov =  FfmpegProcessor
+processor.mp4 =  FfmpegProcessor
+processor.mpg =  FfmpegProcessor
+processor.pdf = PdfBoxProcessor
 processor.png = {{ getenv "PROCESSOR_PNG" }}
 processor.tif = {{ getenv "PROCESSOR_TIF" }}
-processor.webm = {{ getenv "PROCESSOR_WEBM" }}
-processor.webp = {{ getenv "PROCESSOR_WEBP" }}
+processor.webm = FfmpegProcessor
+processor.webp = ImageMagickProcessor
 
 # Fall back to this processor for any formats not assigned above.
-processor.fallback = {{ getenv "PROCESSOR_FALLBACK" }}
+processor.fallback = $PROCESSOR_FALLBACK
 
 #----------------------------------------
 # Global Processor Configuration
@@ -291,11 +291,11 @@ processor.metadata.respect_orientation = false
 processor.jpg.progressive = true
 
 # JPEG output quality (1-100).
-processor.jpg.quality = {{ getenv "PROCESSOR_JPG_QUALITY" }}
+processor.jpg.quality = $PROCESSOR_JPG_QUALITY
 
 # TIFF output compression type. Available values are `Deflate`, `JPEG`,
 # `LZW`, and `RLE`. Leave blank for no compression.
-processor.tif.compression = {{ getenv "PROCESSOR_TIF_COMPRESSION" }}
+processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 #----------------------------------------
 # ImageIO Plugin Preferences
@@ -562,7 +562,7 @@ redaction.enabled = {{ getenv "REDACTION_ENABLED" }}
 #----------------------------------------
 
 # `trace`, `debug`, `info`, `warn`, `error`, `all`, or `off`
-log.application.level = {{ getenv "LOG_APPLICATION_LEVEL" }}
+log.application.level = $LOG_APPLICATION_LEVEL
 
 log.application.ConsoleAppender.enabled = true
 
