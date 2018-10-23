@@ -1,24 +1,43 @@
-FROM mostalive/ubuntu-14.04-oracle-jdk8
+FROM openjdk:10-slim
 
-MAINTAINER Richard Rodgers <http://orcid.org/0000-0003-1412-5595>
-
-ARG ctl_ver=2.2
+ENV CANTALOUPE_VERSION=4.0.1
+EXPOSE 8182
 
 VOLUME /imageroot
 
 # Update packages and install tools
-RUN apt-get update -y && apt-get install -y wget unzip
+RUN apt-get update -y && apt-get install -y wget unzip graphicsmagick curl
+
+# Run non privileged
+RUN adduser --system cantaloupe
+
+WORKDIR /tmp
+
+# KAKADU Install
+RUN mkdir -p /tools && \
+    cd /tools && \
+    wget -O kakadu.zip http://kakadusoftware.com/wp-content/uploads/2014/06/KDU7A2_Demo_Apps_for_Ubuntu-x86-64_170827.zip && \
+    unzip kakadu.zip -d kakadu && \
+    rm -f kakadu.zip
+
+ENV PATH /tools/kakadu/KDU7A2_Demo_Apps_for_Ubuntu-x86-64_170827:${PATH}
+ENV LD_LIBRARY_PATH /tools/kakadu/KDU7A2_Demo_Apps_for_Ubuntu-x86-64_170827:${LD_LIBRARY_PATH}
 
 # Get and unpack Cantaloupe release archive
-RUN wget https://github.com/medusa-project/cantaloupe/releases/download/v${ctl_ver}/Cantaloupe-${ctl_ver}.zip \
-    && unzip Cantaloupe-${ctl_ver}.zip \
-    && rm Cantaloupe-${ctl_ver}.zip
+RUN curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip \
+ && mkdir -p /usr/local/ \
+ && cd /usr/local \
+ && unzip /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
+ && ln -s cantaloupe-$CANTALOUPE_VERSION cantaloupe \
+ && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
+ && rm /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip
 
-WORKDIR Cantaloupe-${ctl_ver}
+COPY cantaloupe.properties /etc/cantaloupe.properties
+RUN mkdir -p /var/log/cantaloupe \
+ && mkdir -p /var/cache/cantaloupe \
+ && chown -R cantaloupe /var/log/cantaloupe \
+ && chown -R cantaloupe /var/cache/cantaloupe \
+ && chown cantaloupe /etc/cantaloupe.properties
 
-# Configure image path to mapped volume and enable filesystem cache
-RUN sed -e 's+home\/myself\/images+imageroot+' -e 's/#cache.server/cache.server/' < cantaloupe.properties.sample > ctl.props \
-    && mv Cantaloupe-${ctl_ver}.jar Cantaloupe.jar
-
-EXPOSE 8182
-CMD ["java", "-Dcantaloupe.config=ctl.props", "-Xmx800m", "-jar", "Cantaloupe.jar"]
+USER cantaloupe
+CMD ["sh", "-c", "java -Dcantaloupe.config=/etc/cantaloupe.properties -Xmx2g -jar /usr/local/cantaloupe/cantaloupe-$CANTALOUPE_VERSION.war"]
