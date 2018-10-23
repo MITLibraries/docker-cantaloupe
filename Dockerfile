@@ -7,7 +7,7 @@ VOLUME /imageroot
 
 # Update packages and install tools
 RUN apt-get update -y && \
-    apt-get install -y wget unzip graphicsmagick curl python
+    apt-get install -y wget unzip graphicsmagick curl imagemagick ffmpeg python
 
 # Run non privileged
 RUN adduser --system cantaloupe
@@ -38,7 +38,8 @@ COPY cantaloupe.properties.tmpl /etc/cantaloupe.properties.tmpl
 RUN mkdir -p /var/log/cantaloupe /var/cache/cantaloupe \
  && touch /etc/cantaloupe.properties \
  && chown -R cantaloupe /var/log/cantaloupe /var/cache/cantaloupe \
-    /etc/cantaloupe.properties /usr/local/bin/docker-entrypoint.sh
+    /etc/cantaloupe.properties /usr/local/bin/docker-entrypoint.sh \
+ && cp /usr/local/cantaloupe/deps/Linux-x86-64/lib/* /usr/lib/
 
 USER cantaloupe
 ENTRYPOINT ["docker-entrypoint.sh"]
