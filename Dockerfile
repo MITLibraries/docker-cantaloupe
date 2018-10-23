@@ -6,7 +6,8 @@ EXPOSE 8182
 VOLUME /imageroot
 
 # Update packages and install tools
-RUN apt-get update -y && apt-get install -y wget unzip graphicsmagick curl
+RUN apt-get update -y && \
+    apt-get install -y wget unzip graphicsmagick curl python
 
 # Run non privileged
 RUN adduser --system cantaloupe
@@ -32,12 +33,13 @@ RUN curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CA
  && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
  && rm /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip
 
-COPY cantaloupe.properties /etc/cantaloupe.properties
-RUN mkdir -p /var/log/cantaloupe \
- && mkdir -p /var/cache/cantaloupe \
- && chown -R cantaloupe /var/log/cantaloupe \
- && chown -R cantaloupe /var/cache/cantaloupe \
- && chown cantaloupe /etc/cantaloupe.properties
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY cantaloupe.properties.tmpl /etc/cantaloupe.properties.tmpl
+RUN mkdir -p /var/log/cantaloupe /var/cache/cantaloupe \
+ && touch /etc/cantaloupe.properties \
+ && chown -R cantaloupe /var/log/cantaloupe /var/cache/cantaloupe \
+    /etc/cantaloupe.properties /usr/local/bin/docker-entrypoint.sh
 
 USER cantaloupe
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["sh", "-c", "java -Dcantaloupe.config=/etc/cantaloupe.properties -Xmx2g -jar /usr/local/cantaloupe/cantaloupe-$CANTALOUPE_VERSION.war"]
