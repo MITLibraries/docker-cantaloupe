@@ -9,7 +9,7 @@ Rudimentary containerization of the [Cantaloupe server](https://medusa-project.g
 This invocation will download the 4.0.1 (current at time of writing) release of the software. To override for
 newer (or older) versions:
 
-    docker build --build_arg CANTALOUPE_VERSION=<desired version> -t cantaloupe .
+    docker build --build-arg CANTALOUPE_VERSION=<desired version> -t cantaloupe .
 
 ### Run the container
 
