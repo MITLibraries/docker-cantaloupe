@@ -220,18 +220,18 @@ processor.selection_strategy = AutomaticSelectionStrategy
 
 # These extension-specific definitions are optional.
 processor.avi =  FfmpegProcessor
-processor.bmp = {{ getenv "PROCESSOR_BMP" }}
+#processor.bmp = {{ getenv "PROCESSOR_BMP" }}
 processor.dcm = ImageMagickProcessor
 processor.flv =  FfmpegProcessor
-processor.gif = {{ getenv "PROCESSOR_GIF" }}
+#processor.gif = {{ getenv "PROCESSOR_GIF" }}
 processor.jp2 = $PROCESSOR_JP2
-processor.jpg = {{ getenv "PROCESSOR_JPG" }}
+#processor.jpg = {{ getenv "PROCESSOR_JPG" }}
 processor.mov =  FfmpegProcessor
 processor.mp4 =  FfmpegProcessor
 processor.mpg =  FfmpegProcessor
 processor.pdf = PdfBoxProcessor
-processor.png = {{ getenv "PROCESSOR_PNG" }}
-processor.tif = {{ getenv "PROCESSOR_TIF" }}
+#processor.png = {{ getenv "PROCESSOR_PNG" }}
+#processor.tif = {{ getenv "PROCESSOR_TIF" }}
 processor.webm = FfmpegProcessor
 processor.webp = ImageMagickProcessor
 
@@ -303,15 +303,15 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # These override the default plugins used by the application and should not
 # normally be changed.
-processor.imageio.bmp.reader = {{ getenv "PROCESSOR_IMAGEIO_BMP_READER" }}
-processor.imageio.gif.reader = {{ getenv "PROCESSOR_IMAGEIO_GIF_READER" }}
-processor.imageio.gif.writer = {{ getenv "PROCESSOR_IMAGEIO_GIF_WRITER" }}
-processor.imageio.jpg.reader = {{ getenv "PROCESSOR_IMAGEIO_JPG_READER" }}
-processor.imageio.jpg.writer = {{ getenv "PROCESSOR_IMAGEIO_JPG_WRITER" }}
-processor.imageio.png.reader = {{ getenv "PROCESSOR_IMAGEIO_PNG_READER" }}
-processor.imageio.png.writer = {{ getenv "PROCESSOR_IMAGEIO_PNG_WRITER" }}
-processor.imageio.tif.reader = {{ getenv "PROCESSOR_IMAGEIO_TIF_READER" }}
-processor.imageio.tif.writer = {{ getenv "PROCESSOR_IMAGEIO_TIF_WRITER" }}
+#processor.imageio.bmp.reader = {{ getenv "PROCESSOR_IMAGEIO_BMP_READER" }}
+#processor.imageio.gif.reader = {{ getenv "PROCESSOR_IMAGEIO_GIF_READER" }}
+#processor.imageio.gif.writer = {{ getenv "PROCESSOR_IMAGEIO_GIF_WRITER" }}
+#processor.imageio.jpg.reader = {{ getenv "PROCESSOR_IMAGEIO_JPG_READER" }}
+#processor.imageio.jpg.writer = {{ getenv "PROCESSOR_IMAGEIO_JPG_WRITER" }}
+#processor.imageio.png.reader = {{ getenv "PROCESSOR_IMAGEIO_PNG_READER" }}
+#processor.imageio.png.writer = {{ getenv "PROCESSOR_IMAGEIO_PNG_WRITER" }}
+#processor.imageio.tif.reader = {{ getenv "PROCESSOR_IMAGEIO_TIF_READER" }}
+#processor.imageio.tif.writer = {{ getenv "PROCESSOR_IMAGEIO_TIF_WRITER" }}
 
 #----------------------------------------
 # FfmpegProcessor
@@ -319,7 +319,7 @@ processor.imageio.tif.writer = {{ getenv "PROCESSOR_IMAGEIO_TIF_WRITER" }}
 
 # Optional absolute path of the directory containing the FFmpeg binaries.
 # Overrides the PATH.
-FfmpegProcessor.path_to_binaries =
+#FfmpegProcessor.path_to_binaries =
 
 #----------------------------------------
 # GraphicsMagickProcessor
@@ -327,7 +327,7 @@ FfmpegProcessor.path_to_binaries =
 
 # !! Optional absolute path of the directory containing the GraphicsMagick
 # binary. Overrides the PATH.
-GraphicsMagickProcessor.path_to_binaries =
+#GraphicsMagickProcessor.path_to_binaries =
 
 #----------------------------------------
 # ImageMagickProcessor
@@ -335,7 +335,7 @@ GraphicsMagickProcessor.path_to_binaries =
 
 # !! Optional absolute path of the directory containing the ImageMagick
 # binary. Overrides the PATH.
-ImageMagickProcessor.path_to_binaries =
+#ImageMagickProcessor.path_to_binaries =
 
 #----------------------------------------
 # KakaduDemoProcessor
@@ -351,7 +351,7 @@ ImageMagickProcessor.path_to_binaries =
 
 # Optional absolute path of the directory containing opj_decompress.
 # Overrides the PATH.
-OpenJpegProcessor.path_to_binaries =
+#OpenJpegProcessor.path_to_binaries =
 
 ###########################################################################
 # CLIENT-SIDE CACHING
