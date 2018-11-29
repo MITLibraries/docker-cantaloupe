@@ -9,7 +9,7 @@ temp_pathname =
 http.enabled = true
 http.host = 0.0.0.0
 http.port = 8182
-http.http2.enabled = false
+http.http2.enabled = true
 
 # !! Configures the HTTPS server. (Standalone mode only.)
 https.enabled = false
@@ -358,17 +358,17 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 ###########################################################################
 
 # Whether to enable the response Cache-Control header.
-cache.client.enabled = {{ getenv "CACHE_CLIENT_ENABLED" }}
+#cache.client.enabled = {{ getenv "CACHE_CLIENT_ENABLED" }}
 
-cache.client.max_age = {{ getenv "CACHE_CLIENT_MAX_AGE" }}
-cache.client.shared_max_age = {{ getenv "CACHE_CLIENT_SHARED_MAX_AGE" }}
-cache.client.public = {{ getenv "CACHE_CLIENT_PUBLIC" }}
-cache.client.private = {{ getenv "CACHE_CLIENT_PRIVATE" }}
-cache.client.no_cache = {{ getenv "CACHE_CLIENT_NO_CACHE" }}
-cache.client.no_store = {{ getenv "CACHE_CLIENT_NO_STORE" }}
-cache.client.must_revalidate = {{ getenv "CACHE_CLIENT_MUST_REVALIDATE" }}
-cache.client.proxy_revalidate = {{ getenv "CACHE_CLIENT_PROXY_REVALIDATE" }}
-cache.client.no_transform = {{ getenv "CACHE_CLIENT_NO_TRANSFORM" }}
+#cache.client.max_age = {{ getenv "CACHE_CLIENT_MAX_AGE" }}
+#cache.client.shared_max_age = {{ getenv "CACHE_CLIENT_SHARED_MAX_AGE" }}
+#cache.client.public = {{ getenv "CACHE_CLIENT_PUBLIC" }}
+#cache.client.private = {{ getenv "CACHE_CLIENT_PRIVATE" }}
+#cache.client.no_cache = {{ getenv "CACHE_CLIENT_NO_CACHE" }}
+#cache.client.no_store = {{ getenv "CACHE_CLIENT_NO_STORE" }}
+#cache.client.must_revalidate = {{ getenv "CACHE_CLIENT_MUST_REVALIDATE" }}
+#cache.client.proxy_revalidate = {{ getenv "CACHE_CLIENT_PROXY_REVALIDATE" }}
+#cache.client.no_transform = {{ getenv "CACHE_CLIENT_NO_TRANSFORM" }}
 
 ###########################################################################
 # SERVER-SIDE CACHING
@@ -379,11 +379,11 @@ cache.client.no_transform = {{ getenv "CACHE_CLIENT_NO_TRANSFORM" }}
 # `processor.fallback_retrieval_strategy` keys are set to `CacheStrategy`.
 
 # FilesystemCache is the only available source cache.
-cache.server.source = {{ getenv "CACHE_SERVER_SOURCE" }}
+#cache.server.source = {{ getenv "CACHE_SERVER_SOURCE" }}
 
 # Amount of time source cache content remains valid. Set to blank or 0
 # for forever.
-cache.server.source.ttl_seconds = {{ getenv "CACHE_SERVER_SOURCE_TTL_SECONDS" }}
+#cache.server.source.ttl_seconds = {{ getenv "CACHE_SERVER_SOURCE_TTL_SECONDS" }}
 
 # Enables the derivative (processed image) cache.
 cache.server.derivative.enabled = {{ getenv "CACHE_SERVER_DERIVATIVE_ENABLED" }}
@@ -461,24 +461,24 @@ HeapCache.persist.filesystem.pathname = {{ getenv "HEAPCACHE_PERSIST_FILESYSTEM_
 # !! Endpoint URI.
 # For AWS endpoints, see:
 # https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
-S3Cache.endpoint = {{ getenv "S3CACHE_ENDPOINT" }}
+S3Cache.endpoint =  $S3SOURCE_ENDPOINT
 
 # !! Credentials for your AWS account.
 # See: http://aws.amazon.com/security-credentials
 # Note that this info can be obtained from elsewhere rather than setting it
 # here; see the user manual.
-S3Cache.access_key_id = {{ getenv "S3CACHE_ACCESS_KEY_ID" }}
-S3Cache.secret_key = {{ getenv "S3CACHE_SECRET_KEY" }}
+S3Cache.access_key_id = $S3SOURCE_ACCESS_KEY_ID
+S3Cache.secret_key = $S3SOURCE_SECRET_KEY
 
 # !! Name of a bucket to use to hold cached data.
-S3Cache.bucket.name = {{ getenv "S3CACHE_BUCKET_NAME" }}
+S3Cache.bucket.name = $S3SOURCE_CACHE_BUCKET_NAME
 
 # !! String that will be prefixed to object keys.
-S3Cache.object_key_prefix = {{ getenv "S3CACHE_OBJECT_KEY_PREFIX" }}
+S3Cache.object_key_prefix = $S3CACHE_OBJECT_KEY_PREFIX
 
 # !! Maximum number of concurrent HTTP connections to AWS. Leave blank to
 # use the default.
-S3Cache.max_connections = {{ getenv "S3CACHE_MAX_CONNECTIONS" }}
+S3Cache.max_connections = $S3CACHE_MAX_CONNECTIONS
 
 ###########################################################################
 # OVERLAYS
