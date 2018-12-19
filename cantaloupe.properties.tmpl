@@ -107,8 +107,8 @@ endpoint.admin.secret = $ENDPOINT_ADMIN_SECRET
 endpoint.api.enabled = false
 
 # HTTP Basic credentials to access the HTTP API.
-#endpoint.api.username = {{ getenv "ENDPOINT_API_USERNAME" }}
-#endpoint.api.secret = {{ getenv "ENDPOINT_API_SECRET" }}
+#endpoint.api.username = $ENDPOINT_API_USERNAME
+#endpoint.api.secret = $ENDPOINT_API_SECRET
 
 ###########################################################################
 # SOURCES
@@ -144,7 +144,7 @@ FilesystemSource.BasicLookupStrategy.path_suffix = $FILESYSTEMSOURCE_BASICLOOKUP
 #----------------------------------------
 
 #HttpSource.trust_all_certs = false
-#HttpSource.request_timeout = {{ getenv "HTTPSOURCE_REQUEST_TIMEOUT" }}
+#HttpSource.request_timeout = $HTTPSOURCE_REQUEST_TIMEOUT
 
 # Tells HttpSource how to look up resources. Allowed values are
 # `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
@@ -157,11 +157,11 @@ FilesystemSource.BasicLookupStrategy.path_suffix = $FILESYSTEMSOURCE_BASICLOOKUP
 
 # Path, extension, query string, etc. that will be suffixed to the
 # identifier in the request URL.
-#HttpSource.BasicLookupStrategy.url_suffix = {{ getenv "HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_SUFFIX" }}
+#HttpSource.BasicLookupStrategy.url_suffix = $HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_SUFFIX
 
 # Enables access to resources that require HTTP Basic authentication.
-#HttpSource.BasicLookupStrategy.auth.basic.username = {{ getenv "HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_USERNAME" }}
-#HttpSource.BasicLookupStrategy.auth.basic.secret = {{ getenv "HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_SECRET" }}
+#HttpSource.BasicLookupStrategy.auth.basic.username = $HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_USERNAME
+#HttpSource.BasicLookupStrategy.auth.basic.secret = $HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_SECRET
 
 #----------------------------------------
 # S3Source
@@ -220,18 +220,18 @@ processor.selection_strategy = AutomaticSelectionStrategy
 
 # These extension-specific definitions are optional.
 processor.avi =  FfmpegProcessor
-#processor.bmp = {{ getenv "PROCESSOR_BMP" }}
+#processor.bmp = $PROCESSOR_BMP
 processor.dcm = ImageMagickProcessor
 processor.flv =  FfmpegProcessor
-#processor.gif = {{ getenv "PROCESSOR_GIF" }}
+#processor.gif = $PROCESSOR_GIF
 processor.jp2 = $PROCESSOR_JP2
-#processor.jpg = {{ getenv "PROCESSOR_JPG" }}
+#processor.jpg = $PROCESSOR_JPG
 processor.mov =  FfmpegProcessor
 processor.mp4 =  FfmpegProcessor
 processor.mpg =  FfmpegProcessor
 processor.pdf = PdfBoxProcessor
-#processor.png = {{ getenv "PROCESSOR_PNG" }}
-#processor.tif = {{ getenv "PROCESSOR_TIF" }}
+#processor.png = $PROCESSOR_PNG
+#processor.tif = $PROCESSOR_TIF
 processor.webm = FfmpegProcessor
 processor.webp = ImageMagickProcessor
 
@@ -303,15 +303,15 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # These override the default plugins used by the application and should not
 # normally be changed.
-#processor.imageio.bmp.reader = {{ getenv "PROCESSOR_IMAGEIO_BMP_READER" }}
-#processor.imageio.gif.reader = {{ getenv "PROCESSOR_IMAGEIO_GIF_READER" }}
-#processor.imageio.gif.writer = {{ getenv "PROCESSOR_IMAGEIO_GIF_WRITER" }}
-#processor.imageio.jpg.reader = {{ getenv "PROCESSOR_IMAGEIO_JPG_READER" }}
-#processor.imageio.jpg.writer = {{ getenv "PROCESSOR_IMAGEIO_JPG_WRITER" }}
-#processor.imageio.png.reader = {{ getenv "PROCESSOR_IMAGEIO_PNG_READER" }}
-#processor.imageio.png.writer = {{ getenv "PROCESSOR_IMAGEIO_PNG_WRITER" }}
-#processor.imageio.tif.reader = {{ getenv "PROCESSOR_IMAGEIO_TIF_READER" }}
-#processor.imageio.tif.writer = {{ getenv "PROCESSOR_IMAGEIO_TIF_WRITER" }}
+#processor.imageio.bmp.reader = $PROCESSOR_IMAGEIO_BMP_READER
+#processor.imageio.gif.reader = $PROCESSOR_IMAGEIO_GIF_READER
+#processor.imageio.gif.writer = $PROCESSOR_IMAGEIO_GIF_WRITER
+#processor.imageio.jpg.reader = $PROCESSOR_IMAGEIO_JPG_READER
+#processor.imageio.jpg.writer = $PROCESSOR_IMAGEIO_JPG_WRITER
+#processor.imageio.png.reader = $PROCESSOR_IMAGEIO_PNG_READER
+#processor.imageio.png.writer = $PROCESSOR_IMAGEIO_PNG_WRITER
+#processor.imageio.tif.reader = $PROCESSOR_IMAGEIO_TIF_READER
+#processor.imageio.tif.writer = $PROCESSOR_IMAGEIO_TIF_WRITER
 
 #----------------------------------------
 # FfmpegProcessor
@@ -358,17 +358,17 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 ###########################################################################
 
 # Whether to enable the response Cache-Control header.
-#cache.client.enabled = {{ getenv "CACHE_CLIENT_ENABLED" }}
+#cache.client.enabled = $CACHE_CLIENT_ENABLED
 
-#cache.client.max_age = {{ getenv "CACHE_CLIENT_MAX_AGE" }}
-#cache.client.shared_max_age = {{ getenv "CACHE_CLIENT_SHARED_MAX_AGE" }}
-#cache.client.public = {{ getenv "CACHE_CLIENT_PUBLIC" }}
-#cache.client.private = {{ getenv "CACHE_CLIENT_PRIVATE" }}
-#cache.client.no_cache = {{ getenv "CACHE_CLIENT_NO_CACHE" }}
-#cache.client.no_store = {{ getenv "CACHE_CLIENT_NO_STORE" }}
-#cache.client.must_revalidate = {{ getenv "CACHE_CLIENT_MUST_REVALIDATE" }}
-#cache.client.proxy_revalidate = {{ getenv "CACHE_CLIENT_PROXY_REVALIDATE" }}
-#cache.client.no_transform = {{ getenv "CACHE_CLIENT_NO_TRANSFORM" }}
+#cache.client.max_age = $CACHE_CLIENT_MAX_AGE
+#cache.client.shared_max_age = $CACHE_CLIENT_SHARED_MAX_AGE
+#cache.client.public = $CACHE_CLIENT_PUBLIC
+#cache.client.private = $CACHE_CLIENT_PRIVATE
+#cache.client.no_cache = $CACHE_CLIENT_NO_CACHE
+#cache.client.no_store = $CACHE_CLIENT_NO_STORE
+#cache.client.must_revalidate = $CACHE_CLIENT_MUST_REVALIDATE
+#cache.client.proxy_revalidate = $CACHE_CLIENT_PROXY_REVALIDATE
+#cache.client.no_transform = $CACHE_CLIENT_NO_TRANSFORM
 
 ###########################################################################
 # SERVER-SIDE CACHING
@@ -379,62 +379,62 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 # `processor.fallback_retrieval_strategy` keys are set to `CacheStrategy`.
 
 # FilesystemCache is the only available source cache.
-#cache.server.source = {{ getenv "CACHE_SERVER_SOURCE" }}
+#cache.server.source = $CACHE_SERVER_SOURCE
 
 # Amount of time source cache content remains valid. Set to blank or 0
 # for forever.
-#cache.server.source.ttl_seconds = {{ getenv "CACHE_SERVER_SOURCE_TTL_SECONDS" }}
+#cache.server.source.ttl_seconds = $CACHE_SERVER_SOURCE_TTL_SECONDS
 
 # Enables the derivative (processed image) cache.
-cache.server.derivative.enabled = {{ getenv "CACHE_SERVER_DERIVATIVE_ENABLED" }}
+cache.server.derivative.enabled = $CACHE_SERVER_DERIVATIVE_ENABLED
 
 # Available values are `FilesystemCache`, `JdbcCache`, `RedisCache`,
 # `HeapCache`, `S3Cache`, and `AzureStorageCache`.
-cache.server.derivative = {{ getenv "CACHE_SERVER_DERIVATIVE" }}
+cache.server.derivative = $CACHE_SERVER_DERIVATIVE
 
 # Amount of time derivative cache content remains valid. Set to blank or 0
 # for forever.
-cache.server.derivative.ttl_seconds = {{ getenv "CACHE_SERVER_DERIVATIVE_TTL_SECONDS" }}
+cache.server.derivative.ttl_seconds = $CACHE_SERVER_DERIVATIVE_TTL_SECONDS
 
 # Whether to use the Java heap as a "level 1" cache for image infos, either
 # independently or in front of a "level 2" derivative cache (if enabled).
-cache.server.info.enabled = {{ getenv "CACHE_SERVER_INFO_ENABLED" }}
+cache.server.info.enabled = $CACHE_SERVER_INFO_ENABLED
 
 # If true, when a source reports that the requested source image has gone
 # missing, all cached information relating to it (if any) will be deleted.
 # (This is effectively always false when cache.server.resolve_first is also
 # false.)
-cache.server.purge_missing = {{ getenv "CACHE_SERVER_PURGE_MISSING" }}
+cache.server.purge_missing = $CACHE_SERVER_PURGE_MISSING
 
 # If true, the source image will be confirmed to exist before a cached copy
 # is returned. If false, the cached copy will be returned without checking.
 # Resolving first is safer but slower.
-cache.server.resolve_first = {{ getenv "CACHE_SERVER_RESOLVE_FIRST" }}
+cache.server.resolve_first = $CACHE_SERVER_RESOLVE_FIRST
 
 # !! Enables the cache worker, which periodically purges invalid cache
 # items in the background.
-cache.server.worker.enabled = {{ getenv "CACHE_SERVER_WORKER_ENABLED" }}
+cache.server.worker.enabled = $CACHE_SERVER_WORKER_ENABLED
 
 # !! The cache worker will wait this many seconds before starting its
 # next shift.
-cache.server.worker.interval = {{ getenv "CACHE_SERVER_WORKER_INTERVAL" }}
+cache.server.worker.interval = $CACHE_SERVER_WORKER_INTERVAL
 
 #----------------------------------------
 # FilesystemCache
 #----------------------------------------
 
 # If this directory does not exist, it will be created automatically.
-FilesystemCache.pathname = {{ getenv "FILESYSTEMCACHE_PATHNAME" }}
+FilesystemCache.pathname = $FILESYSTEMCACHE_PATHNAME
 
 # Levels of folder hierarchy in which to store cached images. Deeper depth
 # results in fewer files per directory. Set to 0 to disable subdirectories.
 # Purge the cache after changing this.
-FilesystemCache.dir.depth = {{ getenv "FILESYSTEMCACHE_DIR_DEPTH" }}
+FilesystemCache.dir.depth = $FILESYSTEMCACHE_DIR_DEPTH
 
 # Number of characters in tree directory names. Should be set to
 # 16^n < (max number of directory entries your filesystem can deal with).
 # Purge the cache after changing this.
-FilesystemCache.dir.name_length = {{ getenv "FILESYSTEMCACHE_DIR_NAME_LENGTH" }}
+FilesystemCache.dir.name_length = $FILESYSTEMCACHE_DIR_NAME_LENGTH
 
 #----------------------------------------
 # HeapCache
@@ -443,16 +443,16 @@ FilesystemCache.dir.name_length = {{ getenv "FILESYSTEMCACHE_DIR_NAME_LENGTH" }}
 # Target cache size, in bytes or a number ending in M, MB, G, GB, etc.
 # This is not a hard limit, and may be transiently exceeded.
 # Ensure your heap can accommodate this size.
-HeapCache.target_size = {{ getenv "HEAPCACHE_TARGET_SIZE" }}
+HeapCache.target_size = $HEAPCACHE_TARGET_SIZE
 
 # If true, the cache contents will be written to a file on exit and during
 # cache worker shifts, and read back in at startup.
-HeapCache.persist = {{ getenv "HEAPCACHE_PERSIST" }}
+HeapCache.persist = $HEAPCACHE_PERSIST
 
 # When the contents are persisted, this specifies the location of the cache
 # file. If the parent directory does not exist, it will be created
 # automatically.
-HeapCache.persist.filesystem.pathname = {{ getenv "HEAPCACHE_PERSIST_FILESYSTEM_PATHNAME" }}
+HeapCache.persist.filesystem.pathname = $HEAPCACHE_PERSIST_FILESYSTEM_PATHNAME
 
 #----------------------------------------
 # S3Cache
@@ -485,73 +485,73 @@ S3Cache.max_connections = $S3CACHE_MAX_CONNECTIONS
 ###########################################################################
 
 # Whether to enable overlays.
-overlays.enabled = {{ getenv "OVERLAYS_ENABLED" }}
+overlays.enabled = $OVERLAYS_ENABLED
 
 # Controls how overlays are configured. `BasicStrategy` will use the
 # `overlays.BasicStrategy.*` keys in this section. `ScriptStrategy` will
 # use a delegate method. (See the user manual.)
-overlays.strategy = {{ getenv "OVERLAYS_STRATEGY" }}
+overlays.strategy = $OVERLAYS_STRATEGY
 
 # `image` or `string`.
-overlays.BasicStrategy.type = {{ getenv "OVERLAYS_BASICSTRATEGY_TYPE" }}
+overlays.BasicStrategy.type = $OVERLAYS_BASICSTRATEGY_TYPE
 
 # Absolute path or URL of the overlay image. Must be a PNG file.
-overlays.BasicStrategy.image = {{ getenv "OVERLAYS_BASICSTRATEGY_IMAGE" }}
+overlays.BasicStrategy.image = $OVERLAYS_BASICSTRATEGY_IMAGE
 
 # Overlay text.
-overlays.BasicStrategy.string = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING" }}
+overlays.BasicStrategy.string = $OVERLAYS_BASICSTRATEGY_STRING
 
 # For possible values, launch with the -Dcantaloupe.list_fonts option.
-overlays.BasicStrategy.string.font = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_FONT" }}
+overlays.BasicStrategy.string.font = $OVERLAYS_BASICSTRATEGY_STRING_FONT
 
 # Font size in points.
-overlays.BasicStrategy.string.font.size = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_FONT_SIZE" }}
+overlays.BasicStrategy.string.font.size = $OVERLAYS_BASICSTRATEGY_STRING_FONT_SIZE
 
 # If the string doesn't fit in the image at the above size, the largest size
 # at which it does fit will be used, down to this.
-overlays.BasicStrategy.string.font.min_size = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_FONT_MIN_SIZE" }}
+overlays.BasicStrategy.string.font.min_size = $OVERLAYS_BASICSTRATEGY_STRING_FONT_MIN_SIZE
 
-# Font weight. 1 = regular, 2 = {{ getenv "# FONT WEIGHT_ 1 = REGULAR, 2" }}
+# Font weight. 1 = regular, 2 = $# FONT WEIGHT_ 1 = REGULAR, 2
 # support fractional weights.
-overlays.BasicStrategy.string.font.weight = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_FONT_WEIGHT" }}
+overlays.BasicStrategy.string.font.weight = $OVERLAYS_BASICSTRATEGY_STRING_FONT_WEIGHT
 
 # Point spacing between glyphs, typically between -0.1 and 0.1.
-overlays.BasicStrategy.string.glyph_spacing = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_GLYPH_SPACING" }}
+overlays.BasicStrategy.string.glyph_spacing = $OVERLAYS_BASICSTRATEGY_STRING_GLYPH_SPACING
 
 # CSS color syntax is supported.
-overlays.BasicStrategy.string.color = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_COLOR" }}
+overlays.BasicStrategy.string.color = $OVERLAYS_BASICSTRATEGY_STRING_COLOR
 
 # CSS color syntax is supported.
-overlays.BasicStrategy.string.stroke.color = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_STROKE_COLOR" }}
+overlays.BasicStrategy.string.stroke.color = $OVERLAYS_BASICSTRATEGY_STRING_STROKE_COLOR
 
 # Stroke width in pixels.
-overlays.BasicStrategy.string.stroke.width = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_STROKE_WIDTH" }}
+overlays.BasicStrategy.string.stroke.width = $OVERLAYS_BASICSTRATEGY_STRING_STROKE_WIDTH
 
 # Color of a rectangular background to draw under the string.
 # CSS color syntax and alpha are supported.
-overlays.BasicStrategy.string.background.color = {{ getenv "OVERLAYS_BASICSTRATEGY_STRING_BACKGROUND_COLOR" }}
+overlays.BasicStrategy.string.background.color = $OVERLAYS_BASICSTRATEGY_STRING_BACKGROUND_COLOR
 
 # Allowed values: `top left`, `top center`, `top right`, `left center`,
 # `center`, `right center`, `bottom left`, `bottom center`, `bottom right`.
-overlays.BasicStrategy.position = {{ getenv "OVERLAYS_BASICSTRATEGY_POSITION" }}
+overlays.BasicStrategy.position = $OVERLAYS_BASICSTRATEGY_POSITION
 
 # Pixel margin between the overlay and the image edge.
-overlays.BasicStrategy.inset = {{ getenv "OVERLAYS_BASICSTRATEGY_INSET" }}
+overlays.BasicStrategy.inset = $OVERLAYS_BASICSTRATEGY_INSET
 
 # Output images less than this many pixels wide will not receive an overlay.
 # Set to 0 to add the overlay regardless.
-overlays.BasicStrategy.output_width_threshold = {{ getenv "OVERLAYS_BASICSTRATEGY_OUTPUT_WIDTH_THRESHOLD" }}
+overlays.BasicStrategy.output_width_threshold = $OVERLAYS_BASICSTRATEGY_OUTPUT_WIDTH_THRESHOLD
 
 # Output images less than this many pixels tall will not receive an overlay.
 # Set to 0 to add the overlay regardless.
-overlays.BasicStrategy.output_height_threshold = {{ getenv "OVERLAYS_BASICSTRATEGY_OUTPUT_HEIGHT_THRESHOLD" }}
+overlays.BasicStrategy.output_height_threshold = $OVERLAYS_BASICSTRATEGY_OUTPUT_HEIGHT_THRESHOLD
 
 ###########################################################################
 # REDACTIONS
 ###########################################################################
 
 # See the user manual for information about how redactions work.
-redaction.enabled = {{ getenv "REDACTION_ENABLED" }}
+redaction.enabled = $REDACTION_ENABLED
 
 ###########################################################################
 # LOGGING
@@ -567,21 +567,21 @@ log.application.level = $LOG_APPLICATION_LEVEL
 log.application.ConsoleAppender.enabled = true
 
 # N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.application.FileAppender.enabled = {{ getenv "LOG_APPLICATION_FILEAPPENDER_ENABLED" }}
-log.application.FileAppender.pathname = {{ getenv "LOG_APPLICATION_FILEAPPENDER_PATHNAME" }}
+log.application.FileAppender.enabled = $LOG_APPLICATION_FILEAPPENDER_ENABLED
+log.application.FileAppender.pathname = $LOG_APPLICATION_FILEAPPENDER_PATHNAME
 
-log.application.RollingFileAppender.enabled = {{ getenv "LOG_APPLICATION_ROLLINGFILEAPPENDER_ENABLED" }}
-log.application.RollingFileAppender.pathname = {{ getenv "LOG_APPLICATION_ROLLINGFILEAPPENDER_PATHNAME" }}
-log.application.RollingFileAppender.policy = {{ getenv "LOG_APPLICATION_ROLLINGFILEAPPENDER_POLICY" }}
-log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = {{ getenv "LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN" }}
-log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = {{ getenv "LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY" }}
+log.application.RollingFileAppender.enabled = $LOG_APPLICATION_ROLLINGFILEAPPENDER_ENABLED
+log.application.RollingFileAppender.pathname = $LOG_APPLICATION_ROLLINGFILEAPPENDER_PATHNAME
+log.application.RollingFileAppender.policy = $LOG_APPLICATION_ROLLINGFILEAPPENDER_POLICY
+log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
 
 # See the "SyslogAppender" section for a list of facilities:
 # http://logback.qos.ch/manual/appenders.html
-log.application.SyslogAppender.enabled = {{ getenv "LOG_APPLICATION_SYSLOGAPPENDER_ENABLED" }}
-log.application.SyslogAppender.host = {{ getenv "LOG_APPLICATION_SYSLOGAPPENDER_HOST" }}
-log.application.SyslogAppender.port = {{ getenv "LOG_APPLICATION_SYSLOGAPPENDER_PORT" }}
-log.application.SyslogAppender.facility = {{ getenv "LOG_APPLICATION_SYSLOGAPPENDER_FACILITY" }}
+log.application.SyslogAppender.enabled = $LOG_APPLICATION_SYSLOGAPPENDER_ENABLED
+log.application.SyslogAppender.host = $LOG_APPLICATION_SYSLOGAPPENDER_HOST
+log.application.SyslogAppender.port = $LOG_APPLICATION_SYSLOGAPPENDER_PORT
+log.application.SyslogAppender.facility = $LOG_APPLICATION_SYSLOGAPPENDER_FACILITY
 
 #----------------------------------------
 # Error Log
@@ -591,36 +591,36 @@ log.application.SyslogAppender.facility = {{ getenv "LOG_APPLICATION_SYSLOGAPPEN
 # into a dedicated error log, which may make them easier to spot.
 
 # N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.error.FileAppender.enabled = {{ getenv "LOG_ERROR_FILEAPPENDER_ENABLED" }}
-log.error.FileAppender.pathname = {{ getenv "LOG_ERROR_FILEAPPENDER_PATHNAME" }}
+log.error.FileAppender.enabled = $LOG_ERROR_FILEAPPENDER_ENABLED
+log.error.FileAppender.pathname = $LOG_ERROR_FILEAPPENDER_PATHNAME
 
-log.error.RollingFileAppender.enabled = {{ getenv "LOG_ERROR_ROLLINGFILEAPPENDER_ENABLED" }}
-log.error.RollingFileAppender.pathname = {{ getenv "LOG_ERROR_ROLLINGFILEAPPENDER_PATHNAME" }}
-log.error.RollingFileAppender.policy = {{ getenv "LOG_ERROR_ROLLINGFILEAPPENDER_POLICY" }}
-log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = {{ getenv "LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN" }}
-log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history = {{ getenv "LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY" }}
+log.error.RollingFileAppender.enabled = $LOG_ERROR_ROLLINGFILEAPPENDER_ENABLED
+log.error.RollingFileAppender.pathname = $LOG_ERROR_ROLLINGFILEAPPENDER_PATHNAME
+log.error.RollingFileAppender.policy = $LOG_ERROR_ROLLINGFILEAPPENDER_POLICY
+log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
 
 #----------------------------------------
 # Access Log
 #----------------------------------------
 
-log.access.ConsoleAppender.enabled = {{ getenv "LOG_ACCESS_CONSOLEAPPENDER_ENABLED" }}
+log.access.ConsoleAppender.enabled = $LOG_ACCESS_CONSOLEAPPENDER_ENABLED
 
 # N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.access.FileAppender.enabled = {{ getenv "LOG_ACCESS_FILEAPPENDER_ENABLED" }}
-log.access.FileAppender.pathname = {{ getenv "LOG_ACCESS_FILEAPPENDER_PATHNAME" }}
+log.access.FileAppender.enabled = $LOG_ACCESS_FILEAPPENDER_ENABLED
+log.access.FileAppender.pathname = $LOG_ACCESS_FILEAPPENDER_PATHNAME
 
 # RollingFileAppender is an alternative to using something like
 # FileAppender + logrotate.
-log.access.RollingFileAppender.enabled = {{ getenv "LOG_ACCESS_ROLLINGFILEAPPENDER_ENABLED" }}
-log.access.RollingFileAppender.pathname = {{ getenv "LOG_ACCESS_ROLLINGFILEAPPENDER_PATHNAME" }}
-log.access.RollingFileAppender.policy = {{ getenv "LOG_ACCESS_ROLLINGFILEAPPENDER_POLICY" }}
-log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = {{ getenv "LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN" }}
-log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = {{ getenv "LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY" }}
+log.access.RollingFileAppender.enabled = $LOG_ACCESS_ROLLINGFILEAPPENDER_ENABLED
+log.access.RollingFileAppender.pathname = $LOG_ACCESS_ROLLINGFILEAPPENDER_PATHNAME
+log.access.RollingFileAppender.policy = $LOG_ACCESS_ROLLINGFILEAPPENDER_POLICY
+log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
 
 # See the "SyslogAppender" section for a list of facilities:
 # http://logback.qos.ch/manual/appenders.html
-log.access.SyslogAppender.enabled = {{ getenv "LOG_ACCESS_SYSLOGAPPENDER_ENABLED" }}
-log.access.SyslogAppender.host = {{ getenv "LOG_ACCESS_SYSLOGAPPENDER_HOST" }}
-log.access.SyslogAppender.port = {{ getenv "LOG_ACCESS_SYSLOGAPPENDER_PORT" }}
-log.access.SyslogAppender.facility = {{ getenv "LOG_ACCESS_SYSLOGAPPENDER_FACILITY" }}
+log.access.SyslogAppender.enabled = $LOG_ACCESS_SYSLOGAPPENDER_ENABLED
+log.access.SyslogAppender.host = $LOG_ACCESS_SYSLOGAPPENDER_HOST
+log.access.SyslogAppender.port = $LOG_ACCESS_SYSLOGAPPENDER_PORT
+log.access.SyslogAppender.facility = $LOG_ACCESS_SYSLOGAPPENDER_FACILITY
