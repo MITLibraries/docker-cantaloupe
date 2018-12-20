@@ -386,7 +386,7 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 #cache.server.source.ttl_seconds = $CACHE_SERVER_SOURCE_TTL_SECONDS
 
 # Enables the derivative (processed image) cache.
-cache.server.derivative.enabled = $CACHE_SERVER_DERIVATIVE_ENABLED
+cache.server.derivative.enabled = true
 
 # Available values are `FilesystemCache`, `JdbcCache`, `RedisCache`,
 # `HeapCache`, `S3Cache`, and `AzureStorageCache`.
@@ -394,7 +394,7 @@ cache.server.derivative = $CACHE_SERVER_DERIVATIVE
 
 # Amount of time derivative cache content remains valid. Set to blank or 0
 # for forever.
-cache.server.derivative.ttl_seconds = $CACHE_SERVER_DERIVATIVE_TTL_SECONDS
+cache.server.derivative.ttl_seconds = 0
 
 # Whether to use the Java heap as a "level 1" cache for image infos, either
 # independently or in front of a "level 2" derivative cache (if enabled).
@@ -404,20 +404,20 @@ cache.server.info.enabled = $CACHE_SERVER_INFO_ENABLED
 # missing, all cached information relating to it (if any) will be deleted.
 # (This is effectively always false when cache.server.resolve_first is also
 # false.)
-cache.server.purge_missing = $CACHE_SERVER_PURGE_MISSING
+cache.server.purge_missing = false
 
 # If true, the source image will be confirmed to exist before a cached copy
 # is returned. If false, the cached copy will be returned without checking.
 # Resolving first is safer but slower.
-cache.server.resolve_first = $CACHE_SERVER_RESOLVE_FIRST
+cache.server.resolve_first = false
 
 # !! Enables the cache worker, which periodically purges invalid cache
 # items in the background.
-cache.server.worker.enabled = $CACHE_SERVER_WORKER_ENABLED
+cache.server.worker.enabled = false
 
 # !! The cache worker will wait this many seconds before starting its
 # next shift.
-cache.server.worker.interval = $CACHE_SERVER_WORKER_INTERVAL
+#cache.server.worker.interval = $CACHE_SERVER_WORKER_INTERVAL
 
 #----------------------------------------
 # FilesystemCache
@@ -467,11 +467,11 @@ S3Cache.endpoint =  $S3SOURCE_ENDPOINT
 # See: http://aws.amazon.com/security-credentials
 # Note that this info can be obtained from elsewhere rather than setting it
 # here; see the user manual.
-S3Cache.access_key_id = $S3SOURCE_ACCESS_KEY_ID
-S3Cache.secret_key = $S3SOURCE_SECRET_KEY
+S3Cache.access_key_id = $S3CACHE_ACCESS_KEY_ID
+S3Cache.secret_key = $S3CACHE_SECRET_KEY
 
 # !! Name of a bucket to use to hold cached data.
-S3Cache.bucket.name = $S3SOURCE_CACHE_BUCKET_NAME
+S3Cache.bucket.name = $S3CACHE_BUCKET_NAME
 
 # !! String that will be prefixed to object keys.
 S3Cache.object_key_prefix = $S3CACHE_OBJECT_KEY_PREFIX
