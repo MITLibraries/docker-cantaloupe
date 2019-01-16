@@ -6,8 +6,7 @@ Rudimentary containerization of the [Cantaloupe server](https://medusa-project.g
 
     docker build -t cantaloupe .
 
-This invocation will download the 4.0.2 (current at time of writing) release of the software. To override for
-newer (or older) versions:
+This invocation will download the 4.0.2 (current at time of writing) release of the software. To override for newer (or older) versions:
 
     docker build --build-arg CANTALOUPE_VERSION=<desired version> -t cantaloupe .
 
@@ -15,10 +14,13 @@ newer (or older) versions:
 
  First you will need to set the environment variables required to run Cantaloupe. If you would like to test additional settings, ensure the cantaloupe.propoerties.tmpl template has the variable configured or you have set it as an environment variable.
 
-    docker run -d -p 8182:8182 --name melon -v testimages/:/imageroot cantaloupe
+    docker run -d -p 8182:8182 --name melon -v testimages:/imageroot cantaloupe
 
-will run the container in the background until _docker stop_ is called, looking in specified
-directory for image files.
+will run the container in the background until _docker stop_ is called, looking in specified directory for image files.
+
+ You can also run the container with environmental variables supplied on the command line like:
+
+    docker run -d -p 8182:8182 -e "ENDPOINT_ADMIN_SECRET=[my_secret_password]" -e "ENDPOINT_ADMIN_ENABLED=true" --name melon -v testimages:/imageroot cantaloupe
 
 ### Deployment to AWS
 
