@@ -1,0 +1,27 @@
+language: bash
+
+services:
+- docker
+
+script:
+- tests/run-tests.sh
+
+after_success:
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin ;
+    docker tag cantaloupe $TAGGED_IMAGE ;
+    docker push $TAGGED_IMAGE ;
+  fi
+
+notifications:
+  email:
+    recipients:
+    - ksclarke@ksclarke.io
+    on_success: change
+    on_failure: change
+
+env:
+  global:
+  - secure: tc3WuBWPk+oEA6MxNKwxoZkGy8OZ22bmKrT/anhFh9bIlZ7Srk3HV9DKw+CnJ2v6Om90V6mnHOFVTWofHBNzke0Ew7q/vTusoIVj6eLJiREvqNJgqLA00/RvhMbvUmozOzxogEZG807g/5+NdJaLCRNfUxJuvfIBLpmITsQajnZaXjZnqlwtWGvguVEChPIlH2S2BVez/7dBbqYaQnjaKuJMMtDdMDf0wNhTqi+Cv3WcrMb5NxNelGXUR18mjDkGDOikB0JOpR+/UvKQRv9RejBOvA9pp39Anf5fx1pwjdcp4TsQYmsnOo/TNc7f2sKNQZOnZq6FDFwJ5lO0assidak4bEd1WouxdHmQ03M8vBJLUVSZh/JE2Pt/E/LBYNyeaBRqXN7K2oErPJBlbtCPnbCfJUpjJqpmOLHxlwZ28HSOBDNDGss4iW357T+VHrRylsvQocoHV/3rHNufB1fgDDjVEUZA2oLUOP6FRBdcW2LjBvtM/XTs8ow6HCfU77aonzvO/gso3gGOMnbjnrJHOMNRQ/chKBXWU1yIRcJW2dXvYqLKWzWDFj4lu7fTJy8MWRFOeoO0sk2Uq37PDR5982GsSw4N0kYhV7MwBy80HXBNaNU5/BfsQq9g8OreW2iY1d5FR59kXcqnJk7wJopNql0vbnOoXdd0S8Y/DuZ9eVs=
+  - secure: 98Uo4sm8YU1JThyRJr+HxYE7x7hBHUh+y8e/HRBEuo8v4ekT0+v3h2N8HWtloFDehYyc4tnLuujpe8/kiK24UMCl9CLoD6T9yj3DUwQSZPGhyfhvKZNWd+koscGflRDXzHW48GCuzy7BqXQp6yQpC3j/YwfNTc8FNxCqFpLr5lW8RFc//8M7kJj4AfZaiqIm6KjKDTTpcCDRVZ6ITxwbEgYyaYBqr6zcsh0bb1G72ui1X4kgnWmndhvlXjfVSZwC0JYcIspDPVRVyebhAt1IyyYVW88aI9PqPyvx+lH84384X2FkJWJs3Sm8yltAsG0XuDvRCgTwWcwrQLj4H5ms9GYOssys3QGEg1tOzJlilgNgujv3/h6mD6GC2osbx2asHzNHBN45m0yTJoeB8A1kq4220AtW6CLcqQ2D9NR8uwrGq9byvEFcs8oHcLEg+Co4nr9QwCfKIR9VTuUrCBQ0slkde/MAUIvK4J24ggZmtnZVosDEEMcMHZsi7t1Zhl6boMlYsWZ1F+vvEeVFxoMnJMPDQI6H/Bk4IGYzy1SgYqxPbSnF4+2XB9D6xhrjTutkhzyX7YK6KF7VSP0AZqxrwEW5UUPrLDg8GrMEPkLXqaOp0+/MdiHKNOLpkeOVwnWLIgB8Lwk+rRXxxHIXD6ZIibyNkjFhncr1lRkPkmm/ve0=
+  - secure: kGck0DHnXCj44nFq6XAyCzAehZW2HCKCpO8mu2YwVunqnMqLJkZUdNx5MciYd4ntw0abYpNmHKUmu4WgNcRfjH4WtVSbYRWBrDNh/TTp9njscaXb9gQjoHW/iqjze+zZKlo2KJZ5+j4Pw0i/wxjPgH6HClTM8r0CX0K6Mo+6jLyz4pZQjlRFaCJhsR+KbfMNZt+IUVGgiUoqn79tQVeVj1M4XA29zErX74Lfcj79/t1p5T2dk9zGC5floGhihc1Mc2Wy22eju01S8V+YizyHMW1fwUv0PaqjxCSIJpaAfBJvoBVn9k4xFF9dYjdnHVKXmfL+wZCbPMcMD6QNm+u8qpy4hszYfDko1ZkJq5m102VCXVuDiKaC8RykvSJvnGvr0j6lekZeJMH6GN7T5DfLaiXoaMBmfUTLNYzo2Rrx279/1JpV3yymeU9YVEioPjIj/R23iiQVavviNd7aYb4J8yhKXTy4ML/QdyAy6kaHdSX0sqKhDGYOtwx0x1l3gymMnRV7Snz/jE7UphwsYEdIIV2SGwBfHxT7p9EwHVWk40m3OvtxQ+wMT8/E5Qd20zfszi5V6cLmzpImCnZEW/XzJW/t+iPy//oSGf74Xt+dwwl89qeMDqTh9tgUUKH5GBspvPJQUkCORCYO+VTxpngdMFlaWqbhT03y/LeXwmZku1Q=

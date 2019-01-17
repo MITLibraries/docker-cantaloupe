@@ -1,4 +1,4 @@
-## Docker Container for Cantaloupe IIIF server
+## Docker Container for Cantaloupe IIIF server &nbsp;[![Build Status](https://travis-ci.org/UCLALibrary/docker-cantaloupe.svg?branch=master)](https://travis-ci.org/UCLALibrary/docker-cantaloupe)
 
 Rudimentary containerization of the [Cantaloupe server](https://medusa-project.github.io/cantaloupe), which bakes in a local filesystem 'resolver' (the means by which requested images are found) to a Docker data volume.
 
