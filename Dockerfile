@@ -1,8 +1,4 @@
-ARG CANTALOUPE_VERSION=4.0.3
 FROM openjdk:10-slim
-ARG CANTALOUPE_VERSION
-
-ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 #ENV IMAGEMAGICK_VERSION=7.0.8-14
 
 EXPOSE 8182
@@ -40,6 +36,9 @@ ENV LD_LIBRARY_PATH /tools/kakadu/KDU7A2_Demo_Apps_for_Ubuntu-x86-64_170827:${LD
 #    cd .. && \
 #    ldconfig /usr/local/lib && \
 #    rm -rf  ImageMagick*
+
+ARG CANTALOUPE_VERSION=4.0.3
+ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
 # Get and unpack Cantaloupe release archive
 RUN curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip \
