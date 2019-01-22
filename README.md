@@ -10,6 +10,11 @@ This invocation will download the 4.0.2 (current at time of writing) release of 
 
     docker build --build-arg CANTALOUPE_VERSION=<desired version> -t cantaloupe .
 
+To build the latest version of Cantaloupe from source, use the following:
+
+    docker build --build-arg CANTALOUPE_VERSION=latest -t cantaloupe .
+
+
 ### Run the container
 
  First you will need to set the environment variables required to run Cantaloupe. If you would like to test additional settings, ensure the cantaloupe.propoerties.tmpl template has the variable configured or you have set it as an environment variable.

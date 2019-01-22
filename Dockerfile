@@ -1,7 +1,18 @@
-FROM openjdk:10-slim
+ARG CANTALOUPE_VERSION=4.0.2
+FROM maven:3.6.0-jdk-11 AS MAVEN_TOOL_CHAIN
+ARG CANTALOUPE_VERSION
+ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
+RUN mkdir -p /build && \
+    cd /build && \
+    if [ "$CANTALOUPE_VERSION" = 'latest' ] ; then curl -OL https://github.com/medusa-project/cantaloupe/archive/develop.zip; else curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip; fi
 
-ENV CANTALOUPE_VERSION=4.0.2
-#ENV IMAGEMAGICK_VERSION=7.0.8-14
+# unzip and compile the Cantaloupe source code if $CANTALOUPE_VERSION = 'latest'
+WORKDIR /build/
+RUN if [ "$CANTALOUPE_VERSION" = 'latest' ]; then unzip develop.zip cantaloupe-develop/* && mv cantaloupe-develop src && cd src/ && cp test.properties.sample test.properties && mvn -Pfreedeps -DskipTests clean package && cp /build/src/target/cantaloupe-?.?-SNAPSHOT.zip /build/Cantaloupe-$CANTALOUPE_VERSION.zip; fi
+
+FROM openjdk:10-slim
+ARG CANTALOUPE_VERSION
+ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
 EXPOSE 8182
 
@@ -10,7 +21,7 @@ VOLUME /imageroot
 # Update packages and install tools
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends wget unzip graphicsmagick curl imagemagick libopenjp2-tools ffmpeg python && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* ### this command prevents future tinkering with apt
 
 # Run non privileged
 RUN adduser --system cantaloupe
@@ -29,10 +40,10 @@ WORKDIR /tmp
 #    ldconfig /usr/local/lib && \
 #    rm -rf  ImageMagick*
 
+COPY --from=MAVEN_TOOL_CHAIN /build/Cantaloupe-$CANTALOUPE_VERSION.zip /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip
+
 # Get and unpack Cantaloupe release archive
-RUN curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip \
- && mkdir -p /usr/local/ \
- && cd /usr/local \
+RUN cd /usr/local \
  && unzip /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
  && ln -s cantaloupe-$CANTALOUPE_VERSION cantaloupe \
  && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
