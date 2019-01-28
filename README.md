@@ -15,7 +15,7 @@ newer (or older) versions:
 
  First you will need to set the environment variables required to run Cantaloupe. If you would like to test additional settings, ensure the cantaloupe.propoerties.tmpl template has the variable configured or you have set it as an environment variable.
 
-    docker run -d -p 8182:8182 --name melon -v testimages/:/imageroot cantaloupe
+    docker run -d -p 8182:8182 --name melon -v testimages:/imageroot cantaloupe
 
 will run the container in the background until _docker stop_ is called, looking in specified
 directory for image files.
