@@ -1,202 +1,117 @@
 ###########################################################################
-# Cantaloupe.properties managed by confd
+# cantaloupe.properties configuration
+# For Cantaloupe v4.x
+# Created using https://github.com/medusa-project/cantaloupe/blob/release/4.0/cantaloupe.properties.sample
 ###########################################################################
 
-# !! Leave blank to use the JVM default temporary directory.
-temp_pathname =
+###########################################################################
+# GENERAL SETTINGS
+###########################################################################
 
-# !! Configures the HTTP server. (Standalone mode only.)
-http.enabled = true
-http.host = 0.0.0.0
-http.port = 8182
-http.http2.enabled = true
-
-# !! Configures the HTTPS server. (Standalone mode only.)
-https.enabled = false
-https.host = 0.0.0.0
-https.port = 8183
-# Secure HTTP/2 requires Java 9 or later.
-https.http2.enabled = false
-
-# !! Available values are `JKS` and `PKCS12`. (Standalone mode only.)
-https.key_store_type = JKS
-https.key_store_password = myPassword
-https.key_store_path = /path/to/keystore.jks
-https.key_password = myPassword
-
-# !! Maximum size of the HTTP(S) request queue. Leave blank to use the
-# default.
-#http.accept_queue_limit = $HTTP_ACCEPT_QUEUE_LIMIT
-
-# Base URI to use for internal links, such as Link headers and JSON-LD
-# @id values, in a reverse-proxy context. This should only be used when
-# X-Forwarded-* headers cannot be used instead. (See the user manual.)
-#base_uri = $BASE_URI
-
-# Normally, slashes in a URI path component must be percent-encoded as
-# "%2F". If your proxy is not able to pass these through without decoding,
-# you can define an alternate character or character sequence to substitute
-# for a slash. Supply the non-percent-encoded version here, and use the
-# percent-encoded version in URLs.
-#slash_substitute = $SLASH_SUBSTITUTE
-
-# Maximum number of pixels to return in a response, to prevent overloading
-# the server. Requests for more pixels than this will receive an error
-# response. Set to 0 for no maximum.
-max_pixels = 400000000
-#max_pixels = $MAX_PIXELS
-
-# Errors will also be logged to the error log (if enabled).
-print_stack_trace_on_error_pages = true
+temp_pathname = $CANTALOUPE_TEMP_PATHNAME
+http.enabled = $CANTALOUPE_HTTP_ENABLED
+http.host = $CANTALOUPE_HTTP_HOST
+http.port = $CANTALOUPE_HTTP_PORT
+http.http2.enabled = $CANTALOUPE_HTTP_HTTP2_ENABLED
+https.enabled = $CANTALOUPE_HTTPS_ENABLED
+https.host = $CANTALOUPE_HTTPS_HOST
+https.port = $CANTALOUPE_HTTPS_PORT
+https.http2.enabled = $CANTALOUPE_HTTPS_HTTP2_ENABLED
+https.key_store_type = $CANTALOUPE_HTTPS_KEY_STORE_TYPE
+https.key_store_password = $CANTALOUPE_HTTPS_KEY_STORE_PASSWORD
+https.key_store_path = $CANTALOUPE_HTTPS_KEY_STORE_PATH
+https.key_password = $CANTALOUPE_HTTPS_KEY_PASSWORD
+http.accept_queue_limit = $CANTALOUPE_HTTP_ACCEPT_QUEUE_LIMIT
+base_uri = $CANTALOUPE_BASE_URI
+slash_substitute = $CANTALOUPE_SLASH_SUBSTITUTE
+max_pixels = $CANTALOUPE_MAX_PIXELS
+print_stack_trace_on_error_pages = $CANTALOUPE_PRINT_STACK_TRACE_ON_ERROR_PAGES
 
 ###########################################################################
 # DELEGATE SCRIPT
 ###########################################################################
 
-# Enables the delegate script: a Ruby script containing various delegate
-# methods. (See the user manual.)
-delegate_script.enabled = false
-
-# !! This can be an absolute path, or a filename; if only a filename is
-# specified, it will be searched for in the same folder as this file, and
-# then the current working directory.
-delegate_script.pathname = delegates.rb
-
-# Enables the invocation cache, which caches method invocations and return
-# values in memory. See the user manual for more information.
-delegate_script.cache.enabled = false
+delegate_script.enabled = $CANTALOUPE_DELEGATE_SCRIPT_ENABLED
+delegate_script.pathname = $CANTALOUPE_DELEGATE_SCRIPT_PATHNAME
+delegate_script.cache.enabled = $CANTALOUPE_DELEGATE_SCRIPT_CACHE_ENABLED
 
 ###########################################################################
 # ENDPOINTS
 ###########################################################################
 
-# !! Configures HTTP Basic authentication in all public endpoints.
-endpoint.public.auth.basic.enabled = false
-#endpoint.public.auth.basic.enabled = $ENDPOINT_PUBLIC_AUTH_BASIC_ENABLED
-#endpoint.public.auth.basic.username = $ENDPOINT_PUBLIC_AUTH_BASIC_USERNAME
-#endpoint.public.auth.basic.secret = $ENDPOINT_PUBLIC_AUTH_BASIC_SECRET
-
-# Enables the IIIF Image API 1.x endpoint, at /iiif/1.
-endpoint.iiif.1.enabled = false
-
-# Enables the IIIF Image API 2.x endpoint, at /iiif/2.
-endpoint.iiif.2.enabled = true
-
-# Controls the response Content-Disposition header for images. Allowed
-# values are `inline`, `attachment`, and `none`. This can be overridden
-# using the ?response-content-disposition query argument.
-endpoint.iiif.content_disposition = inline
-
-# Minimum size that will be used in info.json `sizes` keys.
-endpoint.iiif.min_size = 64
-
-# Minimum size that will be used in info.json `tiles` keys. The user manual
-# explains how these are calculated.
-endpoint.iiif.min_tile_size = 512
-
-# If true, requests for sizes other than those contained in an information
-# response will be denied.
-endpoint.iiif.2.restrict_to_sizes = false
-
-# Enables the Control Panel, at /admin.
-endpoint.admin.enabled = $ENDPOINT_ADMIN_ENABLED
-endpoint.admin.username = admin
-endpoint.admin.secret = $ENDPOINT_ADMIN_SECRET
-
-# Enables the administrative HTTP API. (See the user manual.)
-endpoint.api.enabled = false
-
-# HTTP Basic credentials to access the HTTP API.
-#endpoint.api.username = $ENDPOINT_API_USERNAME
-#endpoint.api.secret = $ENDPOINT_API_SECRET
+endpoint.public.auth.basic.enabled = $CANTALOUPE_ENDPOINT_PUBLIC_AUTH_BASIC_ENABLED
+endpoint.public.auth.basic.username = $CANTALOUPE_ENDPOINT_PUBLIC_AUTH_BASIC_USERNAME
+endpoint.public.auth.basic.secret = $CANTALOUPE_ENDPOINT_PUBLIC_AUTH_BASIC_SECRET
+endpoint.iiif.1.enabled = $CANTALOUPE_ENDPOINT_IIIF_1_ENABLED
+endpoint.iiif.2.enabled = $CANTALOUPE_ENDPOINT_IIIF_2_ENABLED
+endpoint.iiif.content_disposition = $CANTALOUPE_ENDPOINT_IIIF_CONTENT_DISPOSITION
+endpoint.iiif.min_size = $CANTALOUPE_ENDPOINT_IIIF_MIN_SIZE
+endpoint.iiif.min_tile_size = $CANTALOUPE_ENDPOINT_IIIF_MIN_TILE_SIZE
+endpoint.iiif.2.restrict_to_sizes = $CANTALOUPE_ENDPOINT_IIIF_2_RESTRICT_TO_SIZES
+endpoint.admin.enabled = $CANTALOUPE_ENDPOINT_ADMIN_ENABLED
+endpoint.admin.username = $CANTALOUPE_ENDPOINT_ADMIN_USERNAME
+endpoint.admin.secret = $CANTALOUPE_ENDPOINT_ADMIN_SECRET
+endpoint.api.enabled = $CANTALOUPE_ENDPOINT_API_ENABLED
+endpoint.api.username = $CANTALOUPE_ENDPOINT_API_USERNAME
+endpoint.api.secret = $CANTALOUPE_ENDPOINT_API_SECRET
 
 ###########################################################################
 # SOURCES
 ###########################################################################
 
-# Uses one source for all requests. Available values are `FilesystemSource`,
-# `HttpSource`, `JdbcSource`, `S3Source`, and `AzureStorageSource`.
-source.static = $SOURCE_STATIC
-
-# If true, `source.static` will be overridden, and the `source()` delegate
-# method will be used to select a source per-request.
-source.delegate = false
+source.static = $CANTALOUPE_SOURCE_STATIC
+source.delegate = $CANTALOUPE_SOURCE_DELEGATE
 
 #----------------------------------------
 # FilesystemSource
 #----------------------------------------
 
-# How to look up files. Allowed values are `BasicLookupStrategy` and
-# `ScriptLookupStrategy`. ScriptLookupStrategy uses the delegate script for
-# dynamic lookups; see the user manual.
-FilesystemSource.lookup_strategy = BasicLookupStrategy
-
-# Server-side path that will be prefixed to the identifier in the URL.
-# Trailing slash is important!
-FilesystemSource.BasicLookupStrategy.path_prefix = $FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
-
-# Server-side path or extension that will be suffixed to the identifier in
-# the URL.
-FilesystemSource.BasicLookupStrategy.path_suffix = $FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
+FilesystemSource.lookup_strategy = $CANTALOUPE_FILESYSTEMSOURCE_LOOKUP_STRATEGY
+FilesystemSource.BasicLookupStrategy.path_prefix = $CANTALOUPE_FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
+FilesystemSource.BasicLookupStrategy.path_suffix = $CANTALOUPE_FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
 
 #----------------------------------------
 # HttpSource
 #----------------------------------------
 
-#HttpSource.trust_all_certs = false
-#HttpSource.request_timeout = $HTTPSOURCE_REQUEST_TIMEOUT
+HttpSource.trust_all_certs = $CANTALOUPE_HTTPSOURCE_TRUST_ALL_CERTS
+HttpSource.request_timeout = $CANTALOUPE_HTTPSOURCE_REQUEST_TIMEOUT
+HttpSource.lookup_strategy = $CANTALOUPE_HTTPSOURCE_LOOKUP_STRATEGY
+HttpSource.BasicLookupStrategy.url_prefix = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_PREFIX
+HttpSource.BasicLookupStrategy.url_suffix = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_SUFFIX
+HttpSource.BasicLookupStrategy.auth.basic.username = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_USERNAME
+HttpSource.BasicLookupStrategy.auth.basic.secret = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_SECRET
 
-# Tells HttpSource how to look up resources. Allowed values are
-# `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
-# uses a delegate method for dynamic lookups; see the user manual.
-#HttpSource.lookup_strategy = BasicLookupStrategy
+#----------------------------------------
+# JdbcSource
+#----------------------------------------
 
-# URL that will be prefixed to the identifier in the request URL.
-# Trailing slash is important!
-#HttpSource.BasicLookupStrategy.url_prefix = http://localhost/images
-
-# Path, extension, query string, etc. that will be suffixed to the
-# identifier in the request URL.
-#HttpSource.BasicLookupStrategy.url_suffix = $HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_SUFFIX
-
-# Enables access to resources that require HTTP Basic authentication.
-#HttpSource.BasicLookupStrategy.auth.basic.username = $HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_USERNAME
-#HttpSource.BasicLookupStrategy.auth.basic.secret = $HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_SECRET
+JdbcSource.url = $CANTALOUPE_JDBCSOURCE_URL
+JdbcSource.user = $CANTALOUPE_JDBCSOURCE_USER
+JdbcSource.password = $CANTALOUPE_JDBCSOURCE_PASSWORD
+JdbcSource.connection_timeout = $CANTALOUPE_JDBCSOURCE_CONNECTION_TIMEOUT
 
 #----------------------------------------
 # S3Source
 #----------------------------------------
 
-# !! Endpoint URI.
-# For AWS endpoints, see:
-# https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
-S3Source.endpoint = $S3SOURCE_ENDPOINT
+S3Source.endpoint = $CANTALOUPE_S3SOURCE_ENDPOINT
+S3Source.access_key_id = $CANTALOUPE_S3SOURCE_ACCESS_KEY_ID
+S3Source.secret_key = $CANTALOUPE_S3SOURCE_SECRET_KEY
+S3Source.max_connections = $CANTALOUPE_S3SOURCE_MAX_CONNECTIONS
+S3Source.lookup_strategy = $CANTALOUPE_S3SOURCE_LOOKUP_STRATEGY
+S3Source.BasicLookupStrategy.bucket.name = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME
+S3Source.BasicLookupStrategy.path_prefix = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
+S3Source.BasicLookupStrategy.path_suffix = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
 
-# !! Credentials for your AWS account.
-# See: http://aws.amazon.com/security-credentials
-# Note that this info can be obtained from elsewhere rather than setting
-# it here; see the user manual.
-S3Source.access_key_id = $S3SOURCE_ACCESS_KEY_ID
-S3Source.secret_key = $S3SOURCE_SECRET_KEY
+#----------------------------------------
+# AzureStorageSource
+#----------------------------------------
 
-# !! Maximum number of concurrent HTTP connections to AWS. Leave blank to
-# use the default.
-S3Source.max_connections = $S3SOURCE_MAX_CONNECTIONS
-
-# Tells S3Source how to look up objects. Allowed values are
-# `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
-# uses a delegate method for dynamic lookups; see the user manual.
-S3Source.lookup_strategy = $S3SOURCE_LOOKUP_STRATEGY
-
-# !! Name of the bucket containing images to be served.
-S3Source.BasicLookupStrategy.bucket.name = $S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME
-
-# Path within the bucket that will be prefixed to the identifier in the URL.
-# Trailing slash is important!
-S3Source.BasicLookupStrategy.path_prefix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
-
-# Path or extension that will be suffixed to the identifier in the URL.
-S3Source.BasicLookupStrategy.path_suffix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
+AzureStorageSource.account_name = $CANTALOUPE_AZURESTORAGESOURCE_ACCOUNT_NAME
+AzureStorageSource.account_key = $CANTALOUPE_AZURESTORAGESOURCE_ACCOUNT_KEY
+AzureStorageSource.container_name = $CANTALOUPE_AZURESTORAGESOURCE_CONTAINER_NAME
+AzureStorageSource.lookup_strategy = $CANTALOUPE_AZURESTORAGESOURCE_LOOKUP_STRATEGY
 
 ###########################################################################
 # PROCESSORS
@@ -206,352 +121,200 @@ S3Source.BasicLookupStrategy.path_suffix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SU
 # Processor Selection
 #----------------------------------------
 
-# * If set to `AutomaticSelectionStrategy`, a "best" available processor
-#   will be selected per-request based on formats and installed
-#   dependencies.
-# * If set to `ManualSelectionStrategy`, a processor will be chosen based
-#   on the rest of the keys in this section.
-processor.selection_strategy = AutomaticSelectionStrategy
-
-# Image processors to use for various source formats. Available values are
-# `Java2dProcessor`, `GraphicsMagickProcessor`, `ImageMagickProcessor`,
-# `KakaduDemoProcessor`, `KakaduNativeProcessor`, `OpenJpegProcessor`,
-# `JaiProcessor`, `PdfBoxProcessor`, and `FfmpegProcessor`.
-
-# These extension-specific definitions are optional.
-processor.avi =  FfmpegProcessor
-#processor.bmp = $PROCESSOR_BMP
-processor.dcm = ImageMagickProcessor
-processor.flv =  FfmpegProcessor
-#processor.gif = $PROCESSOR_GIF
-processor.jp2 = $PROCESSOR_JP2
-#processor.jpg = $PROCESSOR_JPG
-processor.mov =  FfmpegProcessor
-processor.mp4 =  FfmpegProcessor
-processor.mpg =  FfmpegProcessor
-processor.pdf = PdfBoxProcessor
-#processor.png = $PROCESSOR_PNG
-#processor.tif = $PROCESSOR_TIF
-processor.webm = FfmpegProcessor
-processor.webp = ImageMagickProcessor
-
-# Fall back to this processor for any formats not assigned above.
-processor.fallback = $PROCESSOR_FALLBACK
+processor.avi = $CANTALOUPE_PROCESSOR_AVI
+processor.bmp = $CANTALOUPE_PROCESSOR_BMP
+processor.dcm = $CANTALOUPE_PROCESSOR_DCM
+processor.flv = $CANTALOUPE_PROCESSOR_FLV
+processor.gif = $CANTALOUPE_PROCESSOR_GIF
+processor.jp2 = $CANTALOUPE_PROCESSOR_JP2
+processor.jpg = $CANTALOUPE_PROCESSOR_JPG
+processor.mov = $CANTALOUPE_PROCESSOR_MOV
+processor.mp4 = $CANTALOUPE_PROCESSOR_MP4
+processor.mpg = $CANTALOUPE_PROCESSOR_MPG
+processor.pdf = $CANTALOUPE_PROCESSOR_PDF
+processor.png = $CANTALOUPE_PROCESSOR_PNG
+processor.tif = $CANTALOUPE_PROCESSOR_TIF
+processor.webm = $CANTALOUPE_PROCESSOR_WEBM
+processor.webp = $CANTALOUPE_PROCESSOR_WEBP
+processor.fallback = $CANTALOUPE_PROCESSOR_FALLBACK
 
 #----------------------------------------
 # Global Processor Configuration
 #----------------------------------------
 
-# Controls how content is fed to processors from stream-based sources.
-# * `StreamStrategy` will try to stream a source image from a source when
-#   possible, and use `processor.fallback_retrieval_strategy` otherwise.
-# * `DownloadStrategy` will download it to a temporary file, and delete
-#   it after the request is complete.
-# * `CacheStrategy` will download it into the source cache using
-#   FilesystemCache, which must also be configured. (This will perform a
-#   lot better than DownloadStrategy if you can spare the disk space.)
-processor.stream_retrieval_strategy = StreamStrategy
-
-# Controls how an incompatible StreamSource + FileProcessor combination is
-# dealt with.
-# * `DownloadStrategy` and `CacheStrategy` work the same as above.
-# * `AbortStrategy` causes the request to fail.
-processor.fallback_retrieval_strategy = DownloadStrategy
-
-# Resolution of vector rasterization (of e.g. PDFs) at a scale of 1.
-processor.dpi = 150
-
-# Expands contrast to utilize available dynamic range. This usually requires
-# the whole source image to be read into memory, so it can be inefficient.
-processor.normalize = false
-
-# Color of the background when an image is rotated or alpha-flattened, for
-# output formats that don't support transparency.
-# This may not be respected for indexed color derivative images.
-processor.background_color = white
-
-# Available values are `bell`, `bspline`, `bicubic`, `box`, `hermite`,
-# `lanczos3`, `mitchell`, `triangle`. (JaiProcessor & KakaduNativeProcessor
-# ignore these.)
-processor.downscale_filter = bicubic
-processor.upscale_filter = bicubic
-
-# Intensity of an unsharp mask from 0 to 1.
-processor.sharpen = 0
-
-# Attempts to copy source image metadata (EXIF, IPTC, XMP) into derivative
-# images. (This is not foolproof; see the user manual.)
-processor.metadata.preserve = false
-
-# Whether to auto-rotate images using the EXIF `Orientation` field.
-# The check for this field can impair performance slightly.
-processor.metadata.respect_orientation = false
-
-# Progressive JPEGs are usually more compact.
-processor.jpg.progressive = true
-
-# JPEG output quality (1-100).
-processor.jpg.quality = $PROCESSOR_JPG_QUALITY
-
-# TIFF output compression type. Available values are `Deflate`, `JPEG`,
-# `LZW`, and `RLE`. Leave blank for no compression.
-processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
+processor.stream_retrieval_strategy = $CANTALOUPE_PROCESSOR_STREAM_RETRIEVAL_STRATEGY
+processor.fallback_retrieval_strategy = $CANTALOUPE_PROCESSOR_FALLBACK_RETRIEVAL_STRATEGY
+processor.dpi = $CANTALOUPE_PROCESSOR_DPI
+processor.normalize = $CANTALOUPE_PROCESSOR_NORMALIZE
+processor.background_color = $CANTALOUPE_PROCESSOR_BACKGROUND_COLOR
+processor.downscale_filter = $CANTALOUPE_PROCESSOR_DOWNSCALE_FILTER
+processor.upscale_filter = $CANTALOUPE_PROCESSOR_UPSCALE_FILTER
+processor.sharpen = $CANTALOUPE_PROCESSOR_SHARPEN
+processor.metadata.preserve = $CANTALOUPE_PROCESSOR_METADATA_PRESERVE
+processor.metadata.respect_orientation = $CANTALOUPE_PROCESSOR_METADATA_RESPECT_ORIENTATION
+processor.jpg.progressive = $CANTALOUPE_PROCESSOR_JPG_PROGRESSIVE
+processor.jpg.quality = $CANTALOUPE_PROCESSOR_JPG_QUALITY
+processor.tif.compression = $CANTALOUPE_PROCESSOR_TIF_COMPRESSION
 
 #----------------------------------------
 # ImageIO Plugin Preferences
 #----------------------------------------
 
-# These override the default plugins used by the application and should not
-# normally be changed.
-#processor.imageio.bmp.reader = $PROCESSOR_IMAGEIO_BMP_READER
-#processor.imageio.gif.reader = $PROCESSOR_IMAGEIO_GIF_READER
-#processor.imageio.gif.writer = $PROCESSOR_IMAGEIO_GIF_WRITER
-#processor.imageio.jpg.reader = $PROCESSOR_IMAGEIO_JPG_READER
-#processor.imageio.jpg.writer = $PROCESSOR_IMAGEIO_JPG_WRITER
-#processor.imageio.png.reader = $PROCESSOR_IMAGEIO_PNG_READER
-#processor.imageio.png.writer = $PROCESSOR_IMAGEIO_PNG_WRITER
-#processor.imageio.tif.reader = $PROCESSOR_IMAGEIO_TIF_READER
-#processor.imageio.tif.writer = $PROCESSOR_IMAGEIO_TIF_WRITER
+processor.imageio.bmp.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_BMP_READER
+processor.imageio.gif.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_GIF_READER
+processor.imageio.gif.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_GIF_WRITER
+processor.imageio.jpg.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_JPG_READER
+processor.imageio.jpg.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_JPG_WRITER
+processor.imageio.png.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_PNG_READER
+processor.imageio.png.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_PNG_WRITER
+processor.imageio.tif.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_TIF_READER
+processor.imageio.tif.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_TIF_WRITER
 
 #----------------------------------------
 # FfmpegProcessor
 #----------------------------------------
 
-# Optional absolute path of the directory containing the FFmpeg binaries.
-# Overrides the PATH.
-#FfmpegProcessor.path_to_binaries =
+FfmpegProcessor.path_to_binaries = $CANTALOUPE_FFMPEGPROCESSOR_PATH_TO_BINARIES
 
 #----------------------------------------
 # GraphicsMagickProcessor
 #----------------------------------------
 
-# !! Optional absolute path of the directory containing the GraphicsMagick
-# binary. Overrides the PATH.
-#GraphicsMagickProcessor.path_to_binaries =
+GraphicsMagickProcessor.path_to_binaries = $CANTALOUPE_GRAPHICSMAGICKPROCESSOR_PATH_TO_BINARIES
 
 #----------------------------------------
 # ImageMagickProcessor
 #----------------------------------------
 
-# !! Optional absolute path of the directory containing the ImageMagick
-# binary. Overrides the PATH.
-#ImageMagickProcessor.path_to_binaries =
+ImageMagickProcessor.path_to_binaries = $CANTALOUPE_IMAGEMAGICKPROCESSOR_PATH_TO_BINARIES
 
 #----------------------------------------
 # KakaduDemoProcessor
 #----------------------------------------
 
-# Optional absolute path of the directory containing kdu_expand.
-# Overrides the PATH.
-#KakaduDemoProcessor.path_to_binaries =
+KakaduDemoProcessor.path_to_binaries = $CANTALOUPE_KAKADUDEMOPROCESSOR_PATH_TO_BINARIES
 
 #----------------------------------------
 # OpenJpegProcessor
 #----------------------------------------
 
-# Optional absolute path of the directory containing opj_decompress.
-# Overrides the PATH.
-#OpenJpegProcessor.path_to_binaries =
+OpenJpegProcessor.path_to_binaries = $CANTALOUPE_OPENJPEGPROCESSOR_PATH_TO_BINARIES
 
 ###########################################################################
 # CLIENT-SIDE CACHING
 ###########################################################################
 
-# Whether to enable the response Cache-Control header.
-#cache.client.enabled = $CACHE_CLIENT_ENABLED
-
-#cache.client.max_age = $CACHE_CLIENT_MAX_AGE
-#cache.client.shared_max_age = $CACHE_CLIENT_SHARED_MAX_AGE
-#cache.client.public = $CACHE_CLIENT_PUBLIC
-#cache.client.private = $CACHE_CLIENT_PRIVATE
-#cache.client.no_cache = $CACHE_CLIENT_NO_CACHE
-#cache.client.no_store = $CACHE_CLIENT_NO_STORE
-#cache.client.must_revalidate = $CACHE_CLIENT_MUST_REVALIDATE
-#cache.client.proxy_revalidate = $CACHE_CLIENT_PROXY_REVALIDATE
-#cache.client.no_transform = $CACHE_CLIENT_NO_TRANSFORM
+cache.client.enabled = $CANTALOUPE_CACHE_CLIENT_ENABLED
+cache.client.max_age = $CANTALOUPE_CACHE_CLIENT_MAX_AGE
+cache.client.shared_max_age = $CANTALOUPE_CACHE_CLIENT_SHARED_MAX_AGE
+cache.client.public = $CANTALOUPE_CACHE_CLIENT_PUBLIC
+cache.client.private = $CANTALOUPE_CACHE_CLIENT_PRIVATE
+cache.client.no_cache = $CANTALOUPE_CACHE_CLIENT_NO_CACHE
+cache.client.no_store = $CANTALOUPE_CACHE_CLIENT_NO_STORE
+cache.client.must_revalidate = $CANTALOUPE_CACHE_CLIENT_MUST_REVALIDATE
+cache.client.proxy_revalidate = $CANTALOUPE_CACHE_CLIENT_PROXY_REVALIDATE
+cache.client.no_transform = $CANTALOUPE_CACHE_CLIENT_NO_TRANSFORM
 
 ###########################################################################
 # SERVER-SIDE CACHING
 ###########################################################################
 
-# N.B.: The source cache may be used if the
-# `processor.stream_retrieval_strategy` and/or
-# `processor.fallback_retrieval_strategy` keys are set to `CacheStrategy`.
-
-# FilesystemCache is the only available source cache.
-#cache.server.source = $CACHE_SERVER_SOURCE
-
-# Amount of time source cache content remains valid. Set to blank or 0
-# for forever.
-#cache.server.source.ttl_seconds = $CACHE_SERVER_SOURCE_TTL_SECONDS
-
-# Enables the derivative (processed image) cache.
-cache.server.derivative.enabled = true
-
-# Available values are `FilesystemCache`, `JdbcCache`, `RedisCache`,
-# `HeapCache`, `S3Cache`, and `AzureStorageCache`.
-cache.server.derivative = $CACHE_SERVER_DERIVATIVE
-
-# Amount of time derivative cache content remains valid. Set to blank or 0
-# for forever.
-cache.server.derivative.ttl_seconds = 0
-
-# Whether to use the Java heap as a "level 1" cache for image infos, either
-# independently or in front of a "level 2" derivative cache (if enabled).
-cache.server.info.enabled = $CACHE_SERVER_INFO_ENABLED
-
-# If true, when a source reports that the requested source image has gone
-# missing, all cached information relating to it (if any) will be deleted.
-# (This is effectively always false when cache.server.resolve_first is also
-# false.)
-cache.server.purge_missing = false
-
-# If true, the source image will be confirmed to exist before a cached copy
-# is returned. If false, the cached copy will be returned without checking.
-# Resolving first is safer but slower.
-cache.server.resolve_first = false
-
-# !! Enables the cache worker, which periodically purges invalid cache
-# items in the background.
-cache.server.worker.enabled = false
-
-# !! The cache worker will wait this many seconds before starting its
-# next shift.
-#cache.server.worker.interval = $CACHE_SERVER_WORKER_INTERVAL
+cache.server.source = $CANTALOUPE_CACHE_SERVER_SOURCE
+cache.server.source.ttl_seconds = $CANTALOUPE_CACHE_SERVER_SOURCE_TTL_SECONDS
+cache.server.derivative.enabled = $CANTALOUPE_CACHE_SERVER_DERIVATIVE_ENABLED
+cache.server.derivative = $CANTALOUPE_CACHE_SERVER_DERIVATIVE
+cache.server.derivative.ttl_seconds = $CANTALOUPE_CACHE_SERVER_DERIVATIVE_TTL_SECONDS
+cache.server.info.enabled = $CANTALOUPE_CACHE_SERVER_INFO_ENABLED
+cache.server.purge_missing = $CANTALOUPE_CACHE_SERVER_PURGE_MISSING
+cache.server.resolve_first = $CANTALOUPE_CACHE_SERVER_RESOLVE_FIRST
+cache.server.worker.enabled = $CANTALOUPE_CACHE_SERVER_WORKER_ENABLED
+cache.server.worker.interval = $CANTALOUPE_CACHE_SERVER_WORKER_INTERVAL
 
 #----------------------------------------
 # FilesystemCache
 #----------------------------------------
 
-# If this directory does not exist, it will be created automatically.
-FilesystemCache.pathname = $FILESYSTEMCACHE_PATHNAME
-
-# Levels of folder hierarchy in which to store cached images. Deeper depth
-# results in fewer files per directory. Set to 0 to disable subdirectories.
-# Purge the cache after changing this.
-FilesystemCache.dir.depth = $FILESYSTEMCACHE_DIR_DEPTH
-
-# Number of characters in tree directory names. Should be set to
-# 16^n < (max number of directory entries your filesystem can deal with).
-# Purge the cache after changing this.
-FilesystemCache.dir.name_length = $FILESYSTEMCACHE_DIR_NAME_LENGTH
+FilesystemCache.pathname = $CANTALOUPE_FILESYSTEMCACHE_PATHNAME
+FilesystemCache.dir.depth = $CANTALOUPE_FILESYSTEMCACHE_DIR_DEPTH
+FilesystemCache.dir.name_length = $CANTALOUPE_FILESYSTEMCACHE_DIR_NAME_LENGTH
 
 #----------------------------------------
 # HeapCache
 #----------------------------------------
 
-# Target cache size, in bytes or a number ending in M, MB, G, GB, etc.
-# This is not a hard limit, and may be transiently exceeded.
-# Ensure your heap can accommodate this size.
-HeapCache.target_size = $HEAPCACHE_TARGET_SIZE
+HeapCache.target_size = $CANTALOUPE_HEAPCACHE_TARGET_SIZE
+HeapCache.persist = $CANTALOUPE_HEAPCACHE_PERSIST
+HeapCache.persist.filesystem.pathname = $CANTALOUPE_HEAPCACHE_PERSIST_FILESYSTEM_PATHNAME
 
-# If true, the cache contents will be written to a file on exit and during
-# cache worker shifts, and read back in at startup.
-HeapCache.persist = $HEAPCACHE_PERSIST
+#----------------------------------------
+# JdbcCache
+#----------------------------------------
 
-# When the contents are persisted, this specifies the location of the cache
-# file. If the parent directory does not exist, it will be created
-# automatically.
-HeapCache.persist.filesystem.pathname = $HEAPCACHE_PERSIST_FILESYSTEM_PATHNAME
+JdbcCache.url = $CANTALOUPE_JDBCCACHE_URL
+JdbcCache.user = $CANTALOUPE_JDBCCACHE_USER
+JdbcCache.password = $CANTALOUPE_JDBCCACHE_PASSWORD
+JdbcCache.connection_timeout = $CANTALOUPE_JDBCCACHE_CONNECTION_TIMEOUT
+JdbcCache.derivative_image_table = $CANTALOUPE_JDBCCACHE_DERIVATIVE_IMAGE_TABLE
+JdbcCache.info_table = $CANTALOUPE_JDBCCACHE_INFO_TABLE
 
 #----------------------------------------
 # S3Cache
 #----------------------------------------
 
-# !! Endpoint URI.
-# For AWS endpoints, see:
-# https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
-S3Cache.endpoint =  $S3SOURCE_ENDPOINT
+S3Cache.endpoint = $CANTALOUPE_S3CACHE_ENDPOINT
+S3Cache.access_key_id = $CANTALOUPE_S3CACHE_ACCESS_KEY_ID
+S3Cache.secret_key = $CANTALOUPE_S3CACHE_SECRET_KEY
+S3Cache.bucket.name = $CANTALOUPE_S3CACHE_BUCKET_NAME
+S3Cache.object_key_prefix = $CANTALOUPE_S3CACHE_OBJECT_KEY_PREFIX
+S3Cache.max_connections = $CANTALOUPE_S3CACHE_MAX_CONNECTIONS
 
-# !! Credentials for your AWS account.
-# See: http://aws.amazon.com/security-credentials
-# Note that this info can be obtained from elsewhere rather than setting it
-# here; see the user manual.
-S3Cache.access_key_id = $S3CACHE_ACCESS_KEY_ID
-S3Cache.secret_key = $S3CACHE_SECRET_KEY
+#----------------------------------------
+# AzureStorageCache
+#----------------------------------------
 
-# !! Name of a bucket to use to hold cached data.
-S3Cache.bucket.name = $S3CACHE_BUCKET_NAME
+AzureStorageCache.account_name = $CANTALOUPE_AZURESTORAGECACHE_ACCOUNT_NAME
+AzureStorageCache.account_key = $CANTALOUPE_AZURESTORAGECACHE_ACCOUNT_KEY
+AzureStorageCache.container_name = $CANTALOUPE_AZURESTORAGECACHE_CONTAINER_NAME
+AzureStorageCache.object_key_prefix = $CANTALOUPE_AZURESTORAGECACHE_OBJECT_KEY_PREFIX
 
-# !! String that will be prefixed to object keys.
-S3Cache.object_key_prefix = $S3CACHE_OBJECT_KEY_PREFIX
+#----------------------------------------
+# RedisCache
+#----------------------------------------
 
-# !! Maximum number of concurrent HTTP connections to AWS. Leave blank to
-# use the default.
-S3Cache.max_connections = $S3CACHE_MAX_CONNECTIONS
+RedisCache.host = $CANTALOUPE_REDISCACHE_HOST
+RedisCache.port = $CANTALOUPE_REDISCACHE_PORT
+RedisCache.ssl = $CANTALOUPE_REDISCACHE_SSL
+RedisCache.password = $CANTALOUPE_REDISCACHE_PASSWORD
+RedisCache.database = $CANTALOUPE_REDISCACHE_DATABASE
 
 ###########################################################################
 # OVERLAYS
 ###########################################################################
 
-# Whether to enable overlays.
-overlays.enabled = $OVERLAYS_ENABLED
-
-# Controls how overlays are configured. `BasicStrategy` will use the
-# `overlays.BasicStrategy.*` keys in this section. `ScriptStrategy` will
-# use a delegate method. (See the user manual.)
-overlays.strategy = $OVERLAYS_STRATEGY
-
-# `image` or `string`.
-overlays.BasicStrategy.type = $OVERLAYS_BASICSTRATEGY_TYPE
-
-# Absolute path or URL of the overlay image. Must be a PNG file.
-overlays.BasicStrategy.image = $OVERLAYS_BASICSTRATEGY_IMAGE
-
-# Overlay text.
-overlays.BasicStrategy.string = $OVERLAYS_BASICSTRATEGY_STRING
-
-# For possible values, launch with the -Dcantaloupe.list_fonts option.
-overlays.BasicStrategy.string.font = $OVERLAYS_BASICSTRATEGY_STRING_FONT
-
-# Font size in points.
-overlays.BasicStrategy.string.font.size = $OVERLAYS_BASICSTRATEGY_STRING_FONT_SIZE
-
-# If the string doesn't fit in the image at the above size, the largest size
-# at which it does fit will be used, down to this.
-overlays.BasicStrategy.string.font.min_size = $OVERLAYS_BASICSTRATEGY_STRING_FONT_MIN_SIZE
-
-# Font weight. 1 = regular, 2 = $# FONT WEIGHT_ 1 = REGULAR, 2
-# support fractional weights.
-overlays.BasicStrategy.string.font.weight = $OVERLAYS_BASICSTRATEGY_STRING_FONT_WEIGHT
-
-# Point spacing between glyphs, typically between -0.1 and 0.1.
-overlays.BasicStrategy.string.glyph_spacing = $OVERLAYS_BASICSTRATEGY_STRING_GLYPH_SPACING
-
-# CSS color syntax is supported.
-overlays.BasicStrategy.string.color = $OVERLAYS_BASICSTRATEGY_STRING_COLOR
-
-# CSS color syntax is supported.
-overlays.BasicStrategy.string.stroke.color = $OVERLAYS_BASICSTRATEGY_STRING_STROKE_COLOR
-
-# Stroke width in pixels.
-overlays.BasicStrategy.string.stroke.width = $OVERLAYS_BASICSTRATEGY_STRING_STROKE_WIDTH
-
-# Color of a rectangular background to draw under the string.
-# CSS color syntax and alpha are supported.
-overlays.BasicStrategy.string.background.color = $OVERLAYS_BASICSTRATEGY_STRING_BACKGROUND_COLOR
-
-# Allowed values: `top left`, `top center`, `top right`, `left center`,
-# `center`, `right center`, `bottom left`, `bottom center`, `bottom right`.
-overlays.BasicStrategy.position = $OVERLAYS_BASICSTRATEGY_POSITION
-
-# Pixel margin between the overlay and the image edge.
-overlays.BasicStrategy.inset = $OVERLAYS_BASICSTRATEGY_INSET
-
-# Output images less than this many pixels wide will not receive an overlay.
-# Set to 0 to add the overlay regardless.
-overlays.BasicStrategy.output_width_threshold = $OVERLAYS_BASICSTRATEGY_OUTPUT_WIDTH_THRESHOLD
-
-# Output images less than this many pixels tall will not receive an overlay.
-# Set to 0 to add the overlay regardless.
-overlays.BasicStrategy.output_height_threshold = $OVERLAYS_BASICSTRATEGY_OUTPUT_HEIGHT_THRESHOLD
+overlays.enabled = $CANTALOUPE_OVERLAYS_ENABLED
+overlays.strategy = $CANTALOUPE_OVERLAYS_STRATEGY
+overlays.BasicStrategy.type = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_TYPE
+overlays.BasicStrategy.image = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_IMAGE
+overlays.BasicStrategy.string = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING
+overlays.BasicStrategy.string.font = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT
+overlays.BasicStrategy.string.font.size = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT_SIZE
+overlays.BasicStrategy.string.font.min_size = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT_MIN_SIZE
+overlays.BasicStrategy.string.font.weight = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT_WEIGHT
+overlays.BasicStrategy.string.glyph_spacing = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_GLYPH_SPACING
+overlays.BasicStrategy.string.color = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_COLOR
+overlays.BasicStrategy.string.stroke.color = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_STROKE_COLOR
+overlays.BasicStrategy.string.stroke.width = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_STROKE_WIDTH
+overlays.BasicStrategy.string.background.color = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_BACKGROUND_COLOR
+overlays.BasicStrategy.position = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_POSITION
+overlays.BasicStrategy.inset = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_INSET
+overlays.BasicStrategy.output_width_threshold = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_OUTPUT_WIDTH_THRESHOLD
+overlays.BasicStrategy.output_height_threshold = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_OUTPUT_HEIGHT_THRESHOLD
 
 ###########################################################################
 # REDACTIONS
 ###########################################################################
 
-# See the user manual for information about how redactions work.
-redaction.enabled = $REDACTION_ENABLED
+redaction.enabled = $CANTALOUPE_REDACTION_ENABLED
 
 ###########################################################################
 # LOGGING
@@ -561,66 +324,45 @@ redaction.enabled = $REDACTION_ENABLED
 # Application Log
 #----------------------------------------
 
-# `trace`, `debug`, `info`, `warn`, `error`, `all`, or `off`
-log.application.level = $LOG_APPLICATION_LEVEL
-
-log.application.ConsoleAppender.enabled = true
-
-# N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.application.FileAppender.enabled = $LOG_APPLICATION_FILEAPPENDER_ENABLED
-log.application.FileAppender.pathname = $LOG_APPLICATION_FILEAPPENDER_PATHNAME
-
-log.application.RollingFileAppender.enabled = $LOG_APPLICATION_ROLLINGFILEAPPENDER_ENABLED
-log.application.RollingFileAppender.pathname = $LOG_APPLICATION_ROLLINGFILEAPPENDER_PATHNAME
-log.application.RollingFileAppender.policy = $LOG_APPLICATION_ROLLINGFILEAPPENDER_POLICY
-log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
-log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
-
-# See the "SyslogAppender" section for a list of facilities:
-# http://logback.qos.ch/manual/appenders.html
-log.application.SyslogAppender.enabled = $LOG_APPLICATION_SYSLOGAPPENDER_ENABLED
-log.application.SyslogAppender.host = $LOG_APPLICATION_SYSLOGAPPENDER_HOST
-log.application.SyslogAppender.port = $LOG_APPLICATION_SYSLOGAPPENDER_PORT
-log.application.SyslogAppender.facility = $LOG_APPLICATION_SYSLOGAPPENDER_FACILITY
+log.application.level = $CANTALOUPE_LOG_APPLICATION_LEVEL
+log.application.ConsoleAppender.enabled = $CANTALOUPE_LOG_APPLICATION_CONSOLEAPPENDER_ENABLED
+log.application.FileAppender.enabled = $CANTALOUPE_LOG_APPLICATION_FILEAPPENDER_ENABLED
+log.application.FileAppender.pathname = $CANTALOUPE_LOG_APPLICATION_FILEAPPENDER_PATHNAME
+log.application.RollingFileAppender.enabled = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_ENABLED
+log.application.RollingFileAppender.pathname = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_PATHNAME
+log.application.RollingFileAppender.policy = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_POLICY
+log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.application.SyslogAppender.enabled = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_ENABLED
+log.application.SyslogAppender.host = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_HOST
+log.application.SyslogAppender.port = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_PORT
+log.application.SyslogAppender.facility = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_FACILITY
 
 #----------------------------------------
 # Error Log
 #----------------------------------------
 
-# Application log messages with a severity of WARN or greater can be copied
-# into a dedicated error log, which may make them easier to spot.
-
-# N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.error.FileAppender.enabled = $LOG_ERROR_FILEAPPENDER_ENABLED
-log.error.FileAppender.pathname = $LOG_ERROR_FILEAPPENDER_PATHNAME
-
-log.error.RollingFileAppender.enabled = $LOG_ERROR_ROLLINGFILEAPPENDER_ENABLED
-log.error.RollingFileAppender.pathname = $LOG_ERROR_ROLLINGFILEAPPENDER_PATHNAME
-log.error.RollingFileAppender.policy = $LOG_ERROR_ROLLINGFILEAPPENDER_POLICY
-log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
-log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.error.FileAppender.enabled = $CANTALOUPE_LOG_ERROR_FILEAPPENDER_ENABLED
+log.error.FileAppender.pathname = $CANTALOUPE_LOG_ERROR_FILEAPPENDER_PATHNAME
+log.error.RollingFileAppender.enabled = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_ENABLED
+log.error.RollingFileAppender.pathname = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_PATHNAME
+log.error.RollingFileAppender.policy = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_POLICY
+log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
 
 #----------------------------------------
 # Access Log
 #----------------------------------------
 
-log.access.ConsoleAppender.enabled = $LOG_ACCESS_CONSOLEAPPENDER_ENABLED
-
-# N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.access.FileAppender.enabled = $LOG_ACCESS_FILEAPPENDER_ENABLED
-log.access.FileAppender.pathname = $LOG_ACCESS_FILEAPPENDER_PATHNAME
-
-# RollingFileAppender is an alternative to using something like
-# FileAppender + logrotate.
-log.access.RollingFileAppender.enabled = $LOG_ACCESS_ROLLINGFILEAPPENDER_ENABLED
-log.access.RollingFileAppender.pathname = $LOG_ACCESS_ROLLINGFILEAPPENDER_PATHNAME
-log.access.RollingFileAppender.policy = $LOG_ACCESS_ROLLINGFILEAPPENDER_POLICY
-log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
-log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
-
-# See the "SyslogAppender" section for a list of facilities:
-# http://logback.qos.ch/manual/appenders.html
-log.access.SyslogAppender.enabled = $LOG_ACCESS_SYSLOGAPPENDER_ENABLED
-log.access.SyslogAppender.host = $LOG_ACCESS_SYSLOGAPPENDER_HOST
-log.access.SyslogAppender.port = $LOG_ACCESS_SYSLOGAPPENDER_PORT
-log.access.SyslogAppender.facility = $LOG_ACCESS_SYSLOGAPPENDER_FACILITY
+log.access.ConsoleAppender.enabled = $CANTALOUPE_LOG_ACCESS_CONSOLEAPPENDER_ENABLED
+log.access.FileAppender.enabled = $CANTALOUPE_LOG_ACCESS_FILEAPPENDER_ENABLED
+log.access.FileAppender.pathname = $CANTALOUPE_LOG_ACCESS_FILEAPPENDER_PATHNAME
+log.access.RollingFileAppender.enabled = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_ENABLED
+log.access.RollingFileAppender.pathname = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_PATHNAME
+log.access.RollingFileAppender.policy = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_POLICY
+log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.access.SyslogAppender.enabled = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_ENABLED
+log.access.SyslogAppender.host = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_HOST
+log.access.SyslogAppender.port = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_PORT
+log.access.SyslogAppender.facility = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_FACILITY

@@ -50,6 +50,7 @@ RUN curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CA
 
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY cantaloupe.properties.tmpl /etc/cantaloupe.properties.tmpl
+COPY cantaloupe.properties.default /etc/cantaloupe.properties.default
 RUN mkdir -p /var/log/cantaloupe /var/cache/cantaloupe \
  && touch /etc/cantaloupe.properties \
  && chown -R cantaloupe /var/log/cantaloupe /var/cache/cantaloupe \
