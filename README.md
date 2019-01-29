@@ -14,7 +14,6 @@ To build the latest version of Cantaloupe from source, use the following:
 
     docker build --build-arg CANTALOUPE_VERSION=latest -t cantaloupe .
 
-
 ### Run the container
 
  First you will need to set the environment variables required to run Cantaloupe. If you would like to test additional settings, ensure the cantaloupe.propoerties.tmpl template has the variable configured or you have set it as an environment variable.
@@ -25,7 +24,10 @@ will run the container in the background until _docker stop_ is called, looking 
 
  You can also run the container with environmental variables supplied on the command line like:
 
-    docker run -d -p 8182:8182 -e "ENDPOINT_ADMIN_SECRET=[my_secret_password]" -e "ENDPOINT_ADMIN_ENABLED=true" --name melon -v testimages:/imageroot cantaloupe
+    docker run -d -p 8182:8182 \
+      -e "CANTALOUPE_ENDPOINT_ADMIN_SECRET=[my_secret_password]" \
+      -e "CANTALOUPE_ENDPOINT_ADMIN_ENABLED=true" \
+      --name melon -v testimages:/imageroot cantaloupe
 
 ### Deployment to AWS
 
