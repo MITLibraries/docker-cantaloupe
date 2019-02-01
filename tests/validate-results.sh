@@ -13,17 +13,17 @@ die () {
 
   if [ "$TRAVIS" != 'true' ]; then
     printf "  ${GREEN}To clean up the testing container, run:${NC}\n"
-    echo "    docker rm -f \"$(cat $1)\""
+    echo "    docker rm -f \"$CONTAINER_ID\""
     echo ""
     printf "  ${GREEN}To clean up all system containers, run:${NC}\n"
     echo "    docker rm -f \$(docker ps -a -q)"
     echo ""
   fi
 
-  exit $2
+  exit $1
 }
 
 # These are the actual tests we run
-docker exec --tty "$(cat ${1})" env TERM=xterm ls /etc/cantaloupe.properties >> /dev/null 2>&1 || die "$1" "$?"
+docker exec --tty "$CONTAINER_ID" env TERM=xterm ls /etc/cantaloupe.properties || die "$?"
 
 printf "${GREEN}Tests ran successfully!${NC}\n"
