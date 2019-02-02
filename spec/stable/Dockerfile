@@ -1,4 +1,4 @@
-FROM uclalibrary/cantaloupe
+FROM uclalibrary/cantaloupe_stable
 
 USER root
 

@@ -1,15 +1,16 @@
 require 'dockerspec/serverspec'
 require 'dockerspec/infrataster'
 
-describe docker_build('.', tag: 'uclalibrary/cantaloupe') do
+### test cantaloupe_stable (i.e. the default build)
+describe docker_build('.', tag: 'uclalibrary/cantaloupe_stable') do
   it { should have_expose '8182' }
 
-  describe docker_build('spec/', tag: 'uclalibrary/cantaloupe_test') do
+  describe docker_build('spec/stable/', tag: 'uclalibrary/cantaloupe_stable_test') do
     docker_env = { 'ENDPOINT_ADMIN_SECRET' => 'secret',
                     'ENDPOINT_ADMIN_ENABLED' => 'true' }
     wait = ENV['TRAVIS'] ? 10 : 2
 
-    describe docker_run('uclalibrary/cantaloupe_test', env: docker_env, wait: wait) do
+    describe docker_run('uclalibrary/cantaloupe_stable_test', env: docker_env, wait: wait) do
       ### refactor, what packages? does it even matter?
       # describe package('nodejs') do
       #   it { should be_installed }
@@ -37,7 +38,7 @@ describe docker_build('.', tag: 'uclalibrary/cantaloupe') do
             expect(response.body).to_not match(/Oops/i)
           end
 
-          it 'contains the expected version number' do
+          it 'contains the expected version number, 4.0.3' do
             expect(response.body).to match(/Cantaloupe Image Server \<small\>4.0.3\<\/small\>/)
           end
         end
