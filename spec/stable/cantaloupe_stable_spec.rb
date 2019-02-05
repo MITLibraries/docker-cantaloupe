@@ -1,6 +1,11 @@
 require 'dockerspec/serverspec'
 require 'dockerspec/infrataster'
 
+RSpec.configure do |config|
+  config.log_level = :ci
+  config.docker_wait = 60
+end
+
 ### test cantaloupe_stable (i.e. the default build)
 describe docker_build('.', tag: 'uclalibrary/cantaloupe_stable') do
   it { should have_expose '8182' }

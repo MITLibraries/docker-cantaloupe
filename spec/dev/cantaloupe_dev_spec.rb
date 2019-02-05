@@ -1,20 +1,29 @@
 require 'dockerspec/serverspec'
 require 'dockerspec/infrataster'
 
-docker_opts = {'build-arg' => 'CANTALOUPE_VERSION=latest'}
+RSpec.configure do |config|
+  config.log_level = :ci
+  config.docker_wait = 60
+end
 
 ### test cantaloupe_dev (i.e. the bleeding-edge/develop build)
-describe docker_build('.', tag: 'uclalibrary/cantaloupe_dev', opts: docker_opts) do
 
-  it { should have_expose '8182' }
+# Build the _dev version of cantaloupe by calling docker here via backticks
+# this is required because we need to use --build-arg, and DockerSpec does not
+# currently support --build-ARG, see https://github.com/zuazo/dockerspec/issues/14
+system("docker build --build-arg CANTALOUPE_VERSION=latest -t uclalibrary/cantaloupe_dev .")
 
+# the system command is supposed to be synchronous... so... hopefully we'll wait
+# until it's done before continuing on?
+
+# Note, this build assumes that the cantaloupe_stable test works, so run it first
   describe docker_build('spec/dev/', tag: 'uclalibrary/cantaloupe_dev_test') do
     docker_env = {  'CANTALOUPE_VERSION' => 'latest',
                     'ENDPOINT_ADMIN_SECRET' => 'secret',
                     'ENDPOINT_ADMIN_ENABLED' => 'true' }
     wait = ENV['TRAVIS'] ? 10 : 2
 
-    describe docker_run('uclalibrary/cantaloupe_dev_test', env: docker_env, wait: wait) do
+    describe docker_run('uclalibrary/cantaloupe_dev_test', env: docker_env, wait: 120) do
       ### refactor, what packages? does it even matter?
       # describe package('nodejs') do
       #   it { should be_installed }
@@ -55,4 +64,3 @@ describe docker_build('.', tag: 'uclalibrary/cantaloupe_dev', opts: docker_opts)
       end
     end
   end
-end
