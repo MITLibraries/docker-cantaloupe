@@ -15,7 +15,7 @@ before_install:
 - .travis/upgrade.sh
 
 script:
-- tests/run-tests.sh
+- travis_retry bundle exec rspec
 
 after_success:
 - .travis/deploy.sh
