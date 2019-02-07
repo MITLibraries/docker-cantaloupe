@@ -39,7 +39,7 @@ else
     echo "Tag: $TAG"
 
     # If our build is a new stable version or a SNAPSHOT, we want to push to the registry
-    docker tag cantaloupe "${REG_OWNER}/${REG_PROJECT}:${TAG}"
+    docker tag "cantaloupe_$CANTALOUPE_VERSION" "${REG_OWNER}/${REG_PROJECT}:${TAG}"
     docker push "${REG_OWNER}/${REG_PROJECT}:${TAG}"
   fi
 fi
