@@ -17,7 +17,7 @@ if [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" && "$CANTALOUPE_VERSION" != "dev" ]];
     "https://api.github.com/repos/medusa-project/cantaloupe/releases/latest" \
     | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-)
 elif [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" ]]; then
-  TAG="dev"
+  TAG="latest"
 fi
 
 # Make sure we found the latest stable if that's what we are building
