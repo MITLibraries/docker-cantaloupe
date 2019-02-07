@@ -1,22 +1,26 @@
 ARG CANTALOUPE_VERSION=4.0.3
+# LATEST_SAFE_COMMIT should be 'latest' or a commit hash; it is a defense against a broken upstream
+ARG COMMIT_REF=latest
 FROM maven:3.6.0-jdk-11 AS MAVEN_TOOL_CHAIN
 ARG CANTALOUPE_VERSION
+ARG COMMIT_REF
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
+ENV COMMIT_REF=$COMMIT_REF
 RUN mkdir -p /build && \
     cd /build && \
     if [ "$CANTALOUPE_VERSION" = 'latest' ] ; then \
-      curl -OL https://github.com/medusa-project/cantaloupe/archive/develop.zip; \
+      git clone https://github.com/medusa-project/cantaloupe.git && \
+      cd cantaloupe && \
+      if [ "$COMMIT_REF" != 'latest' ] ; then \
+        git checkout -b "$COMMIT_REF" "$COMMIT_REF" ; \
+      fi && \
+      mvn -DskipTests=true clean package && \
+      mv target/cantaloupe-?.?-SNAPSHOT.zip "/build/Cantaloupe-${CANTALOUPE_VERSION}.zip" ; \
     else \
       curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip; \
     fi
 
-# unzip and compile the Cantaloupe source code if $CANTALOUPE_VERSION = 'latest'
-WORKDIR /build/
-RUN if [ "$CANTALOUPE_VERSION" = 'latest' ]; then unzip develop.zip cantaloupe-develop/* && mv cantaloupe-develop src \
-    && cd src/ && cp test.properties.sample test.properties && mvn -Pfreedeps -DskipTests clean package \
-    && cp /build/src/target/cantaloupe-?.?-SNAPSHOT.zip /build/Cantaloupe-$CANTALOUPE_VERSION.zip; fi
-
-FROM openjdk:10-slim
+FROM openjdk:11-slim
 ARG CANTALOUPE_VERSION
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
@@ -25,9 +29,10 @@ EXPOSE 8182
 VOLUME /imageroot
 
 # Update packages and install tools
+#  Removing /var/lib/apt/lists/* prevents using `apt` unless you do `apt update` first
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends wget unzip graphicsmagick curl imagemagick libopenjp2-tools ffmpeg python && \
-    rm -rf /var/lib/apt/lists/* ### this command prevents future tinkering with apt
+    rm -rf /var/lib/apt/lists/*
 
 # Run non privileged
 RUN adduser --system cantaloupe
@@ -39,7 +44,7 @@ COPY --from=MAVEN_TOOL_CHAIN /build/Cantaloupe-$CANTALOUPE_VERSION.zip /tmp/Cant
 # Get and unpack Cantaloupe release archive
 RUN cd /usr/local \
  && unzip /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
- && ln -s cantaloupe-$CANTALOUPE_VERSION cantaloupe \
+ && ln -s cantaloupe-?.* cantaloupe \
  && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
  && rm /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
  && rm -rf /usr/local/cantaloupe-$CANTALOUPE_VERSION/deps
@@ -54,4 +59,4 @@ RUN mkdir -p /var/log/cantaloupe /var/cache/cantaloupe \
 
 USER cantaloupe
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["sh", "-c", "java -Dcantaloupe.config=/etc/cantaloupe.properties -Xmx2g -jar /usr/local/cantaloupe/cantaloupe-$CANTALOUPE_VERSION.war"]
+CMD ["sh", "-c", "java -Dcantaloupe.config=/etc/cantaloupe.properties -Xmx2g -jar /usr/local/cantaloupe/cantaloupe-*.war"]

@@ -15,6 +15,10 @@ To build the latest version of Cantaloupe from source, use the following:
 
     docker build --build-arg CANTALOUPE_VERSION=latest -t cantaloupe .
 
+If the upstream Cantaloupe project is broken, you can also build a last known good commit (or a previous tag or working branch). To do this, supply a `COMMIT_REF` argument with a commit hash, tag, or branch name:
+
+    docker build --build-arg CANTALOUPE_VERSION="latest" --build-arg COMMIT_REF="437a72d7" -t cantaloupe .
+
 ### Run the container
 
  First you will need to set the environment variables required to run Cantaloupe. If you would like to test additional settings, ensure the cantaloupe.properties.tmpl template has the variable configured or you have set it as an environment variable.
