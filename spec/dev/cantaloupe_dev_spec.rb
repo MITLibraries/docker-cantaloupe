@@ -8,10 +8,10 @@ end
 
 ### test cantaloupe_dev (i.e. the bleeding-edge/develop build)
 
-# Build the _dev version of cantaloupe by calling docker here via backticks
+# Build the _dev version of cantaloupe by calling docker here via a system call
 # this is required because we need to use --build-arg, and DockerSpec does not
 # currently support --build-ARG, see https://github.com/zuazo/dockerspec/issues/14
-system("docker build --build-arg CANTALOUPE_VERSION=latest -t uclalibrary/cantaloupe_dev .")
+system("docker build --build-arg 'CANTALOUPE_VERSION=latest' --build-arg 'COMMIT_REF=437a72d7' -t uclalibrary/cantaloupe_dev .")
 
 # the system command is supposed to be synchronous... so... hopefully we'll wait
 # until it's done before continuing on?
@@ -51,8 +51,8 @@ system("docker build --build-arg CANTALOUPE_VERSION=latest -t uclalibrary/cantal
             expect(response.body).to_not match(/Oops/i)
           end
 
-          it 'contains the expected version number, 4.1.0' do
-            expect(response.body).to match(/Cantaloupe Image Server \<small\>4.1.0\<\/small\>/)
+          it 'contains the expected version number, 4.1-SNAPSHOT' do
+            expect(response.body).to match(/Cantaloupe Image Server \<small\>4.1-SNAPSHOT\<\/small\>/)
           end
         end
         describe file('/etc/cantaloupe.properties') do
