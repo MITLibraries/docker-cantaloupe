@@ -2,7 +2,8 @@ language: ruby
 
 env:
   global:
-  - COMMIT_REF="437a72d7"
+# A particular commit ref can be used if Cantaloupe build is broken
+#  - COMMIT_REF="437a72d7"
   matrix:
   - "CANTALOUPE_VERSION=stable"
   - "CANTALOUPE_VERSION=dev"
@@ -10,13 +11,12 @@ env:
 services:
 - docker
 
-# Upgrade Docker to the current version and then login to DockerHub
+# Upgrade Docker to the current version
 before_install:
 - .travis/upgrade.sh
 
 script:
-  #TODO: revise this script call to call the correct test based on CANTALOUPE_VERSION
-- travis_retry bundle exec rspec spec/$CANTALOUPE_VERSION/cantaloupe_*_spec.rb
+- travis_retry bundle exec rspec spec/cantaloupe_spec.rb
 
 after_success:
 - .travis/deploy.sh
@@ -34,7 +34,7 @@ notifications:
 # DOCKER_PASSWORD - For logging into the Docker registery (e.g., DockerHub)
 # DOCKER_USERNAME - For logging into the Docker registery (e.g., DockerHub)
 # AUTH_TOKEN - For querying GitHub releases (otherwise, it's rate limited)
-# REG_OWNER - The DockerHub user or organization that owns the project
+# REG_USERNAME - The DockerHub user or organization that owns the project
 # REG_PROJECT - The DockerHub project to which the tagged image is being pushed
 # MASTER_BRANCH - The Git branch fromw which you want to push to the registry
 #

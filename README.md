@@ -40,11 +40,16 @@ Currently we are deploying this container to AWS Fargate for testing purposes. T
 
 ### How to run the tests
 
-We are using [DockerSpec](https://github.com/zuazo/dockerspec) to test our Dockerfiles.
-To run the tests, you will need Ruby and Bundler installed, then from the project root,
-run `bundle` to install all the dependencies, then run `bundle exec rspec spec` to
-run all the build tests. You can run a specific test by specifying the specific
-test in the rspec command (i.e. `bundle exec rspec spec/dev/spec/dev/cantaloupe_dev_spec.rb`).
+We are using [DockerSpec](https://github.com/zuazo/dockerspec) to test our Dockerfiles. This requires that you have Ruby and Bundler installed. Once you do, you can run the following to install the testing dependencies:
+
+    bundle
+
+And, after that, you can type the following to run the tests:
+
+    rake
+
+If you want to run just the tests for the "dev" or "stable" builds, you can run either `rake test_dev` or `rake test_stable`.
+
 
 ### Todo/Explore
 
