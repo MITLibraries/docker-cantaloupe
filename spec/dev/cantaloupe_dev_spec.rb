@@ -8,10 +8,13 @@ end
 
 ### test cantaloupe_dev (i.e. the bleeding-edge/develop build)
 
+commit_ref = ENV.has_key?('COMMIT_REF') ? '--build-arg COMMIT_REF=' + ENV['COMMIT_REF'] : ''
+
 # Build the _dev version of cantaloupe by calling docker here via a system call
 # this is required because we need to use --build-arg, and DockerSpec does not
 # currently support --build-ARG, see https://github.com/zuazo/dockerspec/issues/14
-system("docker build --build-arg 'CANTALOUPE_VERSION=latest' --build-arg 'COMMIT_REF=437a72d7' -t uclalibrary/cantaloupe_dev .")
+system("docker build --build-arg 'CANTALOUPE_VERSION=latest' " + commit_ref +
+  " -t uclalibrary/cantaloupe_dev .")
 
 # the system command is supposed to be synchronous... so... hopefully we'll wait
 # until it's done before continuing on?
