@@ -38,6 +38,14 @@ will run the container in the background until _docker stop_ is called, looking 
 
 Currently we are deploying this container to AWS Fargate for testing purposes. The configuration and setup are being done using Terraform. The configuration files can be found in the [mitlib-terraform](https://github.com/MITLibraries/mitlib-terraform) GitHub Repository. JPEG2000 images are being stored and called from an S3 bucket for processing. These files are being uploaded manually to the S3 bucket for now.
 
+### How to run the tests
+
+We are using [DockerSpec](https://github.com/zuazo/dockerspec) to test our Dockerfiles.
+To run the tests, you will need Ruby and Bundler installed, then from the project root,
+run `bundle` to install all the dependencies, then run `bundle exec rspec spec` to
+run all the build tests. You can run a specific test by specifying the specific
+test in the rspec command (i.e. `bundle exec rspec spec/dev/spec/dev/cantaloupe_dev_spec.rb`).
+
 ### Todo/Explore
 
  Updating to ImageMagick 7. There is a commented out setup in the Dockerfile if we need to compile from source. Hopefully by the time ImageMagick 6 is no longer supported by Cantaloupe there will be an official Debian package we can use.
