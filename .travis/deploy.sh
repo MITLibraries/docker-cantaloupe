@@ -11,6 +11,9 @@ echo '{"experimental": "enabled"}' > ~/.docker/config.json
 # First, login to the Docker registry
 echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
 
+# A little debugging so we can see what the build produced (even if we ignore it)
+docker images | grep cantaloupe
+
 # What tag are we building, latest stable or the latest dev branch?
 if [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" && "$CANTALOUPE_VERSION" != "dev" ]]; then
   TAG=$(curl -S -H "Authorization: token $AUTH_TOKEN" \
@@ -25,7 +28,7 @@ if [[ -z "$TAG" ]]; then
   exit 1
 else
   # Does this tag already exist in our Docker image registry?
-  TAG_EXISTS=$(docker manifest inspect "$REG_OWNER"/"$REG_PROJECT":"$TAG" > /dev/null 2>&1 ; \
+  TAG_EXISTS=$(docker manifest inspect "$REG_USERNAME"/"$REG_PROJECT":"$TAG" > /dev/null 2>&1 ; \
     echo $?)
 
   # Right now, we're not deploying a tag that already exists in the registry
@@ -39,7 +42,7 @@ else
     echo "Tag: $TAG"
 
     # If our build is a new stable version or a SNAPSHOT, we want to push to the registry
-    docker tag "uclalibrary/cantaloupe_$CANTALOUPE_VERSION" "${REG_OWNER}/${REG_PROJECT}:${TAG}"
-    docker push "${REG_OWNER}/${REG_PROJECT}:${TAG}"
+    docker tag "cantaloupe_${CANTALOUPE_VERSION}" "${REG_USERNAME}/${REG_PROJECT}:${TAG}"
+    docker push "${REG_USERNAME}/${REG_PROJECT}:${TAG}"
   fi
 fi

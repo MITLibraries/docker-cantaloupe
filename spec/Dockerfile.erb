@@ -1,0 +1,9 @@
+FROM <%= reg_username %>cantaloupe_<%= cantaloupe_version %>
+
+USER root
+
+# iproute2 is required for integration tests so we install it and some additional tools
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y --no-install-recommends --no-upgrade net-tools iproute2 procps && \
+    rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
