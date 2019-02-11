@@ -11,6 +11,9 @@ echo '{"experimental": "enabled"}' > ~/.docker/config.json
 # First, login to the Docker registry
 echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
 
+# A little debugging so we can see what the build produced (even if we ignore it)
+docker images | grep cantaloupe
+
 # What tag are we building, latest stable or the latest dev branch?
 if [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" && "$CANTALOUPE_VERSION" != "dev" ]]; then
   TAG=$(curl -S -H "Authorization: token $AUTH_TOKEN" \
