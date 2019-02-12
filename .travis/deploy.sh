@@ -12,7 +12,7 @@ echo '{"experimental": "enabled"}' > ~/.docker/config.json
 echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
 
 # A little debugging so we can see what the build produced (even if we ignore it)
-docker images | grep cantaloupe
+docker images | grep "${REG_PROJECT}"
 
 # What tag are we building, latest stable or the latest dev branch?
 if [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" && "$CANTALOUPE_VERSION" != "dev" ]]; then
@@ -40,10 +40,8 @@ else
       && "$TRAVIS_BRANCH" == "$MASTER_BRANCH" && "$HARD_REGISTRY_PUSH" != "true" ]]; then
     echo "Release tag already exists; we don't need to push again"
   elif [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" || "$HARD_REGISTRY_PUSH" == "true" ]]; then
-    echo "Tag exists: $TAG_EXISTS"
-
     # If our build is a new stable version or a SNAPSHOT, we want to push to the registry
-    docker tag "cantaloupe_${CANTALOUPE_VERSION}" "${REG_USERNAME}/${REG_PROJECT}:${TAG}"
+    docker tag "${REG_USERNAME}/${REG_PROJECT}_${CANTALOUPE_VERSION}" "${REG_USERNAME}/${REG_PROJECT}:${TAG}"
     docker push "${REG_USERNAME}/${REG_PROJECT}:${TAG}"
   fi
 fi
