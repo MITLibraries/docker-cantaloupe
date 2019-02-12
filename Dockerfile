@@ -20,7 +20,7 @@ RUN mkdir -p /build && \
       curl -s -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip; \
     fi
 
-FROM openjdk:11-slim
+FROM ubuntu:18.04
 ARG CANTALOUPE_VERSION
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
@@ -31,7 +31,8 @@ VOLUME /imageroot
 # Update packages and install tools
 #  Removing /var/lib/apt/lists/* prevents using `apt` unless you do `apt update` first
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends wget unzip graphicsmagick curl imagemagick libopenjp2-tools ffmpeg python && \
+    apt-get install -y --no-install-recommends wget unzip graphicsmagick curl imagemagick libopenjp2-tools \
+      ffmpeg python openjdk-11-jdk-headless && \
     rm -rf /var/lib/apt/lists/*
 
 # Run non privileged

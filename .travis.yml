@@ -3,7 +3,7 @@ language: ruby
 env:
   global:
 # A particular commit ref can be used if Cantaloupe build is broken
-  - COMMIT_REF="5c897c92"
+#  - COMMIT_REF="5c897c92"
   matrix:
   - "CANTALOUPE_VERSION=stable"
   - "CANTALOUPE_VERSION=dev"

@@ -23,6 +23,10 @@ elif [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" ]]; then
   TAG="latest"
 fi
 
+echo "Travis branch: $TRAVIS_BRANCH"
+echo "Hard push: $HARD_REGISTRY_PUSH"
+echo "Tag: $TAG"
+
 # Make sure we found the latest stable if that's what we are building
 if [[ -z "$TAG" ]]; then
   exit 1
@@ -36,10 +40,7 @@ else
       && "$TRAVIS_BRANCH" == "$MASTER_BRANCH" && "$HARD_REGISTRY_PUSH" != "true" ]]; then
     echo "Release tag already exists; we don't need to push again"
   elif [[ "$TRAVIS_BRANCH" == "$MASTER_BRANCH" || "$HARD_REGISTRY_PUSH" == "true" ]]; then
-    echo "Travis branch: $TRAVIS_BRANCH"
-    echo "Hard push: $HARD_REGISTRY_PUSH"
     echo "Tag exists: $TAG_EXISTS"
-    echo "Tag: $TAG"
 
     # If our build is a new stable version or a SNAPSHOT, we want to push to the registry
     docker tag "cantaloupe_${CANTALOUPE_VERSION}" "${REG_USERNAME}/${REG_PROJECT}:${TAG}"

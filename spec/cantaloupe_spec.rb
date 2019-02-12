@@ -57,6 +57,14 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
         it { should be_owned_by 'cantaloupe'}
         it { should be_grouped_into 'root' }
       end
+
+      describe package('libopenjp2-tools') do
+        it { should be_installed.with_version('2.3.0-1') }
+      end
+
+      describe package('openjdk-11-jre-headless') do
+        it { should be_installed }
+      end
     end
   end
 end

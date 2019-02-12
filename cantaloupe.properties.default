@@ -353,7 +353,7 @@ CANTALOUPE_KAKADUDEMOPROCESSOR_PATH_TO_BINARIES = /usr/local/bin
 
 ## Optional absolute path of the directory containing opj_decompress.
 # Overrides the PATH.
-CANTALOUPE_OPENJPEGPROCESSOR_PATH_TO_BINARIES = /usr/local/bin
+CANTALOUPE_OPENJPEGPROCESSOR_PATH_TO_BINARIES = /usr/bin
 
 ###########################################################################
 # CLIENT-SIDE CACHING
