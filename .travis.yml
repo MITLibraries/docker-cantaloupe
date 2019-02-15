@@ -15,8 +15,16 @@ services:
 before_install:
 - .travis/upgrade.sh
 
-script:
-- travis_retry bundle exec rspec spec/cantaloupe_spec.rb
+jobs:
+  include:
+    - stage: test
+      script: travis_retry bundle exec rake test_$CANTALOUPE_VERSION
+    - stage: codestyle
+      script: bundle exec rubocop
+
+stages:
+  - codestyle
+  - test
 
 after_success:
 - .travis/deploy.sh
