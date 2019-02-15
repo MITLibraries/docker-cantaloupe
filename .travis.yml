@@ -15,16 +15,11 @@ services:
 before_install:
 - .travis/upgrade.sh
 
-jobs:
-  include:
-    - stage: test
-      script: travis_retry bundle exec rake test_$CANTALOUPE_VERSION
-    - stage: codestyle
-      script: bundle exec rubocop
+before_script:
+- bundle exec rubocop
 
-stages:
-  - codestyle
-  - test
+script:
+- travis_retry bundle exec rake test_$CANTALOUPE_VERSION
 
 after_success:
 - .travis/deploy.sh
