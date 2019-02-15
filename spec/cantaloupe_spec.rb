@@ -21,7 +21,7 @@ elsif version == 'dev'
   # Build the _dev version of cantaloupe by calling docker here via a system call
   # this is required because we need to use --build-arg, and DockerSpec does not
   # currently support --build-ARG, see https://github.com/zuazo/dockerspec/issues/14
-  system("docker build --build-arg 'CANTALOUPE_VERSION=latest' " + commit_ref + " -t " + image_tag + " .")
+  system("docker build --build-arg 'CANTALOUPE_VERSION=" + version + "' " + commit_ref + " -t " + image_tag + " .")
 else
   raise('No CANTALOUPE_VERSION set')
 end

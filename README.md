@@ -11,13 +11,15 @@ newer (or older) versions:
 
     docker build --build-arg CANTALOUPE_VERSION=<desired version> -t cantaloupe .
 
-To build the latest version of Cantaloupe from source, use the following:
+_Note:_ if you want to build a version other than 4.0.3 or 4.0.2 you will need to supply a Cantaloupe properties `template` and `defaults` file in the `configs` directory. These files should be named with the Cantaloupe version you are interested in building. If the version you need is close to one of the supplied version files, you can probably just copy that file and edit as appropriate.
 
-    docker build --build-arg CANTALOUPE_VERSION=latest -t cantaloupe .
+To build the latest development snapshot of Cantaloupe, use the following:
+
+    docker build --build-arg CANTALOUPE_VERSION="dev" -t cantaloupe .
 
 If the upstream Cantaloupe project is broken, you can also build a last known good commit (or a previous tag or working branch). To do this, supply a `COMMIT_REF` argument with a commit hash, tag, or branch name:
 
-    docker build --build-arg CANTALOUPE_VERSION="latest" --build-arg COMMIT_REF="437a72d7" -t cantaloupe .
+    docker build --build-arg CANTALOUPE_VERSION="dev" --build-arg COMMIT_REF="437a72d7" -t cantaloupe .
 
 ### Run the container
 

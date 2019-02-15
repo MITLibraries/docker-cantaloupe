@@ -8,7 +8,7 @@ ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 ENV COMMIT_REF=$COMMIT_REF
 RUN mkdir -p /build && \
     cd /build && \
-    if [ "$CANTALOUPE_VERSION" = 'latest' ] ; then \
+    if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
       git clone https://github.com/medusa-project/cantaloupe.git && \
       cd cantaloupe && \
       if [ "$COMMIT_REF" != 'latest' ] ; then \
