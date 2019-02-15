@@ -4,3 +4,5 @@
 source 'https://rubygems.org'
 
 gem 'dockerspec', '~> 0.5.0'
+gem 'rubocop', '~> 0.58.2', require: false
+gem 'rubocop-rspec', '~> 1.22.2', require: false

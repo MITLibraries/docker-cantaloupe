@@ -1,0 +1,31 @@
+require: rubocop-rspec
+
+LineLength:
+  Max: 120
+
+# See https://github.com/rubocop-hq/rubocop/issues/6410
+Layout/AlignHash:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - Rakefile
+    - '**/*.rake'
+    - spec/**/*.rb
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+RSpec/ExampleLength:
+  Max: 30
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/*'
+
+RSpec/NestedGroups:
+  Exclude:
+    - 'spec/*'
