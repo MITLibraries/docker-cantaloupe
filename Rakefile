@@ -24,7 +24,6 @@ task(:test) do
   RSpec::Core::Runner.run(['spec/cantaloupe_spec.rb'])
   RSpec.clear_examples
   ENV['CANTALOUPE_VERSION'] = 'dev'
-  #  ENV['COMMIT_REF'] = ''
   RSpec::Core::Runner.run(['spec/cantaloupe_spec.rb'])
 end
 

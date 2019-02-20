@@ -9,7 +9,7 @@ ENV COMMIT_REF=$COMMIT_REF
 RUN mkdir -p /build && \
     cd /build && \
     if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
-      git clone https://github.com/medusa-project/cantaloupe.git && \
+      git clone --quiet https://github.com/medusa-project/cantaloupe.git && \
       cd cantaloupe && \
       if [ "$COMMIT_REF" != 'latest' ] ; then \
         git checkout -b "$COMMIT_REF" "$COMMIT_REF" ; \
@@ -30,9 +30,10 @@ VOLUME /imageroot
 
 # Update packages and install tools
 #  Removing /var/lib/apt/lists/* prevents using `apt` unless you do `apt update` first
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends wget unzip graphicsmagick curl imagemagick libopenjp2-tools \
-      ffmpeg python openjdk-11-jdk-headless && \
+RUN apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -qq --no-install-recommends wget unzip graphicsmagick curl imagemagick \
+      libopenjp2-tools ffmpeg python openjdk-11-jdk-headless < /dev/null > /dev/null && \
     rm -rf /var/lib/apt/lists/*
 
 # Run non privileged
@@ -44,7 +45,7 @@ COPY --from=MAVEN_TOOL_CHAIN /build/Cantaloupe-$CANTALOUPE_VERSION.zip /tmp/Cant
 
 # Get and unpack Cantaloupe release archive
 RUN cd /usr/local \
- && unzip /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
+ && unzip -qq /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
  && ln -s cantaloupe-?.* cantaloupe \
  && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
  && rm /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \

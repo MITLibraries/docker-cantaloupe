@@ -15,13 +15,14 @@ if version == 'stable'
 
   describe docker_build('.', tag: image_tag)
 elsif version == 'dev'
-  commit_ref = ENV.key?('COMMIT_REF') ? '--build-arg COMMIT_REF=' + ENV['COMMIT_REF'] : ''
+  commit_ref = ENV.key?('COMMIT_REF') ? ' --build-arg COMMIT_REF=' + ENV['COMMIT_REF'] + ' ' : ' '
   expected_version = '4.1-SNAPSHOT'
 
   # Build the _dev version of cantaloupe by calling docker here via a system call
   # this is required because we need to use --build-arg, and DockerSpec does not
   # currently support --build-ARG, see https://github.com/zuazo/dockerspec/issues/14
-  system('docker build --build-arg \'CANTALOUPE_VERSION=\'' + version + '\' ' + commit_ref + ' -t ' + image_tag + ' .')
+  success = system('docker build --build-arg CANTALOUPE_VERSION=' + version + commit_ref + '-t ' + image_tag + ' .')
+  raise 'Failed to create dev docker-cantaloupe container for testing' unless success
 else
   raise('No CANTALOUPE_VERSION set')
 end
