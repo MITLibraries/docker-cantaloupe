@@ -1,0 +1,20 @@
+language: generic
+sudo: true #required to use docker
+notifications:
+  email: false
+services:
+  - docker
+jobs:
+  include:
+    - name: Build container
+      before_install: pip install --user awscli
+      script: make dist
+    - stage: publish image
+      install:
+        - pip install --user awscli
+      script: skip
+      before_deploy: make dist
+      deploy:
+        skip_cleanup: true
+        provider: script
+        script: make publish
