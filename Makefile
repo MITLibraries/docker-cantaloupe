@@ -21,7 +21,7 @@ publish: dist ## Build, tag and push
 	$$(aws ecr get-login --no-include-email --region us-east-1)
 	docker push $(ECR_REGISTRY)/cantaloupe-stage:latest
 	docker push $(ECR_REGISTRY)/cantaloupe-stage:`git describe --always`
-	aws ecs update-service --cluster cantaloupe-stage-cluster --service cantaloupe-stage --force-new-deployment
+	aws ecs update-service --cluster cantaloupe-stage-cluster --service cantaloupe-stage --region us-east-1 --force-new-deployment
 
 promote: ## Promote the current staging build to production
 	$$(aws ecr get-login --no-include-email --region us-east-1)
@@ -30,4 +30,4 @@ promote: ## Promote the current staging build to production
 	docker tag $(ECR_REGISTRY)/cantaloupe-stage:latest $(ECR_REGISTRY)/cantaloupe-prod:$(DATETIME)
 	docker push $(ECR_REGISTRY)/cantaloupe-prod:latest
 	docker push $(ECR_REGISTRY)/cantaloupe-prod:$(DATETIME)
-	aws ecs update-service --cluster cantaloupe-prod-cluster --service cantaloupe-prod --force-new-deployment
+	aws ecs update-service --cluster cantaloupe-prod-cluster --service cantaloupe-prod --region us-east-1 --force-new-deployment
