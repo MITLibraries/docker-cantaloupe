@@ -7,6 +7,16 @@ LineLength:
 Layout/AlignHash:
   Enabled: false
 
+# Add security checks so Codacy can confirm them
+Security:
+  Enabled: true
+
+Rails/OutputSafety:
+  Enabled: true
+
+Style/MutableConstant:
+  Enabled: true
+
 Metrics/BlockLength:
   Exclude:
     - Rakefile
