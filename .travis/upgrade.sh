@@ -24,6 +24,7 @@ setup_dependencies() {
   sudo apt update -y
   sudo apt install --only-upgrade docker-ce -y
 
+  gem install bundler -v 2.0.1
   docker info
 }
 
