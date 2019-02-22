@@ -21,6 +21,11 @@ script:
 after_success:
 - .travis/deploy.sh
 
+# We want all PRs built but only merges on master branch
+branches:
+  only:
+  - master
+
 notifications:
   email:
     recipients:
