@@ -6,11 +6,9 @@ ARG CANTALOUPE_VERSION
 ARG COMMIT_REF
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 ENV COMMIT_REF=$COMMIT_REF
-RUN mkdir -p /build && \
-    cd /build && \
-    if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
-      git clone --quiet https://github.com/medusa-project/cantaloupe.git && \
-      cd cantaloupe && \
+WORKDIR /build/cantaloupe
+RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
+      git clone --quiet https://github.com/medusa-project/cantaloupe.git . && \
       if [ "$COMMIT_REF" != 'latest' ] ; then \
         git checkout -b "$COMMIT_REF" "$COMMIT_REF" ; \
       fi && \
@@ -44,8 +42,10 @@ WORKDIR /tmp
 COPY --from=MAVEN_TOOL_CHAIN /build/Cantaloupe-$CANTALOUPE_VERSION.zip /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip
 
 # Get and unpack Cantaloupe release archive
-RUN cd /usr/local \
- && unzip -qq /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
+
+WORKDIR /usr/local
+
+RUN unzip -qq /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
  && ln -s cantaloupe-?.* cantaloupe \
  && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
  && rm /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
