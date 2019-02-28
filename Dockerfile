@@ -15,7 +15,7 @@ RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
       mvn -DskipTests=true -q clean package && \
       mv target/cantaloupe-?.?-SNAPSHOT.zip "/build/Cantaloupe-${CANTALOUPE_VERSION}.zip" ; \
     else \
-      curl -s -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip; \
+      curl -o ../Cantaloupe-$CANTALOUPE_VERSION.zip -s -L https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip; \
     fi
 
 FROM ubuntu:18.04
