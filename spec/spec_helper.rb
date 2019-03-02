@@ -2,6 +2,7 @@ require 'tmpdir'
 require 'erb'
 
 RSpec.configure do |config|
+  config.fail_if_no_examples = true
   config.log_level = :ci
   config.docker_wait = 60
 
