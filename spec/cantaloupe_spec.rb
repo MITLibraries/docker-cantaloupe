@@ -65,11 +65,11 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
       end
 
       describe package('openjdk-11-jre-headless') do
-        it { is_expected.to be_installed.with_version('10.0.2+13-1ubuntu0.18.04.4') }
+        it { is_expected.to be_installed.with_version('11.0.1+13-3ubuntu3.18.10.1') }
       end
 
       describe package('wget') do
-        it { is_expected.to be_installed.with_version('1.19.4-1ubuntu2.1') }
+        it { is_expected.to be_installed.with_version('1.19.5-1ubuntu1') }
       end
 
       describe package('unzip') do
@@ -77,23 +77,23 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
       end
 
       describe package('graphicsmagick') do
-        it { is_expected.to be_installed.with_version('1.3.28-2') }
+        it { is_expected.to be_installed.with_version('1.3.30+hg15796-1') }
       end
 
       describe package('curl') do
-        it { is_expected.to be_installed.with_version('7.58.0-2ubuntu3.6') }
+        it { is_expected.to be_installed.with_version('7.61.0-1ubuntu2.3') }
       end
 
       describe package('imagemagick') do
-        it { is_expected.to be_installed.with_version('8:6.9.7.4+dfsg-16ubuntu6.4') }
+        it { is_expected.to be_installed.with_version('8:6.9.10.8+dfsg-1ubuntu2') }
       end
 
       describe package('ffmpeg') do
-        it { is_expected.to be_installed.with_version('7:3.4.4-0ubuntu0.18.04.1') }
+        it { is_expected.to be_installed.with_version('7:4.0.2-2') }
       end
 
       describe package('python') do
-        it { is_expected.to be_installed.with_version('2.7.15~rc1-1') }
+        it { is_expected.to be_installed.with_version('2.7.15-3') }
       end
     end
   end

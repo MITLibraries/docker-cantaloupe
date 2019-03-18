@@ -18,7 +18,7 @@ RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
       curl -o ../Cantaloupe-$CANTALOUPE_VERSION.zip -s -L https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip; \
     fi
 
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 ARG CANTALOUPE_VERSION
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
@@ -32,14 +32,14 @@ RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -qq --no-install-recommends \
     libopenjp2-tools=2.3.0-1 \
-    openjdk-11-jre-headless=10.0.2+13-1ubuntu0.18.04.4 \
-    wget=1.19.4-1ubuntu2.1 \
+    openjdk-11-jre-headless=11.0.1+13-3ubuntu3.18.10.1 \
+    wget=1.19.5-1ubuntu1 \
     unzip=6.0-21ubuntu1 \
-    graphicsmagick=1.3.28-2 \
-    curl=7.58.0-2ubuntu3.6 \
-    imagemagick=8:6.9.7.4+dfsg-16ubuntu6.4 \
-    ffmpeg=7:3.4.4-0ubuntu0.18.04.1 \
-    python=2.7.15~rc1-1 \
+    graphicsmagick=1.3.30+hg15796-1 \
+    curl=7.61.0-1ubuntu2.3 \
+    imagemagick=8:6.9.10.8+dfsg-1ubuntu2 \
+    ffmpeg=7:4.0.2-2 \
+    python=2.7.15-3 \
     < /dev/null > /dev/null && \
     rm -rf /var/lib/apt/lists/*
 

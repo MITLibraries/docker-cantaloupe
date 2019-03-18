@@ -1,0 +1,13 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.3
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-RUBY-NOKOGIRI-20299:
+    - '*':
+        reason: dockerspec-is-for-testing
+        expires: 2020-04-01T00:00:00.000Z
+  SNYK-RUBY-ERUBIS-20482:
+    - '*':
+        reason: dockerspec-is-for-testing
+        expires: 2020-04-01T00:00:00.000Z
+patch: {}
