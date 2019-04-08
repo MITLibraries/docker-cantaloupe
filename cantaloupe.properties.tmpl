@@ -26,25 +26,27 @@ https.key_password = myPassword
 
 # !! Maximum size of the HTTP(S) request queue. Leave blank to use the
 # default.
-#http.accept_queue_limit = $HTTP_ACCEPT_QUEUE_LIMIT
+http.accept_queue_limit =
 
 # Base URI to use for internal links, such as Link headers and JSON-LD
 # @id values, in a reverse-proxy context. This should only be used when
 # X-Forwarded-* headers cannot be used instead. (See the user manual.)
-#base_uri = $BASE_URI
+base_uri =
 
 # Normally, slashes in a URI path component must be percent-encoded as
 # "%2F". If your proxy is not able to pass these through without decoding,
 # you can define an alternate character or character sequence to substitute
 # for a slash. Supply the non-percent-encoded version here, and use the
 # percent-encoded version in URLs.
-#slash_substitute = $SLASH_SUBSTITUTE
+slash_substitute =
 
 # Maximum number of pixels to return in a response, to prevent overloading
 # the server. Requests for more pixels than this will receive an error
 # response. Set to 0 for no maximum.
-max_pixels = 400000000
-#max_pixels = $MAX_PIXELS
+max_pixels = 100000000
+
+# Maximum scale to allow (1.0 = full scale; 0 = no maximum).
+max_scale = 1.0
 
 # Errors will also be logged to the error log (if enabled).
 print_stack_trace_on_error_pages = true
@@ -69,12 +71,6 @@ delegate_script.cache.enabled = false
 ###########################################################################
 # ENDPOINTS
 ###########################################################################
-
-# !! Configures HTTP Basic authentication in all public endpoints.
-endpoint.public.auth.basic.enabled = false
-#endpoint.public.auth.basic.enabled = $ENDPOINT_PUBLIC_AUTH_BASIC_ENABLED
-#endpoint.public.auth.basic.username = $ENDPOINT_PUBLIC_AUTH_BASIC_USERNAME
-#endpoint.public.auth.basic.secret = $ENDPOINT_PUBLIC_AUTH_BASIC_SECRET
 
 # Enables the IIIF Image API 1.x endpoint, at /iiif/1.
 endpoint.iiif.1.enabled = false
@@ -107,8 +103,8 @@ endpoint.admin.secret = $ENDPOINT_ADMIN_SECRET
 endpoint.api.enabled = false
 
 # HTTP Basic credentials to access the HTTP API.
-#endpoint.api.username = $ENDPOINT_API_USERNAME
-#endpoint.api.secret = $ENDPOINT_API_SECRET
+endpoint.api.username =
+endpoint.api.secret =
 
 ###########################################################################
 # SOURCES
@@ -137,14 +133,17 @@ FilesystemSource.BasicLookupStrategy.path_prefix = $FILESYSTEMSOURCE_BASICLOOKUP
 
 # Server-side path or extension that will be suffixed to the identifier in
 # the URL.
-FilesystemSource.BasicLookupStrategy.path_suffix = $FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
+FilesystemSource.BasicLookupStrategy.path_suffix =
 
 #----------------------------------------
 # HttpSource
 #----------------------------------------
 
-#HttpSource.trust_all_certs = false
-#HttpSource.request_timeout = $HTTPSOURCE_REQUEST_TIMEOUT
+# Trusts insecure certificates and cipher suites.
+HttpSource.allow_insecure = false
+
+# Request timeout in seconds.
+HttpSource.request_timeout =
 
 # Tells HttpSource how to look up resources. Allowed values are
 # `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
@@ -163,6 +162,20 @@ FilesystemSource.BasicLookupStrategy.path_suffix = $FILESYSTEMSOURCE_BASICLOOKUP
 #HttpSource.BasicLookupStrategy.auth.basic.username = $HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_USERNAME
 #HttpSource.BasicLookupStrategy.auth.basic.secret = $HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_SECRET
 
+# Read data in chunks when it may be more efficient. (This also may end up
+# being less efficient, depending on many variables; see the user manual.)
+HttpSource.chunking.enabled = false
+
+# Chunk size.
+HttpSource.chunking.chunk_size = 512K
+
+# The per-request chunk cache caches downloaded chunks in memory during
+# a request, and clears them when the request is complete.
+HttpSource.chunking.cache.enabled = true
+
+# Max per-request chunk cache size.
+HttpSource.chunking.cache.max_size = 5M
+
 #----------------------------------------
 # S3Source
 #----------------------------------------
@@ -179,10 +192,6 @@ S3Source.endpoint = $S3SOURCE_ENDPOINT
 S3Source.access_key_id = $S3SOURCE_ACCESS_KEY_ID
 S3Source.secret_key = $S3SOURCE_SECRET_KEY
 
-# !! Maximum number of concurrent HTTP connections to AWS. Leave blank to
-# use the default.
-S3Source.max_connections = $S3SOURCE_MAX_CONNECTIONS
-
 # Tells S3Source how to look up objects. Allowed values are
 # `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
 # uses a delegate method for dynamic lookups; see the user manual.
@@ -193,10 +202,24 @@ S3Source.BasicLookupStrategy.bucket.name = $S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_
 
 # Path within the bucket that will be prefixed to the identifier in the URL.
 # Trailing slash is important!
-S3Source.BasicLookupStrategy.path_prefix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
+S3Source.BasicLookupStrategy.path_prefix =
 
 # Path or extension that will be suffixed to the identifier in the URL.
-S3Source.BasicLookupStrategy.path_suffix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
+S3Source.BasicLookupStrategy.path_suffix =
+
+# Read data in chunks when it may be more efficient. (This also may end up
+# being less efficient, depending on many variables; see the user manual.)
+S3Source.chunking.enabled = false
+
+# Chunk size.
+S3Source.chunking.chunk_size = 512K
+
+# The per-request chunk cache caches downloaded chunks in memory during
+# a request, and clears them when the request is complete.
+S3Source.chunking.cache.enabled = true
+
+# Max per-request chunk cache size.
+S3Source.chunking.cache.max_size = 5M
 
 ###########################################################################
 # PROCESSORS
@@ -211,7 +234,7 @@ S3Source.BasicLookupStrategy.path_suffix = $S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SU
 #   dependencies.
 # * If set to `ManualSelectionStrategy`, a processor will be chosen based
 #   on the rest of the keys in this section.
-processor.selection_strategy = AutomaticSelectionStrategy
+processor.selection_strategy = ManualSelectionStrategy
 
 # Image processors to use for various source formats. Available values are
 # `Java2dProcessor`, `GraphicsMagickProcessor`, `ImageMagickProcessor`,
@@ -219,24 +242,24 @@ processor.selection_strategy = AutomaticSelectionStrategy
 # `JaiProcessor`, `PdfBoxProcessor`, and `FfmpegProcessor`.
 
 # These extension-specific definitions are optional.
-processor.avi =  FfmpegProcessor
-#processor.bmp = $PROCESSOR_BMP
-processor.dcm = ImageMagickProcessor
-processor.flv =  FfmpegProcessor
-#processor.gif = $PROCESSOR_GIF
-processor.jp2 = $PROCESSOR_JP2
-#processor.jpg = $PROCESSOR_JPG
-processor.mov =  FfmpegProcessor
-processor.mp4 =  FfmpegProcessor
-processor.mpg =  FfmpegProcessor
-processor.pdf = PdfBoxProcessor
-#processor.png = $PROCESSOR_PNG
-#processor.tif = $PROCESSOR_TIF
-processor.webm = FfmpegProcessor
-processor.webp = ImageMagickProcessor
+processor.ManualSelectionStrategy.avi = FfmpegProcessor
+processor.ManualSelectionStrategy.bmp =
+processor.ManualSelectionStrategy.dcm = ImageMagickProcessor
+processor.ManualSelectionStrategy.flv = FfmpegProcessor
+processor.ManualSelectionStrategy.gif =
+processor.ManualSelectionStrategy.jp2 = OpenJpegProcessor
+processor.ManualSelectionStrategy.jpg =
+processor.ManualSelectionStrategy.mov = FfmpegProcessor
+processor.ManualSelectionStrategy.mp4 = FfmpegProcessor
+processor.ManualSelectionStrategy.mpg = FfmpegProcessor
+processor.ManualSelectionStrategy.pdf = PdfBoxProcessor
+processor.ManualSelectionStrategy.png =
+processor.ManualSelectionStrategy.tif =
+processor.ManualSelectionStrategy.webm = FfmpegProcessor
+processor.ManualSelectionStrategy.webp = ImageMagickProcessor
 
 # Fall back to this processor for any formats not assigned above.
-processor.fallback = $PROCESSOR_FALLBACK
+processor.ManualSelectionStrategy.fallback = Java2dProcessor
 
 #----------------------------------------
 # Global Processor Configuration
@@ -260,10 +283,6 @@ processor.fallback_retrieval_strategy = DownloadStrategy
 
 # Resolution of vector rasterization (of e.g. PDFs) at a scale of 1.
 processor.dpi = 150
-
-# Expands contrast to utilize available dynamic range. This usually requires
-# the whole source image to be read into memory, so it can be inefficient.
-processor.normalize = false
 
 # Color of the background when an image is rotated or alpha-flattened, for
 # output formats that don't support transparency.
@@ -291,11 +310,11 @@ processor.metadata.respect_orientation = false
 processor.jpg.progressive = true
 
 # JPEG output quality (1-100).
-processor.jpg.quality = $PROCESSOR_JPG_QUALITY
+processor.jpg.quality = 80
 
 # TIFF output compression type. Available values are `Deflate`, `JPEG`,
 # `LZW`, and `RLE`. Leave blank for no compression.
-processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
+processor.tif.compression = LZW
 
 #----------------------------------------
 # ImageIO Plugin Preferences
@@ -303,15 +322,15 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # These override the default plugins used by the application and should not
 # normally be changed.
-#processor.imageio.bmp.reader = $PROCESSOR_IMAGEIO_BMP_READER
-#processor.imageio.gif.reader = $PROCESSOR_IMAGEIO_GIF_READER
-#processor.imageio.gif.writer = $PROCESSOR_IMAGEIO_GIF_WRITER
-#processor.imageio.jpg.reader = $PROCESSOR_IMAGEIO_JPG_READER
-#processor.imageio.jpg.writer = $PROCESSOR_IMAGEIO_JPG_WRITER
-#processor.imageio.png.reader = $PROCESSOR_IMAGEIO_PNG_READER
-#processor.imageio.png.writer = $PROCESSOR_IMAGEIO_PNG_WRITER
-#processor.imageio.tif.reader = $PROCESSOR_IMAGEIO_TIF_READER
-#processor.imageio.tif.writer = $PROCESSOR_IMAGEIO_TIF_WRITER
+processor.imageio.bmp.reader =
+processor.imageio.gif.reader =
+processor.imageio.gif.writer =
+processor.imageio.jpg.reader =
+processor.imageio.jpg.writer =
+processor.imageio.png.reader =
+processor.imageio.png.writer =
+processor.imageio.tif.reader =
+processor.imageio.tif.writer =
 
 #----------------------------------------
 # FfmpegProcessor
@@ -319,7 +338,7 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # Optional absolute path of the directory containing the FFmpeg binaries.
 # Overrides the PATH.
-#FfmpegProcessor.path_to_binaries =
+FfmpegProcessor.path_to_binaries =
 
 #----------------------------------------
 # GraphicsMagickProcessor
@@ -327,7 +346,7 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # !! Optional absolute path of the directory containing the GraphicsMagick
 # binary. Overrides the PATH.
-#GraphicsMagickProcessor.path_to_binaries =
+GraphicsMagickProcessor.path_to_binaries =
 
 #----------------------------------------
 # ImageMagickProcessor
@@ -335,7 +354,7 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # !! Optional absolute path of the directory containing the ImageMagick
 # binary. Overrides the PATH.
-#ImageMagickProcessor.path_to_binaries =
+ImageMagickProcessor.path_to_binaries =
 
 #----------------------------------------
 # KakaduDemoProcessor
@@ -343,7 +362,7 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # Optional absolute path of the directory containing kdu_expand.
 # Overrides the PATH.
-#KakaduDemoProcessor.path_to_binaries =
+KakaduDemoProcessor.path_to_binaries =
 
 #----------------------------------------
 # OpenJpegProcessor
@@ -351,24 +370,24 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 
 # Optional absolute path of the directory containing opj_decompress.
 # Overrides the PATH.
-#OpenJpegProcessor.path_to_binaries =
+OpenJpegProcessor.path_to_binaries =
 
 ###########################################################################
 # CLIENT-SIDE CACHING
 ###########################################################################
 
 # Whether to enable the response Cache-Control header.
-#cache.client.enabled = $CACHE_CLIENT_ENABLED
+cache.client.enabled = true
 
-#cache.client.max_age = $CACHE_CLIENT_MAX_AGE
-#cache.client.shared_max_age = $CACHE_CLIENT_SHARED_MAX_AGE
-#cache.client.public = $CACHE_CLIENT_PUBLIC
-#cache.client.private = $CACHE_CLIENT_PRIVATE
-#cache.client.no_cache = $CACHE_CLIENT_NO_CACHE
-#cache.client.no_store = $CACHE_CLIENT_NO_STORE
-#cache.client.must_revalidate = $CACHE_CLIENT_MUST_REVALIDATE
-#cache.client.proxy_revalidate = $CACHE_CLIENT_PROXY_REVALIDATE
-#cache.client.no_transform = $CACHE_CLIENT_NO_TRANSFORM
+cache.client.max_age = 2592000
+cache.client.shared_max_age =
+cache.client.public = true
+cache.client.private = false
+cache.client.no_cache = false
+cache.client.no_store = false
+cache.client.must_revalidate = false
+cache.client.proxy_revalidate = false
+cache.client.no_transform = true
 
 ###########################################################################
 # SERVER-SIDE CACHING
@@ -379,11 +398,11 @@ processor.tif.compression = $PROCESSOR_TIF_COMPRESSION
 # `processor.fallback_retrieval_strategy` keys are set to `CacheStrategy`.
 
 # FilesystemCache is the only available source cache.
-#cache.server.source = $CACHE_SERVER_SOURCE
+cache.server.source = FilesystemCache
 
 # Amount of time source cache content remains valid. Set to blank or 0
 # for forever.
-#cache.server.source.ttl_seconds = $CACHE_SERVER_SOURCE_TTL_SECONDS
+cache.server.source.ttl_seconds = 2592000
 
 # Enables the derivative (processed image) cache.
 cache.server.derivative.enabled = true
@@ -398,7 +417,7 @@ cache.server.derivative.ttl_seconds = 0
 
 # Whether to use the Java heap as a "level 1" cache for image infos, either
 # independently or in front of a "level 2" derivative cache (if enabled).
-cache.server.info.enabled = $CACHE_SERVER_INFO_ENABLED
+cache.server.info.enabled = false
 
 # If true, when a source reports that the requested source image has gone
 # missing, all cached information relating to it (if any) will be deleted.
@@ -417,24 +436,24 @@ cache.server.worker.enabled = false
 
 # !! The cache worker will wait this many seconds before starting its
 # next shift.
-#cache.server.worker.interval = $CACHE_SERVER_WORKER_INTERVAL
+cache.server.worker.interval = 86400
 
 #----------------------------------------
 # FilesystemCache
 #----------------------------------------
 
 # If this directory does not exist, it will be created automatically.
-FilesystemCache.pathname = $FILESYSTEMCACHE_PATHNAME
+FilesystemCache.pathname = /var/cache/cantaloupe
 
 # Levels of folder hierarchy in which to store cached images. Deeper depth
 # results in fewer files per directory. Set to 0 to disable subdirectories.
 # Purge the cache after changing this.
-FilesystemCache.dir.depth = $FILESYSTEMCACHE_DIR_DEPTH
+FilesystemCache.dir.depth = 3
 
 # Number of characters in tree directory names. Should be set to
 # 16^n < (max number of directory entries your filesystem can deal with).
 # Purge the cache after changing this.
-FilesystemCache.dir.name_length = $FILESYSTEMCACHE_DIR_NAME_LENGTH
+FilesystemCache.dir.name_length = 2
 
 #----------------------------------------
 # HeapCache
@@ -443,16 +462,16 @@ FilesystemCache.dir.name_length = $FILESYSTEMCACHE_DIR_NAME_LENGTH
 # Target cache size, in bytes or a number ending in M, MB, G, GB, etc.
 # This is not a hard limit, and may be transiently exceeded.
 # Ensure your heap can accommodate this size.
-HeapCache.target_size = $HEAPCACHE_TARGET_SIZE
+HeapCache.target_size = 3G
 
 # If true, the cache contents will be written to a file on exit and during
 # cache worker shifts, and read back in at startup.
-HeapCache.persist = $HEAPCACHE_PERSIST
+HeapCache.persist = false
 
 # When the contents are persisted, this specifies the location of the cache
 # file. If the parent directory does not exist, it will be created
 # automatically.
-HeapCache.persist.filesystem.pathname = $HEAPCACHE_PERSIST_FILESYSTEM_PATHNAME
+HeapCache.persist.filesystem.pathname = /var/cache/cantaloupe/heap.cache
 
 #----------------------------------------
 # S3Cache
@@ -474,84 +493,86 @@ S3Cache.secret_key = $S3CACHE_SECRET_KEY
 S3Cache.bucket.name = $S3CACHE_BUCKET_NAME
 
 # !! String that will be prefixed to object keys.
-S3Cache.object_key_prefix = $S3CACHE_OBJECT_KEY_PREFIX
+S3Cache.object_key_prefix =
 
 # !! Maximum number of concurrent HTTP connections to AWS. Leave blank to
 # use the default.
-S3Cache.max_connections = $S3CACHE_MAX_CONNECTIONS
+S3Cache.max_connections =
 
 ###########################################################################
 # OVERLAYS
 ###########################################################################
 
 # Whether to enable overlays.
-overlays.enabled = $OVERLAYS_ENABLED
+overlays.enabled = false
 
 # Controls how overlays are configured. `BasicStrategy` will use the
 # `overlays.BasicStrategy.*` keys in this section. `ScriptStrategy` will
 # use a delegate method. (See the user manual.)
-overlays.strategy = $OVERLAYS_STRATEGY
+overlays.strategy = BasicStrategy
 
 # `image` or `string`.
-overlays.BasicStrategy.type = $OVERLAYS_BASICSTRATEGY_TYPE
+overlays.BasicStrategy.type = image
 
 # Absolute path or URL of the overlay image. Must be a PNG file.
-overlays.BasicStrategy.image = $OVERLAYS_BASICSTRATEGY_IMAGE
+overlays.BasicStrategy.image = /path/to/overlay.png
 
 # Overlay text.
-overlays.BasicStrategy.string = $OVERLAYS_BASICSTRATEGY_STRING
+overlays.BasicStrategy.string = Copyright \u00A9️ MIT Libraries\nAll rights reserved.
 
 # For possible values, launch with the -Dcantaloupe.list_fonts option.
-overlays.BasicStrategy.string.font = $OVERLAYS_BASICSTRATEGY_STRING_FONT
+overlays.BasicStrategy.string.font = Helvetica
 
 # Font size in points.
-overlays.BasicStrategy.string.font.size = $OVERLAYS_BASICSTRATEGY_STRING_FONT_SIZE
+overlays.BasicStrategy.string.font.size = 24
 
 # If the string doesn't fit in the image at the above size, the largest size
 # at which it does fit will be used, down to this.
-overlays.BasicStrategy.string.font.min_size = $OVERLAYS_BASICSTRATEGY_STRING_FONT_MIN_SIZE
+overlays.BasicStrategy.string.font.min_size = 18
 
-# Font weight. 1 = regular, 2 = $# FONT WEIGHT_ 1 = REGULAR, 2
+# Font weight. 1 = regular, 2 = bold. Unfortunately, many fonts don't
 # support fractional weights.
-overlays.BasicStrategy.string.font.weight = $OVERLAYS_BASICSTRATEGY_STRING_FONT_WEIGHT
+overlays.BasicStrategy.string.font.weight = 1.0
 
 # Point spacing between glyphs, typically between -0.1 and 0.1.
-overlays.BasicStrategy.string.glyph_spacing = $OVERLAYS_BASICSTRATEGY_STRING_GLYPH_SPACING
+overlays.BasicStrategy.string.glyph_spacing = 0.02
 
 # CSS color syntax is supported.
-overlays.BasicStrategy.string.color = $OVERLAYS_BASICSTRATEGY_STRING_COLOR
+overlays.BasicStrategy.string.color = white
 
 # CSS color syntax is supported.
-overlays.BasicStrategy.string.stroke.color = $OVERLAYS_BASICSTRATEGY_STRING_STROKE_COLOR
+overlays.BasicStrategy.string.stroke.color = black
 
 # Stroke width in pixels.
-overlays.BasicStrategy.string.stroke.width = $OVERLAYS_BASICSTRATEGY_STRING_STROKE_WIDTH
+overlays.BasicStrategy.string.stroke.width = 1
 
 # Color of a rectangular background to draw under the string.
 # CSS color syntax and alpha are supported.
-overlays.BasicStrategy.string.background.color = $OVERLAYS_BASICSTRATEGY_STRING_BACKGROUND_COLOR
+overlays.BasicStrategy.string.background.color = rgba(0, 0, 0, 100)
 
 # Allowed values: `top left`, `top center`, `top right`, `left center`,
-# `center`, `right center`, `bottom left`, `bottom center`, `bottom right`.
-overlays.BasicStrategy.position = $OVERLAYS_BASICSTRATEGY_POSITION
+# `center`, `right center`, `bottom left`, `bottom center`, `bottom right`,
+# `repeat` (images only).
+overlays.BasicStrategy.position = bottom right
 
-# Pixel margin between the overlay and the image edge.
-overlays.BasicStrategy.inset = $OVERLAYS_BASICSTRATEGY_INSET
+# Pixel margin between the overlay and the image edge. Does not apply to
+# `repeat` position.
+overlays.BasicStrategy.inset = 10
 
 # Output images less than this many pixels wide will not receive an overlay.
 # Set to 0 to add the overlay regardless.
-overlays.BasicStrategy.output_width_threshold = $OVERLAYS_BASICSTRATEGY_OUTPUT_WIDTH_THRESHOLD
+overlays.BasicStrategy.output_width_threshold = 400
 
 # Output images less than this many pixels tall will not receive an overlay.
 # Set to 0 to add the overlay regardless.
-overlays.BasicStrategy.output_height_threshold = $OVERLAYS_BASICSTRATEGY_OUTPUT_HEIGHT_THRESHOLD
+overlays.BasicStrategy.output_height_threshold = 300
 
 ###########################################################################
 # REDACTIONS
 ###########################################################################
 
 # See the user manual for information about how redactions work.
-redaction.enabled = $REDACTION_ENABLED
+redaction.enabled = false
 
 ###########################################################################
 # LOGGING
@@ -567,21 +588,21 @@ log.application.level = $LOG_APPLICATION_LEVEL
 log.application.ConsoleAppender.enabled = true
 
 # N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.application.FileAppender.enabled = $LOG_APPLICATION_FILEAPPENDER_ENABLED
-log.application.FileAppender.pathname = $LOG_APPLICATION_FILEAPPENDER_PATHNAME
+log.application.FileAppender.enabled = false
+log.application.FileAppender.pathname = /path/to/logs/application.log
 
-log.application.RollingFileAppender.enabled = $LOG_APPLICATION_ROLLINGFILEAPPENDER_ENABLED
-log.application.RollingFileAppender.pathname = $LOG_APPLICATION_ROLLINGFILEAPPENDER_PATHNAME
-log.application.RollingFileAppender.policy = $LOG_APPLICATION_ROLLINGFILEAPPENDER_POLICY
-log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
-log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.application.RollingFileAppender.enabled = false
+log.application.RollingFileAppender.pathname = /path/to/logs/application.log
+log.application.RollingFileAppender.policy = TimeBasedRollingPolicy
+log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /path/to/logs/application-%d{yyyy-MM-dd}.log
+log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = 30
 
 # See the "SyslogAppender" section for a list of facilities:
 # http://logback.qos.ch/manual/appenders.html
-log.application.SyslogAppender.enabled = $LOG_APPLICATION_SYSLOGAPPENDER_ENABLED
-log.application.SyslogAppender.host = $LOG_APPLICATION_SYSLOGAPPENDER_HOST
-log.application.SyslogAppender.port = $LOG_APPLICATION_SYSLOGAPPENDER_PORT
-log.application.SyslogAppender.facility = $LOG_APPLICATION_SYSLOGAPPENDER_FACILITY
+log.application.SyslogAppender.enabled = false
+log.application.SyslogAppender.host =
+log.application.SyslogAppender.port = 514
+log.application.SyslogAppender.facility = LOCAL0
 
 #----------------------------------------
 # Error Log
@@ -591,36 +612,36 @@ log.application.SyslogAppender.facility = $LOG_APPLICATION_SYSLOGAPPENDER_FACILI
 # into a dedicated error log, which may make them easier to spot.
 
 # N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.error.FileAppender.enabled = $LOG_ERROR_FILEAPPENDER_ENABLED
-log.error.FileAppender.pathname = $LOG_ERROR_FILEAPPENDER_PATHNAME
+log.error.FileAppender.enabled = false
+log.error.FileAppender.pathname = /path/to/logs/error.log
 
-log.error.RollingFileAppender.enabled = $LOG_ERROR_ROLLINGFILEAPPENDER_ENABLED
-log.error.RollingFileAppender.pathname = $LOG_ERROR_ROLLINGFILEAPPENDER_PATHNAME
-log.error.RollingFileAppender.policy = $LOG_ERROR_ROLLINGFILEAPPENDER_POLICY
-log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
-log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.error.RollingFileAppender.enabled = false
+log.error.RollingFileAppender.pathname = /path/to/logs/error.log
+log.error.RollingFileAppender.policy = TimeBasedRollingPolicy
+log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /path/to/logs/error-%d{yyyy-MM-dd}.log
+log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history = 30
 
 #----------------------------------------
 # Access Log
 #----------------------------------------
 
-log.access.ConsoleAppender.enabled = $LOG_ACCESS_CONSOLEAPPENDER_ENABLED
+log.access.ConsoleAppender.enabled = true
 
 # N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
-log.access.FileAppender.enabled = $LOG_ACCESS_FILEAPPENDER_ENABLED
-log.access.FileAppender.pathname = $LOG_ACCESS_FILEAPPENDER_PATHNAME
+log.access.FileAppender.enabled = false
+log.access.FileAppender.pathname = /path/to/logs/access.log
 
 # RollingFileAppender is an alternative to using something like
 # FileAppender + logrotate.
-log.access.RollingFileAppender.enabled = $LOG_ACCESS_ROLLINGFILEAPPENDER_ENABLED
-log.access.RollingFileAppender.pathname = $LOG_ACCESS_ROLLINGFILEAPPENDER_PATHNAME
-log.access.RollingFileAppender.policy = $LOG_ACCESS_ROLLINGFILEAPPENDER_POLICY
-log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
-log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = $LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.access.RollingFileAppender.enabled = false
+log.access.RollingFileAppender.pathname = /path/to/logs/access.log
+log.access.RollingFileAppender.policy = TimeBasedRollingPolicy
+log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /path/to/logs/access-%d{yyyy-MM-dd}.log
+log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = 30
 
 # See the "SyslogAppender" section for a list of facilities:
 # http://logback.qos.ch/manual/appenders.html
-log.access.SyslogAppender.enabled = $LOG_ACCESS_SYSLOGAPPENDER_ENABLED
-log.access.SyslogAppender.host = $LOG_ACCESS_SYSLOGAPPENDER_HOST
-log.access.SyslogAppender.port = $LOG_ACCESS_SYSLOGAPPENDER_PORT
-log.access.SyslogAppender.facility = $LOG_ACCESS_SYSLOGAPPENDER_FACILITY
+log.access.SyslogAppender.enabled = false
+log.access.SyslogAppender.host =
+log.access.SyslogAppender.port = 514
+log.access.SyslogAppender.facility = LOCAL0
