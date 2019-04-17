@@ -37,7 +37,8 @@ will run the container in the background until _docker stop_ is called, looking 
       --name melon -v testimages:/imageroot cantaloupe
 
 ### Run the container using docker-compose
-The current docker-compose.yml defines fixed environment variables in .docker-compose.env. As of now, the environment file contains configurations for the Admin endpoint. This compose file currently does not build a local image. It only grabs the latest tag on of uclalibrary/cantaloupe. Please change the SHARED_IMAGE_DIR env variable to your associated image path to be shared with the local cantaloupe container.
+The current docker-compose.yml defines fixed environment variables in .docker-compose.env. As of now, the environment file contains configurations for the Admin endpoint. This compose file currently does not build a local image. It only grabs the latest tag on of uclalibrary/cantaloupe. Please change the SHARED_IMAGE_DIR env variable to your associated image path to be shared with the local cantaloupe container. Run the following to start the container with compose:
+
     export SHARED_IMAGE_DIR=/tmp/imageshare; docker-compose up -d
 
 ### Deployment to AWS
