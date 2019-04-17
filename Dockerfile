@@ -32,7 +32,7 @@ RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -qq --no-install-recommends \
     libopenjp2-tools=2.3.0-1 \
-    openjdk-11-jre-headless=11.0.1+13-3ubuntu3.18.10.1 \
+    openjdk-11-jre-headless=11.0.2+9-3ubuntu1~18.10.3  \
     wget=1.19.5-1ubuntu1 \
     unzip=6.0-21ubuntu1 \
     graphicsmagick=1.3.30+hg15796-1 \

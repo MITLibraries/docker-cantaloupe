@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  cantaloupe:
+    image: uclalibrary/cantaloupe:latest
+    ports:
+      - "8182:8182"
+    deploy:
+      replicas: 1
+    container_name: melon
+    env_file:
+      - .docker-compose.env
+    volumes:
+      - "${SHARED_IMAGE_DIR}:/imageroot"

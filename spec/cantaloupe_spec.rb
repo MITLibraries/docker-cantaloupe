@@ -16,7 +16,7 @@ if version == 'stable'
   describe docker_build('.', tag: image_tag)
 elsif version == 'dev'
   commit_ref = ENV.key?('COMMIT_REF') ? ' --build-arg COMMIT_REF=' + ENV['COMMIT_REF'] + ' ' : ' '
-  expected_version = '4.1-SNAPSHOT'
+  expected_version = '5.0-SNAPSHOT'
 
   # Build the _dev version of cantaloupe by calling docker here via a system call
   # this is required because we need to use --build-arg, and DockerSpec does not
@@ -65,7 +65,7 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
       end
 
       describe package('openjdk-11-jre-headless') do
-        it { is_expected.to be_installed.with_version('11.0.1+13-3ubuntu3.18.10.1') }
+        it { is_expected.to be_installed.with_version('11.0.2+9-3ubuntu1~18.10.3') }
       end
 
       describe package('wget') do

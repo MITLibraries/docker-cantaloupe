@@ -36,6 +36,10 @@ will run the container in the background until _docker stop_ is called, looking 
       -e "CANTALOUPE_ENDPOINT_ADMIN_ENABLED=true" \
       --name melon -v testimages:/imageroot cantaloupe
 
+### Run the container using docker-compose
+The current docker-compose.yml defines fixed environment variables in .docker-compose.env. As of now, the environment file contains configurations for the Admin endpoint. This compose file currently does not build a local image. It only grabs the latest tag on of uclalibrary/cantaloupe. Please change the SHARED_IMAGE_DIR env variable to your associated image path to be shared with the local cantaloupe container.
+    export SHARED_IMAGE_DIR=/tmp/imageshare; docker-compose up -d
+
 ### Deployment to AWS
 
 Currently we are deploying this container to AWS Fargate for testing purposes. The configuration and setup are being done using Terraform. The configuration files can be found in the [mitlib-terraform](https://github.com/MITLibraries/mitlib-terraform) GitHub Repository. JPEG2000 images are being stored and called from an S3 bucket for processing. These files are being uploaded manually to the S3 bucket for now.
