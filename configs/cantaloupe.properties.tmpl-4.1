@@ -1,8 +1,7 @@
 ###########################################################################
-# Template configuration file for Cantaloupe
-#
-# Most changes will take effect without restarting. Those that won't are
-# marked with "!!".
+# cantaloupe.properties configuration
+# For Cantaloupe v4.x
+# Created using https://github.com/medusa-project/cantaloupe/blob/release/4.0/cantaloupe.properties.sample
 ###########################################################################
 
 ###########################################################################
@@ -26,8 +25,7 @@ http.accept_queue_limit = $CANTALOUPE_HTTP_ACCEPT_QUEUE_LIMIT
 base_uri = $CANTALOUPE_BASE_URI
 slash_substitute = $CANTALOUPE_SLASH_SUBSTITUTE
 max_pixels = $CANTALOUPE_MAX_PIXELS
-print_stack_trace_on_error_pages = $CANTALOUPE_PRINT_STACK_TRACE_ON_ERROR_PAGE
-
+print_stack_trace_on_error_pages = $CANTALOUPE_PRINT_STACK_TRACE_ON_ERROR_PAGES
 
 ###########################################################################
 # DELEGATE SCRIPT
@@ -76,17 +74,22 @@ FilesystemSource.BasicLookupStrategy.path_suffix = $CANTALOUPE_FILESYSTEMSOURCE_
 # HttpSource
 #----------------------------------------
 
-HttpSource.allow_insecure = $CANTALOUPE_HTTPSOURCE_ALLOW_INSECURE
+HttpSource.trust_all_certs = $CANTALOUPE_HTTPSOURCE_TRUST_ALL_CERTS
 HttpSource.request_timeout = $CANTALOUPE_HTTPSOURCE_REQUEST_TIMEOUT
 HttpSource.lookup_strategy = $CANTALOUPE_HTTPSOURCE_LOOKUP_STRATEGY
 HttpSource.BasicLookupStrategy.url_prefix = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_PREFIX
 HttpSource.BasicLookupStrategy.url_suffix = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_SUFFIX
 HttpSource.BasicLookupStrategy.auth.basic.username = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_USERNAME
 HttpSource.BasicLookupStrategy.auth.basic.secret = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_SECRET
-HttpSource.chunking.enabled = $CANTALOUPE_HTTPSOURCE_CHUNKING_ENABLED
-HttpSource.chunking.chunk_size = $CANTALOUPE_HTTPSOURCE_CHUNKING_CHUNK_SIZE
-HttpSource.chunking.cache.enabled = $CANTALOUPE_HTTPSOURCE_CHUNKING_CACHE_ENABLED
-HttpSource.chunking.cache.max_size = $CANTALOUPE_HTTPSOURCE_CHUNKING_CACHE_MAX_SIZE
+
+#----------------------------------------
+# JdbcSource
+#----------------------------------------
+
+JdbcSource.url = $CANTALOUPE_JDBCSOURCE_URL
+JdbcSource.user = $CANTALOUPE_JDBCSOURCE_USER
+JdbcSource.password = $CANTALOUPE_JDBCSOURCE_PASSWORD
+JdbcSource.connection_timeout = $CANTALOUPE_JDBCSOURCE_CONNECTION_TIMEOUT
 
 #----------------------------------------
 # S3Source
@@ -100,10 +103,6 @@ S3Source.lookup_strategy = $CANTALOUPE_S3SOURCE_LOOKUP_STRATEGY
 S3Source.BasicLookupStrategy.bucket.name = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME
 S3Source.BasicLookupStrategy.path_prefix = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
 S3Source.BasicLookupStrategy.path_suffix = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
-S3Source.chunking.enabled = $CANTALOUPE_S3SOURCE_CHUNKING_ENABLED
-S3Source.chunking.chunk_size = $CANTALOUPE_S3SOURCE_CHUNKING_CHUNK_SIZE
-S3Source.chunking.cache.enabled = $CANTALOUPE_S3SOURCE_CHUNKING_CACHE_ENABLED
-S3Source.chunking.cache.max_size = $CANTALOUPE_S3SOURCE_CHUNKING_CACHE_MAX_SIZE
 
 #----------------------------------------
 # AzureStorageSource
@@ -113,19 +112,6 @@ AzureStorageSource.account_name = $CANTALOUPE_AZURESTORAGESOURCE_ACCOUNT_NAME
 AzureStorageSource.account_key = $CANTALOUPE_AZURESTORAGESOURCE_ACCOUNT_KEY
 AzureStorageSource.container_name = $CANTALOUPE_AZURESTORAGESOURCE_CONTAINER_NAME
 AzureStorageSource.lookup_strategy = $CANTALOUPE_AZURESTORAGESOURCE_LOOKUP_STRATEGY
-AzureStorageSource.chunking.enabled = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_ENABLED
-AzureStorageSource.chunking.chunk_size = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_CHUNK_SIZE
-AzureStorageSource.chunking.cache.enabled = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_CACHE_ENABLED
-AzureStorageSource.chunking.cache.max_size = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_CACHE_MAX_SIZE
-
-#----------------------------------------
-# JdbcSource
-#----------------------------------------
-
-JdbcSource.url = $CANTALOUPE_JDBCSOURCE_URL
-JdbcSource.user = $CANTALOUPE_JDBCSOURCE_USER
-JdbcSource.password = $CANTALOUPE_JDBCSOURCE_PASSWORD
-JdbcSource.connection_timeout = $CANTALOUPE_JDBCSOURCE_CONNECTION_TIMEOUT
 
 ###########################################################################
 # PROCESSORS
@@ -135,6 +121,11 @@ JdbcSource.connection_timeout = $CANTALOUPE_JDBCSOURCE_CONNECTION_TIMEOUT
 # Processor Selection
 #----------------------------------------
 
+# * If set to `AutomaticSelectionStrategy`, a "best" available processor
+#   will be selected per-request based on formats and installed
+#   dependencies.
+# * If set to `ManualSelectionStrategy`, a processor will be chosen based
+#   on the rest of the keys in this section.
 processor.selection_strategy = $CANTALOUPE_PROCESSOR_SELECTION_STRATEGY
 
 # Video Processor Selections
@@ -156,6 +147,16 @@ processor.ManualSelectionStrategy.png = $CANTALOUPE_MANUAL_PROCESSOR_PNG
 processor.ManualSelectionStrategy.tif = $CANTALOUPE_MANUAL_PROCESSOR_TIF
 processor.ManualSelectionStrategy.webp = $CANTALOUPE_MANUAL_PROCESSOR_WEBP
 
+processor.bmp = $CANTALOUPE_PROCESSOR_BMP
+processor.dcm = $CANTALOUPE_PROCESSOR_DCM
+processor.gif = $CANTALOUPE_PROCESSOR_GIF
+processor.jp2 = $CANTALOUPE_PROCESSOR_JP2
+processor.jpg = $CANTALOUPE_PROCESSOR_JPG
+processor.pdf = $CANTALOUPE_PROCESSOR_PDF
+processor.png = $CANTALOUPE_PROCESSOR_PNG
+processor.tif = $CANTALOUPE_PROCESSOR_TIF
+processor.webp = $CANTALOUPE_PROCESSOR_WEBP
+
 
 # Fall back to this processor for any formats not assigned above.
 processor.ManualSelectionStrategy.fallback = $CANTALOUPE_PROCESSOR_FALLBACK
@@ -167,7 +168,7 @@ processor.ManualSelectionStrategy.fallback = $CANTALOUPE_PROCESSOR_FALLBACK
 processor.stream_retrieval_strategy = $CANTALOUPE_PROCESSOR_STREAM_RETRIEVAL_STRATEGY
 processor.fallback_retrieval_strategy = $CANTALOUPE_PROCESSOR_FALLBACK_RETRIEVAL_STRATEGY
 processor.dpi = $CANTALOUPE_PROCESSOR_DPI
-#processor.normalize = $CANTALOUPE_PROCESSOR_NORMALIZE
+processor.normalize = $CANTALOUPE_PROCESSOR_NORMALIZE
 processor.background_color = $CANTALOUPE_PROCESSOR_BACKGROUND_COLOR
 processor.downscale_filter = $CANTALOUPE_PROCESSOR_DOWNSCALE_FILTER
 processor.upscale_filter = $CANTALOUPE_PROCESSOR_UPSCALE_FILTER
