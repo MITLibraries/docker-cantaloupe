@@ -1,4 +1,4 @@
-ARG CANTALOUPE_VERSION=4.1
+ARG CANTALOUPE_VERSION=4.1.1
 # LATEST_SAFE_COMMIT should be 'latest' or a commit hash; it is a defense against a broken upstream
 ARG COMMIT_REF=latest
 FROM maven:3.6.0-jdk-11 AS MAVEN_TOOL_CHAIN

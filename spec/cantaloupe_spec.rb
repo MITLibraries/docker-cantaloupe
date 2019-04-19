@@ -11,7 +11,7 @@ image_tag = reg_username + 'cantaloupe_' + version
 
 # First we build either a 'stable' or 'dev' Cantaloupe image, depending on our ENV property
 if version == 'stable'
-  expected_version = '4.1'
+  expected_version = '4.1.1'
 
   describe docker_build('.', tag: image_tag)
 elsif version == 'dev'
