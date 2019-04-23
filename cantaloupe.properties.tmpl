@@ -195,7 +195,7 @@ S3Source.secret_key = $S3SOURCE_SECRET_KEY
 # Tells S3Source how to look up objects. Allowed values are
 # `BasicLookupStrategy` and `ScriptLookupStrategy`. ScriptLookupStrategy
 # uses a delegate method for dynamic lookups; see the user manual.
-S3Source.lookup_strategy = $S3SOURCE_LOOKUP_STRATEGY
+S3Source.lookup_strategy = BasicLookupStrategy
 
 # !! Name of the bucket containing images to be served.
 S3Source.BasicLookupStrategy.bucket.name = $S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME
@@ -216,7 +216,7 @@ S3Source.chunking.chunk_size = 512K
 
 # The per-request chunk cache caches downloaded chunks in memory during
 # a request, and clears them when the request is complete.
-S3Source.chunking.cache.enabled = true
+S3Source.chunking.cache.enabled = false
 
 # Max per-request chunk cache size.
 S3Source.chunking.cache.max_size = 5M
