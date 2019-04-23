@@ -27,7 +27,7 @@ WORKDIR /tmp
 #    ldconfig /usr/local/lib && \
 #    rm -rf  ImageMagick*
 
-ARG CANTALOUPE_VERSION=4.1
+ARG CANTALOUPE_VERSION=4.1.1
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
 # Get and unpack Cantaloupe release archive
