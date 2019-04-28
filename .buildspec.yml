@@ -1,0 +1,48 @@
+version: 0.2
+
+env:
+  variables:
+    KAKADU_VERSION: "v7_A_7-01903E"
+    JRUBY_VERSION: "9.2.7.0"
+    MAVEN_REPO: "https://repo1.maven.org/maven2"
+    BUILD_VERSION: "stable"
+    RELEASES: "https://api.github.com/repos/medusa-project/cantaloupe/releases/latest"
+  parameter-store:
+    DOCKERHUB_USERNAME: "services.dockerhub.username"
+    DOCKERHUB_PASSWORD: "services.dockerhub.password"
+    REG_USERNAME: "services.docker.registry.username"
+    REG_PROJECT: "cantaloupe.docker.registry.project"
+    AUTH_TOKEN: "cantaloupe.version.auth.token"
+    KAKADU_VERSION: "kakadu.version"
+
+phases:
+  install:
+    commands:
+      - echo "Entered the install phase..."
+      - apt-get update -y -qq
+      - echo "Installing jruby..."
+      - wget -q -O /tmp/jruby.zip "$MAVEN_REPO/org/jruby/jruby-dist/$JRUBY_VERSION/jruby-dist-$JRUBY_VERSION-bin.zip"
+      - unzip -qq -d /tmp /tmp/jruby.zip
+      - echo "Setting PATH to include JRuby bins..."
+      - export PATH="/tmp/jruby-$JRUBY_VERSION/bin:$PATH"
+      - echo "Installing Bundler..."
+      - gem install bundler rake
+  build:
+    commands:
+      - echo "Entered the build phase..."
+      # Copy our Kakadu source code into the local dir so Docker can find it
+      - cp -r ${CODEBUILD_SRC_DIR_KAKADU}/${KAKADU_VERSION} kakadu
+      - bundle install
+      - bundle exec rake "test_${BUILD_VERSION}"
+  post_build:
+    commands:
+      - |-
+         if [ "$BUILD_VERSION" = 'stable' ] ; then
+           AUTH="Authorization: token $AUTH_TOKEN"
+           TAG="$(curl -S -s -H "$AUTH" "$RELEASES" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-)" ;
+         else
+           TAG="latest" ;
+         fi
+      - echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+      - docker tag "${REG_USERNAME}/cantaloupe_${BUILD_VERSION}" "${REG_USERNAME}/${REG_PROJECT}:${TAG}"
+      - docker push "${REG_USERNAME}/${REG_PROJECT}:${TAG}"

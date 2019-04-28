@@ -5,23 +5,31 @@ require 'spec_helper'
 # Define some basic variables
 reg_username = ENV.key?('REG_USERNAME') ? ENV['REG_USERNAME'] + '/' : ''
 version = ENV['CANTALOUPE_VERSION']
-docker_env = { 'ENDPOINT_ADMIN_SECRET' => 'secret', 'ENDPOINT_ADMIN_ENABLED' => 'true' }
 dockerfile = create_test_dockerfile(reg_username)
 image_tag = reg_username + 'cantaloupe_' + version
+
+docker_env = { 'ENDPOINT_ADMIN_SECRET' => 'secret', 'ENDPOINT_ADMIN_ENABLED' => 'true' }
 
 # First we build either a 'stable' or 'dev' Cantaloupe image, depending on our ENV property
 if version == 'stable'
   expected_version = '4.1.1'
+  kakadu_version = ENV.key?('KAKADU_VERSION') ? ' --build-arg KAKADU_VERSION=' + ENV['KAKADU_VERSION'] : ''
 
-  describe docker_build('.', tag: image_tag)
+  # Build the _stable version of cantaloupe by calling docker here via a system call
+  # this is required because we need to use --build-arg, and DockerSpec does not
+  # currently support --build-ARG, see https://github.com/zuazo/dockerspec/issues/14
+  success = system('docker build' + kakadu_version + ' -t ' + image_tag + ' .')
+  raise 'Failed to create stable docker-cantaloupe container for testing' unless success
 elsif version == 'dev'
-  commit_ref = ENV.key?('COMMIT_REF') ? ' --build-arg COMMIT_REF=' + ENV['COMMIT_REF'] + ' ' : ' '
+  kakadu_version = ENV.key?('KAKADU_VERSION') ? ' --build-arg KAKADU_VERSION=' + ENV['KAKADU_VERSION'] : ''
+  commit_ref = ENV.key?('COMMIT_REF') ? ' --build-arg COMMIT_REF=' + ENV['COMMIT_REF'] : ''
+  cantaloupe_version = ' --build-arg CANTALOUPE_VERSION=' + version
   expected_version = '5.0-SNAPSHOT'
 
   # Build the _dev version of cantaloupe by calling docker here via a system call
   # this is required because we need to use --build-arg, and DockerSpec does not
   # currently support --build-ARG, see https://github.com/zuazo/dockerspec/issues/14
-  success = system('docker build --build-arg CANTALOUPE_VERSION=' + version + commit_ref + '-t ' + image_tag + ' .')
+  success = system('docker build' + cantaloupe_version + kakadu_version + commit_ref + ' -t ' + image_tag + ' .')
   raise 'Failed to create dev docker-cantaloupe container for testing' unless success
 else
   raise('No CANTALOUPE_VERSION set')
@@ -30,7 +38,7 @@ end
 # Next, we build a test Cantaloupe image so we can run our tests against it.
 # We do this so we can install additional things that are useful for testing
 describe docker_build(dockerfile, tag: image_tag + '_test') do
-  it { is_expected.to have_expose '8182' }
+  it { is_expected.to have_expose('8182') }
 
   describe docker_run(image_tag + '_test', env: docker_env, wait: 60) do
     describe server(described_container) do
@@ -54,9 +62,9 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
 
       describe file('/etc/cantaloupe.properties') do
         it { is_expected.to be_file }
-        it { is_expected.to be_mode 644 }
-        it { is_expected.to be_owned_by 'cantaloupe' }
-        it { is_expected.to be_grouped_into 'root' }
+        it { is_expected.to be_mode(644) }
+        it { is_expected.to be_owned_by('cantaloupe') }
+        it { is_expected.to be_grouped_into('root') }
       end
 
       # dpkg -s libopenjp2-tools openjdk-11-jre-headless wget unzip graphicsmagick curl imagemagick ffmpeg
@@ -94,6 +102,12 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
 
       describe package('python') do
         it { is_expected.to be_installed.with_version('2.7.15-3') }
+      end
+
+      if ENV['KAKADU_VERSION']
+        describe command('kdu_compress -v') do
+          its(:stdout) { is_expected.to match(/v7.10.7/) }
+        end
       end
     end
   end

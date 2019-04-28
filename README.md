@@ -37,7 +37,8 @@ will run the container in the background until _docker stop_ is called, looking 
       --name melon -v testimages:/imageroot cantaloupe
 
 ### Run the container using docker-compose
-The current docker-compose.yml defines fixed environment variables in .docker-compose.env. As of now, the environment file contains configurations for the Admin endpoint. This compose file currently does not build a local image. It only grabs the latest tag on of uclalibrary/cantaloupe. Please change the SHARED_IMAGE_DIR env variable to your associated image path to be shared with the local cantaloupe container. Run the following to start the container with compose:
+
+The current docker-compose.yml defines fixed environment variables in .docker-compose.env. As of now, the environment file just contains configurations for the administrative endpoint. This compose file currently does not build a local image. It only grabs the latest tag on of uclalibrary/cantaloupe. Please change the SHARED_IMAGE_DIR env variable to your associated image path to be shared with the local cantaloupe container. Run the following to start the container with compose:
 
     export SHARED_IMAGE_DIR=/tmp/imageshare; docker-compose up -d
 
@@ -57,7 +58,16 @@ And, after that, you can type the following to run the tests:
 
 If you want to run just the tests for the "dev" or "stable" builds, you can run either `rake test_dev` or `rake test_stable`.
 
+### Optional stuff
 
-### Todo/Explore
+It is possible, if you have a kakadu license, to have the build also build and configure kakadu for use with your Cantaloupe server. To do this, you will need to place the source code directory that Kakadu Software has given you (it has your license as its name) into this project's `kakadu` directory. When you do this, and supply and additional build-arg to the build, you will cause kakadu to be installed and configured on your image. If you'd like a peak at the CodeBuild configuration we use to build kakadu, look at the `.buildspec.yml` file. Since kakadu is proprietary software and we can't make the source code available publicly, this build takes place in private on our AWS infrastructure.
+
+The additional build-arg that needs to be supplied to the build is `KAKADU_VERSION`. Its value would be your kakadu license code, which also has the release version of kakadu included in its name. This will look something like:
+
+    docker build --build-arg CANTALOUPE_VERSION=v7_A_7-21061X -t cantaloupe .
+
+If you encounter any problems with the build using your kakadu source code, we would be interested in hearing about them.
+
+### TODO
 
  Updating to ImageMagick 7. There is a commented out setup in the Dockerfile if we need to compile from source. Hopefully by the time ImageMagick 6 is no longer supported by Cantaloupe there will be an official Debian package we can use.

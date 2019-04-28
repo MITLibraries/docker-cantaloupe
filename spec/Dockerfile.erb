@@ -4,6 +4,6 @@ USER root
 
 # Install additional packages required for integration tests
 RUN apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get install -qq --no-install-recommends --no-upgrade net-tools iproute2 procps < /dev/null > /dev/null && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends --no-upgrade \
+      net-tools iproute2 procps < /dev/null > /dev/null && \
     rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
