@@ -2,8 +2,13 @@ FROM <%= reg_username %>cantaloupe_<%= cantaloupe_version %>
 
 USER root
 
-# Install additional packages required for integration tests
+# Install additional packages required for integration tests and packages used by our kakadu
+# build... the latter will have specific versions attached to them to confirm those versions
+# are still available.
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends --no-upgrade \
+      gcc=4:8.3.0-1ubuntu1.1 \
+      make=4.2.1-1.2 \
+      build-essential=12.5ubuntu2 \
       net-tools iproute2 procps < /dev/null > /dev/null && \
     rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*

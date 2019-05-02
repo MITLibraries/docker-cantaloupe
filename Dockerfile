@@ -41,9 +41,9 @@ WORKDIR /build/kakadu/"$KAKADU_VERSION"/make
 RUN if [ ! -z "$KAKADU_VERSION" ]; then \
       apt-get update -qq ; \
       DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends \
-        gcc=4:8.3.0-1ubuntu3 \
+        gcc=4:8.3.0-1ubuntu1.1 \
         make=4.2.1-1.2 \
-        build-essential=12.6ubuntu1 ; \
+        build-essential=12.5ubuntu2 ; \
       make -f Makefile-$BUILD_ARCH ; \
       mkdir /build/kakadu/lib ; \
       mkdir /build/kakadu/bin ; \
