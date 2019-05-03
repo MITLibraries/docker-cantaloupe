@@ -43,6 +43,9 @@ RUN if [ ! -z "$KAKADU_VERSION" ]; then \
       DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends \
         gcc=4:8.3.0-1ubuntu1.1 \
         make=4.2.1-1.2 \
+        libtiff-tools=4.0.9-6ubuntu0.2 \
+        libtiff5=4.0.9-6ubuntu0.2 \
+        libtiff5-dev=4.0.9-6ubuntu0.2 \
         build-essential=12.5ubuntu2 ; \
       make -f Makefile-$BUILD_ARCH ; \
       mkdir /build/kakadu/lib ; \
@@ -73,6 +76,9 @@ VOLUME /imageroot
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -qq --no-install-recommends \
+    libtiff-tools=4.0.9-6ubuntu0.2 \
+    libtiff5=4.0.9-6ubuntu0.2 \
+    libtiff5-dev=4.0.9-6ubuntu0.2 \
     libopenjp2-tools=2.3.0-1 \
     openjdk-11-jre-headless=11.0.2+9-3ubuntu1~18.10.3  \
     wget=1.19.5-1ubuntu1 \
