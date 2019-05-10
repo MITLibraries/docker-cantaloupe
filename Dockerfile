@@ -46,7 +46,7 @@ RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
       if [ "$COMMIT_REF" != 'latest' ] ; then \
         git checkout -b "$COMMIT_REF" "$COMMIT_REF" ; \
       fi && \
-      # Janky, but third party repos and transitive dependences what can you do?
+      # Janky, but third party repos and transitive dependences... what can you do?
       curl "${JAI_REPO}/javax/media/jai_codec/${JAI_VERSION}/${JAI_JAR}" > "/tmp/${JAI_JAR}" && \
       curl "${JAI_REPO}/javax/media/jai_core/${JAI_VERSION}/${JAI_CORE_JAR}" > "/tmp/${JAI_CORE_JAR}" && \
       curl "${JAI_REPO}/javax/media/jai_imageio/${JAI_IMAGEIO_VERSION}/${JAI_IMAGEIO_JAR}" > "/tmp/${JAI_IMAGEIO_JAR}" && \
@@ -70,29 +70,31 @@ FROM ubuntu:18.10 AS KAKADU_TOOL_CHAIN
 ARG KAKADU_VERSION
 ENV KAKADU_VERSION="$KAKADU_VERSION"
 ENV BUILD_ARCH=Linux-x86-64-gcc
+ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 
 COPY kakadu /build/kakadu/
 WORKDIR /build/kakadu/"$KAKADU_VERSION"/make
 RUN if [ ! -z "$KAKADU_VERSION" ]; then \
-      apt-get update -qq ; \
+      apt-get update -qq && \
       DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends \
+        openjdk-11-jdk-headless=11.0.2+9-3ubuntu1~18.10.3  \
         gcc=4:8.3.0-1ubuntu1.1 \
         make=4.2.1-1.2 \
         libtiff-tools=4.0.9-6ubuntu0.2 \
         libtiff5=4.0.9-6ubuntu0.2 \
         libtiff5-dev=4.0.9-6ubuntu0.2 \
-        build-essential=12.5ubuntu2 ; \
-      make -f Makefile-$BUILD_ARCH ; \
-      mkdir /build/kakadu/lib ; \
-      mkdir /build/kakadu/bin ; \
-      cp ../lib/$BUILD_ARCH/*.so /build/kakadu/lib ; \
-      cp ../bin/$BUILD_ARCH/kdu_compress /build/kakadu/bin ; \
-      cp ../bin/$BUILD_ARCH/kdu_expand /build/kakadu/bin ; \
+        build-essential=12.5ubuntu2 && \
+      make -f Makefile-$BUILD_ARCH && \
+      mkdir /build/kakadu/lib && \
+      mkdir /build/kakadu/bin && \
+      cp ../lib/$BUILD_ARCH/*.so /build/kakadu/lib && \
+      cp ../bin/$BUILD_ARCH/kdu_compress /build/kakadu/bin && \
+      cp ../bin/$BUILD_ARCH/kdu_expand /build/kakadu/bin && \
       cp ../bin/$BUILD_ARCH/kdu_jp2info /build/kakadu/bin ; \
     else \
-      mkdir -p /build/kakadu/lib ; \
-      mkdir -p /build/kakadu/bin ; \
-      touch /build/kakadu/lib/placeholder.so ; \
+      mkdir -p /build/kakadu/lib && \
+      mkdir -p /build/kakadu/bin && \
+      touch /build/kakadu/lib/placeholder.so && \
       touch /build/kakadu/bin/kdu_placeholder ; \
     fi
 
@@ -101,6 +103,7 @@ FROM ubuntu:18.10
 ARG CANTALOUPE_VERSION
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 ENV CONFIG_FILE="/etc/cantaloupe.properties"
+ENV JAVA_HEAP_SIZE="2g"
 
 EXPOSE 8182
 
@@ -134,10 +137,10 @@ WORKDIR /tmp
 COPY --from=MAVEN_TOOL_CHAIN "/build/Cantaloupe-$CANTALOUPE_VERSION.zip" "/tmp/Cantaloupe-$CANTALOUPE_VERSION.zip"
 
 WORKDIR /usr/local
-RUN unzip -qq "/tmp/Cantaloupe-$CANTALOUPE_VERSION.zip" ; \
-    ln -s cantaloupe-?.* cantaloupe ; \
-    rm -rf "/tmp/Cantaloupe-$CANTALOUPE_VERSION" ; \
-    rm "/tmp/Cantaloupe-$CANTALOUPE_VERSION.zip" ; \
+RUN unzip -qq "/tmp/Cantaloupe-$CANTALOUPE_VERSION.zip" && \
+    ln -s cantaloupe-?.* cantaloupe && \
+    rm -rf "/tmp/Cantaloupe-$CANTALOUPE_VERSION" && \
+    rm "/tmp/Cantaloupe-$CANTALOUPE_VERSION.zip" && \
     rm -rf "/usr/local/cantaloupe-$CANTALOUPE_VERSION/deps"
 
 # Put our Kakadu libs in a directory that's in the LD_LIBRARY_PATH
@@ -153,7 +156,7 @@ ENV LD_LIBRARY_PATH="/usr/lib/jni:${LD_LIBRARY_PATH}"
 
 # Clean up the placeholder files if we built without kakadu
 RUN if [ -z "$KAKADU_VERSION" ]; then \
-      rm -rf /build/kakadu/lib/placeholder.so ; \
+      rm -rf /build/kakadu/lib/placeholder.so && \
       rm -rf /build/kakadu/bin/kdu_placeholder ; \
     fi
 
@@ -161,12 +164,12 @@ RUN if [ -z "$KAKADU_VERSION" ]; then \
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY "configs/cantaloupe.properties.tmpl-$CANTALOUPE_VERSION" /etc/cantaloupe.properties.tmpl
 COPY "configs/cantaloupe.properties.default-$CANTALOUPE_VERSION" /etc/cantaloupe.properties.default
-RUN mkdir -p /var/log/cantaloupe /var/cache/cantaloupe ; \
-    touch "$CONFIG_FILE" ; \
+RUN mkdir -p /var/log/cantaloupe /var/cache/cantaloupe && \
+    touch "$CONFIG_FILE" && \
     chown -R cantaloupe /var/log/cantaloupe /var/cache/cantaloupe "$CONFIG_FILE" /usr/local/bin/docker-entrypoint.sh
 
 # Wrap things up with the entrypoint and command that the container runs
 USER cantaloupe
 WORKDIR /home/cantaloupe
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["sh", "-c", "java -Dcantaloupe.config=$CONFIG_FILE -Xmx2g -jar /usr/local/cantaloupe/cantaloupe-*.war"]
+CMD ["sh", "-c", "java -Dcantaloupe.config=$CONFIG_FILE -Xmx$JAVA_HEAP_SIZE -jar /usr/local/cantaloupe/cantaloupe-*.war"]

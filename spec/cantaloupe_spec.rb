@@ -108,6 +108,13 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
         describe command('kdu_compress -v') do
           its(:stdout) { is_expected.to match(/v7.10.7/) }
         end
+
+        describe file('/usr/lib/jni/libkdu_jni.so') do
+          it { is_expected.to be_file }
+          it { is_expected.to be_mode(755) }
+          it { is_expected.to be_owned_by('root') }
+          it { is_expected.to be_grouped_into('root') }
+        end
       end
     end
   end

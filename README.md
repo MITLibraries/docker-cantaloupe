@@ -64,7 +64,7 @@ It is possible, if you have a kakadu license, to have the build also build and c
 
 The additional build-arg that needs to be supplied to the build is `KAKADU_VERSION`. Its value would be your kakadu license code, which also has the release version of kakadu included in its name. This will look something like:
 
-    docker build --build-arg CANTALOUPE_VERSION=v7_A_7-21061X -t cantaloupe .
+    docker build --build-arg KAKADU_VERSION=v7_A_7-21061X -t cantaloupe .
 
 If you encounter any problems with the build using your kakadu source code, we would be interested in hearing about them.
 
