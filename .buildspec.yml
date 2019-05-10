@@ -6,7 +6,7 @@ env:
     JRUBY_VERSION: "9.2.7.0"
     MAVEN_REPO: "https://repo1.maven.org/maven2"
     BUILD_VERSION: "stable"
-    RELEASES: "https://api.github.com/repos/medusa-project/cantaloupe/releases/latest"
+    RELEASES: "https://api.github.com/repos/cantaloupe-project/cantaloupe/releases/latest"
   parameter-store:
     DOCKERHUB_USERNAME: "services.dockerhub.username"
     DOCKERHUB_PASSWORD: "services.dockerhub.password"

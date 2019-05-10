@@ -7,26 +7,61 @@ ARG KAKADU_VERSION=
 # COMMIT_REF should be 'latest' or a commit hash; it is a defense against a broken upstream
 ARG COMMIT_REF="latest"
 
+# It is not like there will ever be another JAI version, but...
+ARG JAI_VERSION="1.1.3"
+ARG JAI_IMAGEIO_VERSION="1.1"
+
+# Transitive dependencies that Cantaloupe needs to build
+ARG JAI_JAR="jai_codec-1.1.3.jar"
+ARG JAI_CORE_JAR="jai_core-1.1.3.jar"
+ARG JAI_IMAGEIO_JAR="jai_imageio-1.1.jar"
+
+# Boo third party repos, but transitive deps are transitive deps :-(
+ARG JAI_REPO="https://nexus.geomatys.com/repository/geotoolkit"
+
 # We do a multi-stage build; the first stage builds the Cantaloupe code
 FROM maven:3.6.0-jdk-11 AS MAVEN_TOOL_CHAIN
 
 ARG CANTALOUPE_VERSION
 ARG COMMIT_REF
+ARG JAI_JAR
+ARG JAI_CORE_JAR
+ARG JAI_IMAGEIO_JAR
+ARG JAI_REPO
+ARG JAI_VERSION
+ARG JAI_IMAGEIO_VERSION
 ENV CANTALOUPE_VERSION="$CANTALOUPE_VERSION"
 ENV COMMIT_REF="$COMMIT_REF"
-ENV CANTALOUPE_RELEASES="https://github.com/medusa-project/cantaloupe/releases/download"
+ENV JAI_JAR="$JAI_JAR"
+ENV JAI_CORE_JAR="$JAI_CORE_JAR"
+ENV JAI_IMAGEIO_JAR="$JAI_IMAGEIO_JAR"
+ENV JAI_REPO="$JAI_REPO"
+ENV JAI_VERSION="$JAI_VERSION"
+ENV JAI_IMAGEIO_VERSION="$JAI_IMAGEIO_VERSION"
+ENV CANTALOUPE_RELEASES="https://github.com/cantaloupe-project/cantaloupe/releases/download"
 
 WORKDIR /build/cantaloupe
 RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
-      git clone --quiet https://github.com/medusa-project/cantaloupe.git . && \
+      git clone --quiet https://github.com/cantaloupe-project/cantaloupe.git . && \
       if [ "$COMMIT_REF" != 'latest' ] ; then \
         git checkout -b "$COMMIT_REF" "$COMMIT_REF" ; \
       fi && \
+      # Janky, but third party repos and transitive dependences what can you do?
+      curl "${JAI_REPO}/javax/media/jai_codec/${JAI_VERSION}/${JAI_JAR}" > "/tmp/${JAI_JAR}" && \
+      curl "${JAI_REPO}/javax/media/jai_core/${JAI_VERSION}/${JAI_CORE_JAR}" > "/tmp/${JAI_CORE_JAR}" && \
+      curl "${JAI_REPO}/javax/media/jai_imageio/${JAI_IMAGEIO_VERSION}/${JAI_IMAGEIO_JAR}" > "/tmp/${JAI_IMAGEIO_JAR}" && \
+      mvn -q install:install-file -Dfile="/tmp/${JAI_JAR}" -DgroupId="javax.media" \
+        -DartifactId="jai_codec" -Dversion="$JAI_VERSION" -Dpackaging="jar" && \
+      mvn -q install:install-file -Dfile="/tmp/${JAI_CORE_JAR}" -DgroupId="javax.media" \
+        -DartifactId="jai_core" -Dversion="$JAI_VERSION" -Dpackaging="jar" && \
+      mvn -q install:install-file -Dfile="/tmp/${JAI_IMAGEIO_JAR}" -DgroupId="javax.media" \
+        -DartifactId="jai_imageio" -Dversion="$JAI_IMAGEIO_VERSION" -Dpackaging="jar" && \
+      # end jank
       mvn -DskipTests=true -q clean package && \
       mv target/cantaloupe-?.?-SNAPSHOT.zip "/build/Cantaloupe-${CANTALOUPE_VERSION}.zip" ; \
     else \
-      curl -o "../Cantaloupe-$CANTALOUPE_VERSION.zip" -s -L \
-        "$CANTALOUPE_RELEASES/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip" ; \
+      curl -o "../Cantaloupe-${CANTALOUPE_VERSION}.zip" -s -L \
+        "${CANTALOUPE_RELEASES}/v${CANTALOUPE_VERSION}/Cantaloupe-${CANTALOUPE_VERSION}.zip" ; \
     fi
 
 # The second stage of our multi-stage build builds the kakadu libraries and binaries
@@ -81,12 +116,12 @@ RUN apt-get update -qq && \
     libtiff5-dev=4.0.9-6ubuntu0.2 \
     libopenjp2-tools=2.3.0-1 \
     openjdk-11-jre-headless=11.0.2+9-3ubuntu1~18.10.3  \
-    wget=1.19.5-1ubuntu1 \
+    wget=1.19.5-1ubuntu1.1 \
     unzip=6.0-21ubuntu1 \
     graphicsmagick=1.3.30+hg15796-1 \
     curl=7.61.0-1ubuntu2.3 \
     imagemagick=8:6.9.10.8+dfsg-1ubuntu2 \
-    ffmpeg=7:4.0.2-2 \
+    ffmpeg=7:4.0.4-0ubuntu1 \
     python=2.7.15-3 \
     < /dev/null > /dev/null && \
     rm -rf /var/lib/apt/lists/*

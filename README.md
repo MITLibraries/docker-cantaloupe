@@ -1,6 +1,6 @@
 ## Docker Container for Cantaloupe IIIF server &nbsp;[![Build Status](https://travis-ci.com/UCLALibrary/docker-cantaloupe.svg?branch=master)](https://travis-ci.com/UCLALibrary/docker-cantaloupe) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0339f09b793a4f3ea37e09f5e1c3b66b)](https://www.codacy.com/app/UCLALibrary/docker-cantaloupe?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=UCLALibrary/docker-cantaloupe&amp;utm_campaign=Badge_Grade)
 
-Rudimentary containerization of the [Cantaloupe server](https://medusa-project.github.io/cantaloupe), which bakes in a local filesystem 'resolver' (the means by which requested images are found) to a Docker data volume.
+Rudimentary containerization of the [Cantaloupe server](https://cantaloupe-project.github.io/cantaloupe), which bakes in a local filesystem 'resolver' (the means by which requested images are found) to a Docker data volume.
 
 ### Create the image
 

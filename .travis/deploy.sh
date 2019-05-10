@@ -18,7 +18,7 @@ if [[ "$TRAVIS_BRANCH" == 'master' && "$TRAVIS_PULL_REQUEST" == 'false' ]]; then
   # What tag are we building, latest stable or the latest dev branch?
   if [[ "$CANTALOUPE_VERSION" != 'dev' ]]; then
     TAG=$(curl -S -H "Authorization: token $AUTH_TOKEN" \
-      "https://api.github.com/repos/medusa-project/cantaloupe/releases/latest" \
+      "https://api.github.com/repos/cantaloupe-project/cantaloupe/releases/latest" \
       | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-)
   else
     TAG='latest'

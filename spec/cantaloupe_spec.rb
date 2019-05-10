@@ -77,7 +77,7 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
       end
 
       describe package('wget') do
-        it { is_expected.to be_installed.with_version('1.19.5-1ubuntu1') }
+        it { is_expected.to be_installed.with_version('1.19.5-1ubuntu1.1') }
       end
 
       describe package('unzip') do
@@ -97,7 +97,7 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
       end
 
       describe package('ffmpeg') do
-        it { is_expected.to be_installed.with_version('7:4.0.2-2') }
+        it { is_expected.to be_installed.with_version('7:4.0.4-0ubuntu1') }
       end
 
       describe package('python') do
