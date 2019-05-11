@@ -7,38 +7,26 @@ ARG KAKADU_VERSION=
 # COMMIT_REF should be 'latest' or a commit hash; it is a defense against a broken upstream
 ARG COMMIT_REF="latest"
 
-# It is not like there will ever be another JAI version, but...
-ARG JAI_VERSION="1.1.3"
-ARG JAI_IMAGEIO_VERSION="1.1"
-
-# Transitive dependencies that Cantaloupe needs to build
-ARG JAI_JAR="jai_codec-1.1.3.jar"
-ARG JAI_CORE_JAR="jai_core-1.1.3.jar"
-ARG JAI_IMAGEIO_JAR="jai_imageio-1.1.jar"
-
-# Boo third party repos, but transitive deps are transitive deps :-(
-ARG JAI_REPO="https://nexus.geomatys.com/repository/geotoolkit"
-
 # We do a multi-stage build; the first stage builds the Cantaloupe code
 FROM maven:3.6.0-jdk-11 AS MAVEN_TOOL_CHAIN
 
 ARG CANTALOUPE_VERSION
 ARG COMMIT_REF
-ARG JAI_JAR
-ARG JAI_CORE_JAR
-ARG JAI_IMAGEIO_JAR
-ARG JAI_REPO
-ARG JAI_VERSION
-ARG JAI_IMAGEIO_VERSION
+
+# Cantaloupe configuration stuff
 ENV CANTALOUPE_VERSION="$CANTALOUPE_VERSION"
 ENV COMMIT_REF="$COMMIT_REF"
-ENV JAI_JAR="$JAI_JAR"
-ENV JAI_CORE_JAR="$JAI_CORE_JAR"
-ENV JAI_IMAGEIO_JAR="$JAI_IMAGEIO_JAR"
-ENV JAI_REPO="$JAI_REPO"
-ENV JAI_VERSION="$JAI_VERSION"
-ENV JAI_IMAGEIO_VERSION="$JAI_IMAGEIO_VERSION"
 ENV CANTALOUPE_RELEASES="https://github.com/cantaloupe-project/cantaloupe/releases/download"
+
+# All this JAI stuff is never going to change
+ENV JAI_JAR="jai_codec-1.1.3.jar"
+ENV JAI_CORE_JAR="jai_core-1.1.3.jar"
+ENV JAI_IMAGEIO_JAR="jai_imageio-1.1.jar"
+ENV JAI_VERSION="1.1.3"
+ENV JAI_IMAGEIO_VERSION="1.1"
+
+# It's not great to use a third party repo but we pick a reputable one if we have to
+ENV JAI_REPO="https://nexus.geomatys.com/repository/geotoolkit"
 
 WORKDIR /build/cantaloupe
 RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
@@ -46,6 +34,7 @@ RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
       if [ "$COMMIT_REF" != 'latest' ] ; then \
         git checkout -b "$COMMIT_REF" "$COMMIT_REF" ; \
       fi && \
+
       # Janky, but third party repos and transitive dependences... what can you do?
       curl "${JAI_REPO}/javax/media/jai_codec/${JAI_VERSION}/${JAI_JAR}" > "/tmp/${JAI_JAR}" && \
       curl "${JAI_REPO}/javax/media/jai_core/${JAI_VERSION}/${JAI_CORE_JAR}" > "/tmp/${JAI_CORE_JAR}" && \
@@ -56,7 +45,7 @@ RUN if [ "$CANTALOUPE_VERSION" = 'dev' ] ; then \
         -DartifactId="jai_core" -Dversion="$JAI_VERSION" -Dpackaging="jar" && \
       mvn -q install:install-file -Dfile="/tmp/${JAI_IMAGEIO_JAR}" -DgroupId="javax.media" \
         -DartifactId="jai_imageio" -Dversion="$JAI_IMAGEIO_VERSION" -Dpackaging="jar" && \
-      # end jank
+
       mvn -DskipTests=true -q clean package && \
       mv target/cantaloupe-?.?-SNAPSHOT.zip "/build/Cantaloupe-${CANTALOUPE_VERSION}.zip" ; \
     else \
