@@ -73,7 +73,7 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
       end
 
       describe package('openjdk-11-jre-headless') do
-        it { is_expected.to be_installed.with_version('11.0.2+9-3ubuntu1~18.10.3') }
+        it { is_expected.to be_installed.with_version('11.0.3+7-1ubuntu2~18.10.1') }
       end
 
       describe package('wget') do
@@ -89,7 +89,7 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
       end
 
       describe package('curl') do
-        it { is_expected.to be_installed.with_version('7.61.0-1ubuntu2.3') }
+        it { is_expected.to be_installed.with_version('7.61.0-1ubuntu2.4') }
       end
 
       describe package('imagemagick') do

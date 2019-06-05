@@ -66,7 +66,7 @@ WORKDIR /build/kakadu/"$KAKADU_VERSION"/make
 RUN if [ ! -z "$KAKADU_VERSION" ]; then \
       apt-get update -qq && \
       DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends \
-        openjdk-11-jdk-headless=11.0.2+9-3ubuntu1~18.10.3  \
+        openjdk-11-jdk-headless=11.0.3+7-1ubuntu2~18.10.1  \
         gcc=4:8.3.0-1ubuntu1.1 \
         make=4.2.1-1.2 \
         libtiff-tools=4.0.9-6ubuntu0.2 \
@@ -107,11 +107,11 @@ RUN apt-get update -qq && \
     libtiff5=4.0.9-6ubuntu0.2 \
     libtiff5-dev=4.0.9-6ubuntu0.2 \
     libopenjp2-tools=2.3.0-1 \
-    openjdk-11-jre-headless=11.0.2+9-3ubuntu1~18.10.3  \
+    openjdk-11-jre-headless=11.0.3+7-1ubuntu2~18.10.1  \
     wget=1.19.5-1ubuntu1.1 \
     unzip=6.0-21ubuntu1 \
     graphicsmagick=1.3.30+hg15796-1 \
-    curl=7.61.0-1ubuntu2.3 \
+    curl=7.61.0-1ubuntu2.4 \
     imagemagick=8:6.9.10.8+dfsg-1ubuntu2 \
     ffmpeg=7:4.0.4-0ubuntu1 \
     python=2.7.15-3 \

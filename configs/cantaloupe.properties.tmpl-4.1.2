@@ -1,0 +1,390 @@
+###########################################################################
+# Template configuration file for Cantaloupe
+#
+# Most changes will take effect without restarting. Those that won't are
+# marked with "!!".
+###########################################################################
+
+###########################################################################
+# GENERAL SETTINGS
+###########################################################################
+
+temp_pathname = $CANTALOUPE_TEMP_PATHNAME
+http.enabled = $CANTALOUPE_HTTP_ENABLED
+http.host = $CANTALOUPE_HTTP_HOST
+http.port = $CANTALOUPE_HTTP_PORT
+http.http2.enabled = $CANTALOUPE_HTTP_HTTP2_ENABLED
+https.enabled = $CANTALOUPE_HTTPS_ENABLED
+https.host = $CANTALOUPE_HTTPS_HOST
+https.port = $CANTALOUPE_HTTPS_PORT
+https.http2.enabled = $CANTALOUPE_HTTPS_HTTP2_ENABLED
+https.key_store_type = $CANTALOUPE_HTTPS_KEY_STORE_TYPE
+https.key_store_password = $CANTALOUPE_HTTPS_KEY_STORE_PASSWORD
+https.key_store_path = $CANTALOUPE_HTTPS_KEY_STORE_PATH
+https.key_password = $CANTALOUPE_HTTPS_KEY_PASSWORD
+http.accept_queue_limit = $CANTALOUPE_HTTP_ACCEPT_QUEUE_LIMIT
+base_uri = $CANTALOUPE_BASE_URI
+slash_substitute = $CANTALOUPE_SLASH_SUBSTITUTE
+max_pixels = $CANTALOUPE_MAX_PIXELS
+print_stack_trace_on_error_pages = $CANTALOUPE_PRINT_STACK_TRACE_ON_ERROR_PAGE
+
+
+###########################################################################
+# DELEGATE SCRIPT
+###########################################################################
+
+delegate_script.enabled = $CANTALOUPE_DELEGATE_SCRIPT_ENABLED
+delegate_script.pathname = $CANTALOUPE_DELEGATE_SCRIPT_PATHNAME
+delegate_script.cache.enabled = $CANTALOUPE_DELEGATE_SCRIPT_CACHE_ENABLED
+
+###########################################################################
+# ENDPOINTS
+###########################################################################
+
+endpoint.public.auth.basic.enabled = $CANTALOUPE_ENDPOINT_PUBLIC_AUTH_BASIC_ENABLED
+endpoint.public.auth.basic.username = $CANTALOUPE_ENDPOINT_PUBLIC_AUTH_BASIC_USERNAME
+endpoint.public.auth.basic.secret = $CANTALOUPE_ENDPOINT_PUBLIC_AUTH_BASIC_SECRET
+endpoint.iiif.1.enabled = $CANTALOUPE_ENDPOINT_IIIF_1_ENABLED
+endpoint.iiif.2.enabled = $CANTALOUPE_ENDPOINT_IIIF_2_ENABLED
+endpoint.iiif.content_disposition = $CANTALOUPE_ENDPOINT_IIIF_CONTENT_DISPOSITION
+endpoint.iiif.min_size = $CANTALOUPE_ENDPOINT_IIIF_MIN_SIZE
+endpoint.iiif.min_tile_size = $CANTALOUPE_ENDPOINT_IIIF_MIN_TILE_SIZE
+endpoint.iiif.2.restrict_to_sizes = $CANTALOUPE_ENDPOINT_IIIF_2_RESTRICT_TO_SIZES
+endpoint.admin.enabled = $CANTALOUPE_ENDPOINT_ADMIN_ENABLED
+endpoint.admin.username = $CANTALOUPE_ENDPOINT_ADMIN_USERNAME
+endpoint.admin.secret = $CANTALOUPE_ENDPOINT_ADMIN_SECRET
+endpoint.api.enabled = $CANTALOUPE_ENDPOINT_API_ENABLED
+endpoint.api.username = $CANTALOUPE_ENDPOINT_API_USERNAME
+endpoint.api.secret = $CANTALOUPE_ENDPOINT_API_SECRET
+
+###########################################################################
+# SOURCES
+###########################################################################
+
+source.static = $CANTALOUPE_SOURCE_STATIC
+source.delegate = $CANTALOUPE_SOURCE_DELEGATE
+
+#----------------------------------------
+# FilesystemSource
+#----------------------------------------
+
+FilesystemSource.lookup_strategy = $CANTALOUPE_FILESYSTEMSOURCE_LOOKUP_STRATEGY
+FilesystemSource.BasicLookupStrategy.path_prefix = $CANTALOUPE_FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
+FilesystemSource.BasicLookupStrategy.path_suffix = $CANTALOUPE_FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
+
+#----------------------------------------
+# HttpSource
+#----------------------------------------
+
+HttpSource.allow_insecure = $CANTALOUPE_HTTPSOURCE_ALLOW_INSECURE
+HttpSource.request_timeout = $CANTALOUPE_HTTPSOURCE_REQUEST_TIMEOUT
+HttpSource.lookup_strategy = $CANTALOUPE_HTTPSOURCE_LOOKUP_STRATEGY
+HttpSource.BasicLookupStrategy.url_prefix = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_PREFIX
+HttpSource.BasicLookupStrategy.url_suffix = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_URL_SUFFIX
+HttpSource.BasicLookupStrategy.auth.basic.username = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_USERNAME
+HttpSource.BasicLookupStrategy.auth.basic.secret = $CANTALOUPE_HTTPSOURCE_BASICLOOKUPSTRATEGY_AUTH_BASIC_SECRET
+HttpSource.chunking.enabled = $CANTALOUPE_HTTPSOURCE_CHUNKING_ENABLED
+HttpSource.chunking.chunk_size = $CANTALOUPE_HTTPSOURCE_CHUNKING_CHUNK_SIZE
+HttpSource.chunking.cache.enabled = $CANTALOUPE_HTTPSOURCE_CHUNKING_CACHE_ENABLED
+HttpSource.chunking.cache.max_size = $CANTALOUPE_HTTPSOURCE_CHUNKING_CACHE_MAX_SIZE
+
+#----------------------------------------
+# S3Source
+#----------------------------------------
+
+S3Source.endpoint = $CANTALOUPE_S3SOURCE_ENDPOINT
+S3Source.access_key_id = $CANTALOUPE_S3SOURCE_ACCESS_KEY_ID
+S3Source.secret_key = $CANTALOUPE_S3SOURCE_SECRET_KEY
+S3Source.max_connections = $CANTALOUPE_S3SOURCE_MAX_CONNECTIONS
+S3Source.lookup_strategy = $CANTALOUPE_S3SOURCE_LOOKUP_STRATEGY
+S3Source.BasicLookupStrategy.bucket.name = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME
+S3Source.BasicLookupStrategy.path_prefix = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX
+S3Source.BasicLookupStrategy.path_suffix = $CANTALOUPE_S3SOURCE_BASICLOOKUPSTRATEGY_PATH_SUFFIX
+S3Source.chunking.enabled = $CANTALOUPE_S3SOURCE_CHUNKING_ENABLED
+S3Source.chunking.chunk_size = $CANTALOUPE_S3SOURCE_CHUNKING_CHUNK_SIZE
+S3Source.chunking.cache.enabled = $CANTALOUPE_S3SOURCE_CHUNKING_CACHE_ENABLED
+S3Source.chunking.cache.max_size = $CANTALOUPE_S3SOURCE_CHUNKING_CACHE_MAX_SIZE
+
+#----------------------------------------
+# AzureStorageSource
+#----------------------------------------
+
+AzureStorageSource.account_name = $CANTALOUPE_AZURESTORAGESOURCE_ACCOUNT_NAME
+AzureStorageSource.account_key = $CANTALOUPE_AZURESTORAGESOURCE_ACCOUNT_KEY
+AzureStorageSource.container_name = $CANTALOUPE_AZURESTORAGESOURCE_CONTAINER_NAME
+AzureStorageSource.lookup_strategy = $CANTALOUPE_AZURESTORAGESOURCE_LOOKUP_STRATEGY
+AzureStorageSource.chunking.enabled = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_ENABLED
+AzureStorageSource.chunking.chunk_size = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_CHUNK_SIZE
+AzureStorageSource.chunking.cache.enabled = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_CACHE_ENABLED
+AzureStorageSource.chunking.cache.max_size = $CANTALOUPE_AZURESTORAGESOURCE_CHUNKING_CACHE_MAX_SIZE
+
+#----------------------------------------
+# JdbcSource
+#----------------------------------------
+
+JdbcSource.url = $CANTALOUPE_JDBCSOURCE_URL
+JdbcSource.user = $CANTALOUPE_JDBCSOURCE_USER
+JdbcSource.password = $CANTALOUPE_JDBCSOURCE_PASSWORD
+JdbcSource.connection_timeout = $CANTALOUPE_JDBCSOURCE_CONNECTION_TIMEOUT
+
+###########################################################################
+# PROCESSORS
+###########################################################################
+
+#----------------------------------------
+# Processor Selection
+#----------------------------------------
+
+processor.selection_strategy = $CANTALOUPE_PROCESSOR_SELECTION_STRATEGY
+
+# Video Processor Selections
+processor.ManualSelectionStrategy.avi = $CANTALOUPE_MANUAL_PROCESSOR_AVI
+processor.ManualSelectionStrategy.flv = $CANTALOUPE_MANUAL_PROCESSOR_FLV
+processor.ManualSelectionStrategy.mov = $CANTALOUPE_MANUAL_PROCESSOR_MOV
+processor.ManualSelectionStrategy.mp4 = $CANTALOUPE_MANUAL_PROCESSOR_MP4
+processor.ManualSelectionStrategy.mpg = $CANTALOUPE_MANUAL_PROCESSOR_MPG
+processor.ManualSelectionStrategy.webm = $CANTALOUPE_MANUAL_PROCESSOR_WEBM
+
+# Image Processor Selections
+processor.ManualSelectionStrategy.bmp = $CANTALOUPE_MANUAL_PROCESSOR_BMP
+processor.ManualSelectionStrategy.dcm = $CANTALOUPE_MANUAL_PROCESSOR_DCM
+processor.ManualSelectionStrategy.gif = $CANTALOUPE_MANUAL_PROCESSOR_GIF
+processor.ManualSelectionStrategy.jp2 = $CANTALOUPE_MANUAL_PROCESSOR_JP2
+processor.ManualSelectionStrategy.jpg = $CANTALOUPE_MANUAL_PROCESSOR_JPG
+processor.ManualSelectionStrategy.pdf = $CANTALOUPE_MANUAL_PROCESSOR_PDF
+processor.ManualSelectionStrategy.png = $CANTALOUPE_MANUAL_PROCESSOR_PNG
+processor.ManualSelectionStrategy.tif = $CANTALOUPE_MANUAL_PROCESSOR_TIF
+processor.ManualSelectionStrategy.webp = $CANTALOUPE_MANUAL_PROCESSOR_WEBP
+
+
+# Fall back to this processor for any formats not assigned above.
+processor.ManualSelectionStrategy.fallback = $CANTALOUPE_PROCESSOR_FALLBACK
+
+#----------------------------------------
+# Global Processor Configuration
+#----------------------------------------
+
+processor.stream_retrieval_strategy = $CANTALOUPE_PROCESSOR_STREAM_RETRIEVAL_STRATEGY
+processor.fallback_retrieval_strategy = $CANTALOUPE_PROCESSOR_FALLBACK_RETRIEVAL_STRATEGY
+processor.dpi = $CANTALOUPE_PROCESSOR_DPI
+#processor.normalize = $CANTALOUPE_PROCESSOR_NORMALIZE
+processor.background_color = $CANTALOUPE_PROCESSOR_BACKGROUND_COLOR
+processor.downscale_filter = $CANTALOUPE_PROCESSOR_DOWNSCALE_FILTER
+processor.upscale_filter = $CANTALOUPE_PROCESSOR_UPSCALE_FILTER
+processor.sharpen = $CANTALOUPE_PROCESSOR_SHARPEN
+processor.metadata.preserve = $CANTALOUPE_PROCESSOR_METADATA_PRESERVE
+processor.metadata.respect_orientation = $CANTALOUPE_PROCESSOR_METADATA_RESPECT_ORIENTATION
+processor.jpg.progressive = $CANTALOUPE_PROCESSOR_JPG_PROGRESSIVE
+processor.jpg.quality = $CANTALOUPE_PROCESSOR_JPG_QUALITY
+processor.tif.compression = $CANTALOUPE_PROCESSOR_TIF_COMPRESSION
+
+#----------------------------------------
+# ImageIO Plugin Preferences
+#----------------------------------------
+
+processor.imageio.bmp.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_BMP_READER
+processor.imageio.gif.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_GIF_READER
+processor.imageio.gif.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_GIF_WRITER
+processor.imageio.jpg.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_JPG_READER
+processor.imageio.jpg.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_JPG_WRITER
+processor.imageio.png.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_PNG_READER
+processor.imageio.png.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_PNG_WRITER
+processor.imageio.tif.reader = $CANTALOUPE_PROCESSOR_IMAGEIO_TIF_READER
+processor.imageio.tif.writer = $CANTALOUPE_PROCESSOR_IMAGEIO_TIF_WRITER
+
+#----------------------------------------
+# FfmpegProcessor
+#----------------------------------------
+
+FfmpegProcessor.path_to_binaries = $CANTALOUPE_FFMPEGPROCESSOR_PATH_TO_BINARIES
+
+#----------------------------------------
+# GraphicsMagickProcessor
+#----------------------------------------
+
+GraphicsMagickProcessor.path_to_binaries = $CANTALOUPE_GRAPHICSMAGICKPROCESSOR_PATH_TO_BINARIES
+
+#----------------------------------------
+# ImageMagickProcessor
+#----------------------------------------
+
+ImageMagickProcessor.path_to_binaries = $CANTALOUPE_IMAGEMAGICKPROCESSOR_PATH_TO_BINARIES
+
+#----------------------------------------
+# KakaduDemoProcessor
+#----------------------------------------
+
+KakaduDemoProcessor.path_to_binaries = $CANTALOUPE_KAKADUDEMOPROCESSOR_PATH_TO_BINARIES
+
+#----------------------------------------
+# OpenJpegProcessor
+#----------------------------------------
+
+OpenJpegProcessor.path_to_binaries = $CANTALOUPE_OPENJPEGPROCESSOR_PATH_TO_BINARIES
+
+###########################################################################
+# CLIENT-SIDE CACHING
+###########################################################################
+
+cache.client.enabled = $CANTALOUPE_CACHE_CLIENT_ENABLED
+cache.client.max_age = $CANTALOUPE_CACHE_CLIENT_MAX_AGE
+cache.client.shared_max_age = $CANTALOUPE_CACHE_CLIENT_SHARED_MAX_AGE
+cache.client.public = $CANTALOUPE_CACHE_CLIENT_PUBLIC
+cache.client.private = $CANTALOUPE_CACHE_CLIENT_PRIVATE
+cache.client.no_cache = $CANTALOUPE_CACHE_CLIENT_NO_CACHE
+cache.client.no_store = $CANTALOUPE_CACHE_CLIENT_NO_STORE
+cache.client.must_revalidate = $CANTALOUPE_CACHE_CLIENT_MUST_REVALIDATE
+cache.client.proxy_revalidate = $CANTALOUPE_CACHE_CLIENT_PROXY_REVALIDATE
+cache.client.no_transform = $CANTALOUPE_CACHE_CLIENT_NO_TRANSFORM
+
+###########################################################################
+# SERVER-SIDE CACHING
+###########################################################################
+
+cache.server.source = $CANTALOUPE_CACHE_SERVER_SOURCE
+cache.server.source.ttl_seconds = $CANTALOUPE_CACHE_SERVER_SOURCE_TTL_SECONDS
+cache.server.derivative.enabled = $CANTALOUPE_CACHE_SERVER_DERIVATIVE_ENABLED
+cache.server.derivative = $CANTALOUPE_CACHE_SERVER_DERIVATIVE
+cache.server.derivative.ttl_seconds = $CANTALOUPE_CACHE_SERVER_DERIVATIVE_TTL_SECONDS
+cache.server.info.enabled = $CANTALOUPE_CACHE_SERVER_INFO_ENABLED
+cache.server.purge_missing = $CANTALOUPE_CACHE_SERVER_PURGE_MISSING
+cache.server.resolve_first = $CANTALOUPE_CACHE_SERVER_RESOLVE_FIRST
+cache.server.worker.enabled = $CANTALOUPE_CACHE_SERVER_WORKER_ENABLED
+cache.server.worker.interval = $CANTALOUPE_CACHE_SERVER_WORKER_INTERVAL
+
+#----------------------------------------
+# FilesystemCache
+#----------------------------------------
+
+FilesystemCache.pathname = $CANTALOUPE_FILESYSTEMCACHE_PATHNAME
+FilesystemCache.dir.depth = $CANTALOUPE_FILESYSTEMCACHE_DIR_DEPTH
+FilesystemCache.dir.name_length = $CANTALOUPE_FILESYSTEMCACHE_DIR_NAME_LENGTH
+
+#----------------------------------------
+# HeapCache
+#----------------------------------------
+
+HeapCache.target_size = $CANTALOUPE_HEAPCACHE_TARGET_SIZE
+HeapCache.persist = $CANTALOUPE_HEAPCACHE_PERSIST
+HeapCache.persist.filesystem.pathname = $CANTALOUPE_HEAPCACHE_PERSIST_FILESYSTEM_PATHNAME
+
+#----------------------------------------
+# JdbcCache
+#----------------------------------------
+
+JdbcCache.url = $CANTALOUPE_JDBCCACHE_URL
+JdbcCache.user = $CANTALOUPE_JDBCCACHE_USER
+JdbcCache.password = $CANTALOUPE_JDBCCACHE_PASSWORD
+JdbcCache.connection_timeout = $CANTALOUPE_JDBCCACHE_CONNECTION_TIMEOUT
+JdbcCache.derivative_image_table = $CANTALOUPE_JDBCCACHE_DERIVATIVE_IMAGE_TABLE
+JdbcCache.info_table = $CANTALOUPE_JDBCCACHE_INFO_TABLE
+
+#----------------------------------------
+# S3Cache
+#----------------------------------------
+
+S3Cache.endpoint = $CANTALOUPE_S3CACHE_ENDPOINT
+S3Cache.access_key_id = $CANTALOUPE_S3CACHE_ACCESS_KEY_ID
+S3Cache.secret_key = $CANTALOUPE_S3CACHE_SECRET_KEY
+S3Cache.bucket.name = $CANTALOUPE_S3CACHE_BUCKET_NAME
+S3Cache.object_key_prefix = $CANTALOUPE_S3CACHE_OBJECT_KEY_PREFIX
+S3Cache.max_connections = $CANTALOUPE_S3CACHE_MAX_CONNECTIONS
+
+#----------------------------------------
+# AzureStorageCache
+#----------------------------------------
+
+AzureStorageCache.account_name = $CANTALOUPE_AZURESTORAGECACHE_ACCOUNT_NAME
+AzureStorageCache.account_key = $CANTALOUPE_AZURESTORAGECACHE_ACCOUNT_KEY
+AzureStorageCache.container_name = $CANTALOUPE_AZURESTORAGECACHE_CONTAINER_NAME
+AzureStorageCache.object_key_prefix = $CANTALOUPE_AZURESTORAGECACHE_OBJECT_KEY_PREFIX
+
+#----------------------------------------
+# RedisCache
+#----------------------------------------
+
+RedisCache.host = $CANTALOUPE_REDISCACHE_HOST
+RedisCache.port = $CANTALOUPE_REDISCACHE_PORT
+RedisCache.ssl = $CANTALOUPE_REDISCACHE_SSL
+RedisCache.password = $CANTALOUPE_REDISCACHE_PASSWORD
+RedisCache.database = $CANTALOUPE_REDISCACHE_DATABASE
+
+###########################################################################
+# OVERLAYS
+###########################################################################
+
+overlays.enabled = $CANTALOUPE_OVERLAYS_ENABLED
+overlays.strategy = $CANTALOUPE_OVERLAYS_STRATEGY
+overlays.BasicStrategy.type = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_TYPE
+overlays.BasicStrategy.image = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_IMAGE
+overlays.BasicStrategy.string = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING
+overlays.BasicStrategy.string.font = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT
+overlays.BasicStrategy.string.font.size = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT_SIZE
+overlays.BasicStrategy.string.font.min_size = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT_MIN_SIZE
+overlays.BasicStrategy.string.font.weight = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_FONT_WEIGHT
+overlays.BasicStrategy.string.glyph_spacing = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_GLYPH_SPACING
+overlays.BasicStrategy.string.color = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_COLOR
+overlays.BasicStrategy.string.stroke.color = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_STROKE_COLOR
+overlays.BasicStrategy.string.stroke.width = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_STROKE_WIDTH
+overlays.BasicStrategy.string.background.color = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_STRING_BACKGROUND_COLOR
+overlays.BasicStrategy.position = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_POSITION
+overlays.BasicStrategy.inset = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_INSET
+overlays.BasicStrategy.output_width_threshold = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_OUTPUT_WIDTH_THRESHOLD
+overlays.BasicStrategy.output_height_threshold = $CANTALOUPE_OVERLAYS_BASICSTRATEGY_OUTPUT_HEIGHT_THRESHOLD
+
+###########################################################################
+# REDACTIONS
+###########################################################################
+
+redaction.enabled = $CANTALOUPE_REDACTION_ENABLED
+
+###########################################################################
+# LOGGING
+###########################################################################
+
+#----------------------------------------
+# Application Log
+#----------------------------------------
+
+log.application.level = $CANTALOUPE_LOG_APPLICATION_LEVEL
+log.application.ConsoleAppender.enabled = $CANTALOUPE_LOG_APPLICATION_CONSOLEAPPENDER_ENABLED
+log.application.FileAppender.enabled = $CANTALOUPE_LOG_APPLICATION_FILEAPPENDER_ENABLED
+log.application.FileAppender.pathname = $CANTALOUPE_LOG_APPLICATION_FILEAPPENDER_PATHNAME
+log.application.RollingFileAppender.enabled = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_ENABLED
+log.application.RollingFileAppender.pathname = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_PATHNAME
+log.application.RollingFileAppender.policy = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_POLICY
+log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history = $CANTALOUPE_LOG_APPLICATION_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.application.SyslogAppender.enabled = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_ENABLED
+log.application.SyslogAppender.host = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_HOST
+log.application.SyslogAppender.port = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_PORT
+log.application.SyslogAppender.facility = $CANTALOUPE_LOG_APPLICATION_SYSLOGAPPENDER_FACILITY
+
+#----------------------------------------
+# Error Log
+#----------------------------------------
+
+log.error.FileAppender.enabled = $CANTALOUPE_LOG_ERROR_FILEAPPENDER_ENABLED
+log.error.FileAppender.pathname = $CANTALOUPE_LOG_ERROR_FILEAPPENDER_PATHNAME
+log.error.RollingFileAppender.enabled = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_ENABLED
+log.error.RollingFileAppender.pathname = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_PATHNAME
+log.error.RollingFileAppender.policy = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_POLICY
+log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history = $CANTALOUPE_LOG_ERROR_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+
+#----------------------------------------
+# Access Log
+#----------------------------------------
+
+log.access.ConsoleAppender.enabled = $CANTALOUPE_LOG_ACCESS_CONSOLEAPPENDER_ENABLED
+log.access.FileAppender.enabled = $CANTALOUPE_LOG_ACCESS_FILEAPPENDER_ENABLED
+log.access.FileAppender.pathname = $CANTALOUPE_LOG_ACCESS_FILEAPPENDER_PATHNAME
+log.access.RollingFileAppender.enabled = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_ENABLED
+log.access.RollingFileAppender.pathname = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_PATHNAME
+log.access.RollingFileAppender.policy = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_POLICY
+log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_FILENAME_PATTERN
+log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history = $CANTALOUPE_LOG_ACCESS_ROLLINGFILEAPPENDER_TIMEBASEDROLLINGPOLICY_MAX_HISTORY
+log.access.SyslogAppender.enabled = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_ENABLED
+log.access.SyslogAppender.host = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_HOST
+log.access.SyslogAppender.port = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_PORT
+log.access.SyslogAppender.facility = $CANTALOUPE_LOG_ACCESS_SYSLOGAPPENDER_FACILITY
