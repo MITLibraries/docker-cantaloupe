@@ -107,6 +107,7 @@ RUN apt-get update -qq && \
     libtiff5=4.0.9-6ubuntu0.2 \
     libtiff5-dev=4.0.9-6ubuntu0.2 \
     libopenjp2-tools=2.3.0-1 \
+    libturbojpeg \
     openjdk-11-jre-headless=11.0.3+7-1ubuntu2~18.10.1  \
     wget=1.19.5-1ubuntu1.1 \
     unzip=6.0-21ubuntu1 \
@@ -116,6 +117,7 @@ RUN apt-get update -qq && \
     ffmpeg=7:4.0.4-0ubuntu1 \
     python=2.7.15-3 \
     < /dev/null > /dev/null && \
+    mkdir -p /opt/libjpeg-turbo/lib && ln -s /usr/lib/x86_64-linux-gnu/libturbojpeg.so.0 /opt/libjpeg-turbo/lib/libturbojpeg.so && \
     rm -rf /var/lib/apt/lists/*
 
 # Run Cantaloupe non-privileged
