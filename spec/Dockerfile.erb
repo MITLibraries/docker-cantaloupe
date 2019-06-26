@@ -7,7 +7,7 @@ USER root
 # are still available.
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends --no-upgrade \
-      gcc=4:8.3.0-1ubuntu1.1 \
+      gcc=4:8.3.0-1ubuntu1.2 \
       make=4.2.1-1.2 \
       build-essential=12.5ubuntu2 \
       net-tools iproute2 procps < /dev/null > /dev/null && \

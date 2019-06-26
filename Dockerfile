@@ -67,7 +67,7 @@ RUN if [ ! -z "$KAKADU_VERSION" ]; then \
       apt-get update -qq && \
       DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends \
         openjdk-11-jdk-headless=11.0.3+7-1ubuntu2~18.10.1  \
-        gcc=4:8.3.0-1ubuntu1.1 \
+        gcc=4:8.3.0-1ubuntu1.2 \
         make=4.2.1-1.2 \
         libtiff-tools=4.0.9-6ubuntu0.2 \
         libtiff5=4.0.9-6ubuntu0.2 \
