@@ -25,7 +25,7 @@ If the upstream Cantaloupe project is broken, you can also build a last known go
 
  First you will need to set the environment variables required to run Cantaloupe. If you would like to test additional settings, ensure the cantaloupe.properties.tmpl template has the variable configured or you have set it as an environment variable.
 
-    docker run -d -p 8182:8182 --name melon -v testimages:/imageroot cantaloupe
+    docker run -d -p 8182:8182 --name melon -v /path/to/your/images:/imageroot cantaloupe
 
 will run the container in the background until _docker stop_ is called, looking in specified directory for image files.
 
