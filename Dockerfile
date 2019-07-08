@@ -7,8 +7,8 @@ VOLUME /imageroot
 
 # Update packages and install tools
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends graphicsmagick curl imagemagick libopenjp2-tools ffmpeg gettext && \
-    rm -rf /var/lib/apt/lists/*
+   apt-get install -y --no-install-recommends graphicsmagick curl imagemagick libopenjp2-tools ffmpeg gettext unzip && \
+   rm -rf /var/lib/apt/lists/*
 
 # Run non privileged
 RUN adduser --system cantaloupe
