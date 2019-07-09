@@ -1,4 +1,3 @@
-#ENV IMAGEMAGICK_VERSION=7.0.8-14
 FROM debian:buster
 
 EXPOSE 8182
@@ -14,18 +13,6 @@ RUN apt-get update -qy && apt-get dist-upgrade -qy && \
 RUN adduser --system cantaloupe
 
 WORKDIR /tmp
-
-#ImageMagick 7 install - re-evaluate once officially deprecated
-#RUN cd /tools && \
-#    wget http://imagemagick.org/download/releases/ImageMagick-$IMAGEMAGICK_VERSION.tar.xz && \
-#    tar -xf ImageMagick-$IMAGEMAGICK_VERSION.tar.xz && \
-#    cd ImageMagick-$IMAGEMAGICK_VERSION && \
-#    ./configure --prefix /usr/local && \
-#    make && \
-#    make install && \
-#    cd .. && \
-#    ldconfig /usr/local/lib && \
-#    rm -rf  ImageMagick*
 
 ARG CANTALOUPE_VERSION=4.1.1
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
