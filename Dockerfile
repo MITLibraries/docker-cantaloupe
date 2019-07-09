@@ -6,9 +6,9 @@ EXPOSE 8182
 VOLUME /imageroot
 
 # Update packages and install tools
-RUN apt-get update -y && \
-   apt-get install -y --no-install-recommends graphicsmagick curl imagemagick libopenjp2-tools ffmpeg gettext unzip && \
-   rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qy && apt-get dist-upgrade -qy && \
+   apt-get install -qy --no-install-recommends graphicsmagick curl imagemagick libopenjp2-tools ffmpeg gettext unzip && \
+   apt-get -qqy autoremove && apt-get -qqy autoclean
 
 # Run non privileged
 RUN adduser --system cantaloupe
