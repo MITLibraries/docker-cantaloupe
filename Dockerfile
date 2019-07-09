@@ -14,7 +14,7 @@ RUN adduser --system cantaloupe
 
 WORKDIR /tmp
 
-ARG CANTALOUPE_VERSION=4.1.1
+ARG CANTALOUPE_VERSION=4.1.2
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
 # Get and unpack Cantaloupe release archive
