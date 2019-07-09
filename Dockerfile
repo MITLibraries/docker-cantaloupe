@@ -31,13 +31,13 @@ ARG CANTALOUPE_VERSION=4.1.1
 ENV CANTALOUPE_VERSION=$CANTALOUPE_VERSION
 
 # Get and unpack Cantaloupe release archive
-RUN curl -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip \
  && mkdir -p /usr/local/ \
  && cd /usr/local \
  && unzip /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip \
  && ln -s cantaloupe-$CANTALOUPE_VERSION cantaloupe \
  && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
  && rm /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip
+RUN curl --silent --fail -OL https://github.com/medusa-project/cantaloupe/releases/download/v$CANTALOUPE_VERSION/Cantaloupe-$CANTALOUPE_VERSION.zip \
 
 COPY entrypoint.sh /usr/local/bin/
 COPY cantaloupe.properties.tmpl /etc/cantaloupe.properties.tmpl
