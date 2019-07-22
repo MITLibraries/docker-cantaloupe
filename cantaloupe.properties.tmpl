@@ -423,7 +423,7 @@ cache.server.info.enabled = true
 # missing, all cached information relating to it (if any) will be deleted.
 # (This is effectively always false when cache.server.resolve_first is also
 # false.)
-cache.server.purge_missing = false
+cache.server.purge_missing = true
 
 # If true, the source image will be confirmed to exist before a cached copy
 # is returned. If false, the cached copy will be returned without checking.
@@ -432,7 +432,7 @@ cache.server.resolve_first = false
 
 # !! Enables the cache worker, which periodically purges invalid cache
 # items in the background.
-cache.server.worker.enabled = false
+cache.server.worker.enabled = true
 
 # !! The cache worker will wait this many seconds before starting its
 # next shift.
