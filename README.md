@@ -6,12 +6,12 @@ Rudimentary containerization of the [Cantaloupe server](https://cantaloupe-proje
 
     docker build -t cantaloupe .
 
-This invocation will download the 4.1.1 (current at time of writing) release of the software. To override for
+This invocation will download the 4.1.2 (current at time of writing) release of the software. To override for
 newer (or older) versions:
 
     docker build --build-arg CANTALOUPE_VERSION=<desired version> -t cantaloupe .
 
-_Note:_ if you want to build a version other than 4.1.1, 4.1, 4.0.3, or 4.0.2 you will need to supply a Cantaloupe properties `template` and `defaults` file in the `configs` directory. These files should be named with the Cantaloupe version you are interested in building. If the version you need is close to one of the supplied version files, you can probably just copy that file and edit as appropriate.
+_Note:_ if you want to build a version other than 4.1.2, 4.1, 4.0.3, or 4.0.2 you will need to supply a Cantaloupe properties `template` and `defaults` file in the `configs` directory. These files should be named with the Cantaloupe version you are interested in building. If the version you need is close to one of the supplied version files, you can probably just copy that file and edit as appropriate.
 
 To build the latest development snapshot of Cantaloupe, use the following:
 

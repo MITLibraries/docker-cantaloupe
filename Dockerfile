@@ -1,5 +1,5 @@
 # The default Cantaloupe version for our build
-ARG CANTALOUPE_VERSION="4.1.1"
+ARG CANTALOUPE_VERSION="4.1.2"
 
 # Kakadu is optional; if there it should be your licensed kakadu software directory's name
 ARG KAKADU_VERSION=
@@ -107,7 +107,7 @@ RUN apt-get update -qq && \
     libtiff5=4.0.9-6ubuntu0.2 \
     libtiff5-dev=4.0.9-6ubuntu0.2 \
     libopenjp2-tools=2.3.0-1 \
-    libturbojpeg \
+    libturbojpeg=2.0.0-0ubuntu2 \
     openjdk-11-jre-headless=11.0.3+7-1ubuntu2~18.10.1  \
     wget=1.19.5-1ubuntu1.1 \
     unzip=6.0-21ubuntu1 \

@@ -12,7 +12,7 @@ docker_env = { 'ENDPOINT_ADMIN_SECRET' => 'secret', 'ENDPOINT_ADMIN_ENABLED' => 
 
 # First we build either a 'stable' or 'dev' Cantaloupe image, depending on our ENV property
 if version == 'stable'
-  expected_version = '4.1.1'
+  expected_version = '4.1.2'
   kakadu_version = ENV.key?('KAKADU_VERSION') ? ' --build-arg KAKADU_VERSION=' + ENV['KAKADU_VERSION'] : ''
 
   # Build the _stable version of cantaloupe by calling docker here via a system call
@@ -102,6 +102,10 @@ describe docker_build(dockerfile, tag: image_tag + '_test') do
 
       describe package('python') do
         it { is_expected.to be_installed.with_version('2.7.15-3') }
+      end
+
+      describe package('libturbojpeg') do
+        it { is_expected.to be_installed.with_version('2.0.0-0ubuntu2') }
       end
 
       if ENV['KAKADU_VERSION']
