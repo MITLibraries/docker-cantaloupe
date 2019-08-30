@@ -1,0 +1,43 @@
+#!/bin/bash
+# Configured to use https://apps.terraform.io
+
+PLAN_FILE="plan.out"
+BACKEND_FILE="backend.hcl"
+LOCAL_SECRETS="terraform.tfvars"
+WORKSPACE=$(whoami)
+
+if [[ ! -f ${BACKEND_FILE} ]];
+then
+  echo "${BACKEND_FILE} not found"
+  exit
+fi
+
+# This init makes sure that terraform is reading the latest backend.hcl configuration
+terraform init -backend-config=${BACKEND_FILE}
+
+if [[ -z $(terraform workspace list | grep -i ${WORKSPACE}) ]];
+then
+  terraform workspace new ${WORKSPACE}
+else
+  terraform workspace select ${WORKSPACE}
+fi
+
+# This init ensures that the workspace created/selected has instantiated the necessary terraform providers
+terraform init
+
+echo "Working in workspace: $(terraform workspace show)"
+
+if [[ -f "${LOCAL_SECRETS}" ]];
+then
+  if [[ $1 == "destroy" ]];
+  then
+    terraform destroy -var-file="${LOCAL_SECRETS}"
+  else
+    terraform plan -out ${PLAN_FILE} -var-file="${LOCAL_SECRETS}" 
+#    terraform apply -auto-approve ${PLAN_FILE}
+  fi
+else
+  terraform plan -out ${PLAN_FILE}
+#  terraform apply -auto-approve ${PLAN_FILE}
+fi
+

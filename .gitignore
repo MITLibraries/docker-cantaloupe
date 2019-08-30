@@ -1,5 +1,7 @@
 # Ignore the Kakadu source code (it's proprietary and can't be checked in)
 kakadu/*
+terraform/.terraform
+terraform/backend.hcl
 
 # We exclude our README so that that does get checked into version control
 !kakadu/README.txt
