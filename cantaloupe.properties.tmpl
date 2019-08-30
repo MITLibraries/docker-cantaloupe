@@ -81,7 +81,7 @@ endpoint.iiif.2.enabled = true
 # Controls the response Content-Disposition header for images. Allowed
 # values are `inline`, `attachment`, and `none`. This can be overridden
 # using the ?response-content-disposition query argument.
-endpoint.iiif.content_disposition = inline
+endpoint.iiif.content_disposition = none
 
 # Minimum size that will be used in info.json `sizes` keys.
 endpoint.iiif.min_size = 64
@@ -417,13 +417,13 @@ cache.server.derivative.ttl_seconds = 0
 
 # Whether to use the Java heap as a "level 1" cache for image infos, either
 # independently or in front of a "level 2" derivative cache (if enabled).
-cache.server.info.enabled = false
+cache.server.info.enabled = true
 
 # If true, when a source reports that the requested source image has gone
 # missing, all cached information relating to it (if any) will be deleted.
 # (This is effectively always false when cache.server.resolve_first is also
 # false.)
-cache.server.purge_missing = false
+cache.server.purge_missing = true
 
 # If true, the source image will be confirmed to exist before a cached copy
 # is returned. If false, the cached copy will be returned without checking.
@@ -432,7 +432,7 @@ cache.server.resolve_first = false
 
 # !! Enables the cache worker, which periodically purges invalid cache
 # items in the background.
-cache.server.worker.enabled = false
+cache.server.worker.enabled = true
 
 # !! The cache worker will wait this many seconds before starting its
 # next shift.
