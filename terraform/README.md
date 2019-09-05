@@ -24,7 +24,7 @@
 * Cantaloupe Container Definitions
   * Fargate Specifications
     * OPTIONAL: `memory = "2048"`
-    * OPTIONAL: `cpu = "1024"
+    * OPTIONAL: `cpu = "1024"`
     * OPTIONAL: `enable_load_balancer = 0`
     * OPTIONAL: `container_count = 1`
     * `image_url = registry.hub.docker.com/uclalibrary/cantaloupe-ucla:4.1.1`
@@ -52,11 +52,42 @@
       * `cantaloupe_heapsize`
 
 
-## Dependencies
-* ephemeral app name as a vriable
-* Security group ID for ECS service to attach
-* VPC Subnets used
-* Container definitions
-* Memory/CPU specifications
-* Registry URL
-* Registry credentials for authentication
+## Launching private cantaloupe image with S3Source configured
+Create `terraform.tfvars` in this directory
+```
+# Naming prefix
+ephemeral_app_name = "joebruin"
+
+# VPC Variables
+vpc_cidr_block            = "10.10.0.0/16"
+subnet_init_value         = 1
+subnet_count              = 1
+
+# Firewall Setup
+ingress_port    = [8181, 8182]
+ingress_allowed = ["0.0.0.0/0"]
+
+# Cantaloupe Container Definitions
+memory                            = "2048"
+cpu                               = "1024"
+image_url                         = "registry.hub.docker.com/uclalibrary/cantaloupe-ucla:4.1.1"
+listening_port                    = 8182
+disable_load_balancer             = 1
+dockerhub_credentials_secrets_arn = "arn:aws:secretsmanager:us-west-2:0123456789:secret:docker-auth-example"
+
+# Cantaloupe Container Environment Variables
+cantaloupe_admin_secret                 = "enteryouradminpassword"
+cantaloupe_s3_source_access_key         = "s3_access_key"
+cantaloupe_s3_source_secret_key         = "s3_secret_key"
+cantaloupe_s3_source_endpoint           = "s3_endpoint"
+cantaloupe_s3_source_bucket             = "s3_bucket"
+cantaloupe_s3_source_basiclookup_suffix = ".jpx"
+cantaloupe_source_static                = "S3Source"
+cantaloupe_heapsize                     = "2g"
+```
+
+Run the task
+```
+bin/run
+```
+

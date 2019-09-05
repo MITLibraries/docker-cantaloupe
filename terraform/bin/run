@@ -4,7 +4,8 @@
 PLAN_FILE="plan.out"
 BACKEND_FILE="backend.hcl"
 LOCAL_SECRETS="terraform.tfvars"
-WORKSPACE=$(whoami)
+export TF_IN_AUTOMATION=true
+export TF_WORKSPACE="cantaloupe-ephemeral"
 
 if [[ ! -f ${BACKEND_FILE} ]];
 then
@@ -13,13 +14,13 @@ then
 fi
 
 # This init makes sure that terraform is reading the latest backend.hcl configuration
-terraform init -backend-config=${BACKEND_FILE}
+terraform init -input=false -backend-config=${BACKEND_FILE}
 
-if [[ -z $(terraform workspace list | grep -i ${WORKSPACE}) ]];
+if [[ -z $(terraform workspace list | grep -i ${TF_WORKSPACE}) ]];
 then
-  terraform workspace new ${WORKSPACE}
+  terraform workspace new ${TF_WORKSPACE}
 else
-  terraform workspace select ${WORKSPACE}
+  terraform workspace select ${TF_WORKSPACE}
 fi
 
 # This init ensures that the workspace created/selected has instantiated the necessary terraform providers

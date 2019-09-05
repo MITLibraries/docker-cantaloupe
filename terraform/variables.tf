@@ -14,7 +14,7 @@ variable "ingress_allowed" {}
 variable "sg_groups" { default = null }
 
 # Fargate ECS IAM Configurations(required)
-variable "dockerhub_credentials_secrets_arn" {}
+variable "dockerhub_credentials_secrets_arn" { default = "" }
 variable "fargate_ecs_task_execution_role_arn" {}
 
 # Cantaloupe S3 Src Bucket Configuration
@@ -26,7 +26,6 @@ variable "cpu" { default = "1024" }
 variable "registry_auth_arn" {}
 variable "image_url" {}
 variable "listening_port" {}
-variable "forwarding_port" {}
 variable "disable_load_balancer" { default = 0 }
 variable "enable_load_balancer" { default = 0 }
 variable "container_count" { default = 1 }
