@@ -18,6 +18,9 @@
     * `ingress_allowed = [0.0.0.0/16]`
   * OPTIONAL: If you have more restrictive needs and only want to allow AWS resources to access your containers, you can define the IDs of the resources in the following:
     * `sg_groups = ["${aws_lb.main.id}"]`
+* Private Image Registry Access
+  * If you are accessing an image from a private registry, you'll need to store the credentials in AWS Secrets Manager. After storing the secrets, you'll need to retrieve the ARN and supply it to this terraform deployment
+    * `dockerhub_credentials_secrets_arn = "arn:aws:secretsmanager:us-west-2:0123456789:secret:dockerhubauth-example"`
 
 
 ## Dependencies
