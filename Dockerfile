@@ -39,9 +39,12 @@ VOLUME /imageroot
 
 # Update packages and install tools
 RUN apt-get update -qy && apt-get dist-upgrade -qy && \
-    apt-get install -qy --no-install-recommends curl imagemagick \
-    ffmpeg unzip default-jre-headless && \
-    apt-get -qqy autoremove && apt-get -qqy autoclean
+    apt-get install -qy --no-install-recommends \
+	curl \
+	imagemagick \
+    unzip \
+	default-jre-headless \
+	&& apt-get -qqy autoremove && apt-get -qqy autoclean
 
 # Install the patched openjpeg2 tools
 COPY --from=builder /build/*.deb /tmp/
