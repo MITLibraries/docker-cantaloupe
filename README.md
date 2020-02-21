@@ -1,30 +1,22 @@
-## Docker Container for Cantaloupe IIIF server
+# MIT Libraries Cantaloupe Docker Container
 
-Rudimentary containerization of the [Cantaloupe server](https://medusa-project.github.io/cantaloupe), which bakes in a local filesystem 'resolver' (the means by which requested images are found) to a Docker data volume.
+This is our [Cantaloupe](https://cantaloupe-project.github.io/) container used in production. While you are welcome to use this container, and we appreciate PRs, the primary purpose of this repo is managing our production image.
 
-### Create the image
+The `cantaloupe.properties.sample` file is the distributed version without modifications. All setting changes are handled through environment variables.
 
-    docker build -t cantaloupe .
+## Local Development
 
-This invocation will download the 4.1 (current at time of writing) release of the software. To override for
-newer (or older) versions:
+There is a docker-compose file that will spin up an instance of minio as well as the IIIF server. The cantaloupe instance is configured to mostly track the production configuration which uses S3 for both the source and derivative cache. To start just run: `docker-compose up`.
 
-    docker build --build-arg CANTALOUPE_VERSION=<desired version> -t cantaloupe .
+The minio server can be accessed at http://localhost:9000. The default username and password are `minio` and `password`. If you want to change these you can set the `MINIO_USERNAME` and `MINIO_PASSWORD` environment variables in a `.env` file. You will need to create a bucket called `images` and upload an image file to it. You should then be able to access the image through cantaloupe. For example, if you upload a file called `test.jp2` then you can see a JPEG version of the image scaled to 300 width at http://localhost:8182/iiif/2/test.jp2/full/300,/0/default.jpg.
 
-### Run the container
+If you make changes to the Dockerfile, you will need to run `docker-compose build`.
 
- First you will need to set the environment variables required to run Cantaloupe. If you would like to test additional settings, ensure the cantaloupe.properties.tmpl template has the variable configured or you have set it as an environment variable.
+## Deployment to AWS
 
-    docker run -d -p 8182:8182 --name melon -v testimages:/imageroot cantaloupe
+To publish a new staging build run `make publish`. To promote the current staging build to production run `make promote`.
 
-will run the container in the background until _docker stop_ is called, looking in specified
-directory for image files.
-
-### Deployment to AWS
-
-Currently we are deploying this container to AWS Fargate for testing purposes. The configuration and setup are being done using Terraform. The configuration files can be found in the [mitlib-terraform](https://github.com/MITLibraries/mitlib-terraform) GitHub Repository. JPEG2000 images are being stored and called from an S3 bucket for processing. These files are being uploaded manually to the S3 bucket for now.
-
-### ToDo/Explore
+## ToDo/Explore
 
  Updating to ImageMagick 7. There is a commented out setup in the Dockerfile if we need to compile from source. Hopefully by the time ImageMagick 6 is no longer supported by Cantaloupe there will be an official Debian package we can use.
 

@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+  cantaloupe:
+    image: cantaloupe
+    build: .
+    ports:
+      - 8182:8182
+    depends_on:
+      - minio
+    environment:
+      HTTP_HTTP2_ENABLED: "true"
+      HTTPS_HTTP2_ENABLED: "true"
+      ENDPOINT_IIIF_CONTENT_DISPOSITION: none
+      SOURCE_STATIC: S3Source
+      S3SOURCE_ENDPOINT: http://minio:9000
+      S3SOURCE_ACCESS_KEY_ID: minio
+      S3SOURCE_SECRET_KEY: password
+      S3SOURCE_BASICLOOKUPSTRATEGY_BUCKET_NAME: images
+      PROCESSOR_SELECTION_STRATEGY: ManualSelectionStrategy
+      PROCESSOR_MANUAL_SELECTIONSTRATEGY_JP2: OpenJpegProcessor
+      CACHE_SERVER_DERIVATIVE_ENABLED: "true"
+      CACHE_SERVER_DERIVATIVE: S3Cache
+      CACHE_SERVIER_DERIVATIVE_TTL_SECONDS: 0
+      CACHE_SERVER_PURGE_MISSING: "true"
+      CACHE_SERVER_WORKER_ENABLED: "true"
+      S3CACHE_ENDPOINT: http://minio:9000
+      S3CACHE_ACCESS_KEY_ID: minio
+      S3CACHE_SECRET_KEY: password
+      S3CACHE_BUCKET_NAME: images
+      S3CACHE_OBJECT_KEY_PREFIX: cache
+      LOG_APPLICATION_LEVEL: warn
+      LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
+  minio:
+    image: minio/minio
+    command: ["server", "/data"]
+    ports:
+      - 9000:9000
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_USERNAME:-minio}
+      MINIO_SECRET_KEY: ${MINIO_PASSWORD:-password}
