@@ -26,16 +26,12 @@ RUN curl --silent --fail -OL https://github.com/medusa-project/cantaloupe/releas
     && rm -rf /tmp/Cantaloupe-$CANTALOUPE_VERSION \
     && rm /tmp/Cantaloupe-$CANTALOUPE_VERSION.zip
 
-COPY entrypoint.sh /usr/local/bin/
-COPY cantaloupe.properties.tmpl /etc/cantaloupe.properties.tmpl
 RUN mkdir -p /var/log/cantaloupe /var/cache/cantaloupe \
-    && touch /etc/cantaloupe.properties \
     && chown -R cantaloupe /var/log/cantaloupe /var/cache/cantaloupe \
-    /etc/cantaloupe.properties /usr/local/bin/entrypoint.sh \
     && cp /usr/local/cantaloupe/deps/Linux-x86-64/lib/* /usr/lib/ \
     && cp /usr/local/cantaloupe/deps/Linux-x86-64/bin/* /usr/bin/
+COPY cantaloupe.properties.sample /etc/cantaloupe.properties
 
 
 USER cantaloupe
-ENTRYPOINT ["entrypoint.sh"]
-CMD ["sh", "-c", "java -Dcantaloupe.config=/etc/cantaloupe.properties -Xmx4g -jar /usr/local/cantaloupe/cantaloupe-$CANTALOUPE_VERSION.war"]
+CMD ["sh", "-c", "java -Dcantaloupe.config=/etc/cantaloupe.properties -jar /usr/local/cantaloupe/cantaloupe-$CANTALOUPE_VERSION.war"]
