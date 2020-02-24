@@ -11,11 +11,6 @@ dist: ## Build docker image
 	docker build -t $(ECR_REGISTRY)/cantaloupe-stage:latest \
 		-t $(ECR_REGISTRY)/cantaloupe-stage:`git describe --always` \
 		-t cantaloupe:latest .
-	@tput setaf 2
-	@tput bold
-	@echo "Finished building docker image. Try running:"
-	@echo "  $$ docker run --rm cantaloupe:latest"
-	@tput sgr0
 
 publish: dist ## Build, tag and push
 	$$(aws ecr get-login --no-include-email --region us-east-1)
