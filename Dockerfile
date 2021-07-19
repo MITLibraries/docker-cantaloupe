@@ -31,7 +31,7 @@ RUN debuild -uc -us
 
 FROM debian:buster
 
-ENV CANTALOUPE_VERSION=4.1.5
+ENV CANTALOUPE_VERSION=4.1.11
 
 EXPOSE 8182
 
