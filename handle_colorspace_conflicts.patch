@@ -1,0 +1,13 @@
+--- a/src/bin/common/color.c 2019-08-08 00:45:01.903651387 +0200
++++ b/src/bin/common/color.c 2019-08-08 00:39:24.442674016 +0200
+@@ -488,6 +488,10 @@
+     if (out_space == cmsSigRgbData) { /* enumCS 16 */
+         unsigned int i, nr_comp = image->numcomps;
+
++        if (nr_comp < 3) { /* GRAY or GRAYA, not RGB or RGBA */
++            cmsCloseProfile(in_prof);
++            return;
++        }
+         if (nr_comp > 4) {
+             nr_comp = 4;
+         }
