@@ -40,11 +40,15 @@ VOLUME /imageroot
 # Update packages and install tools
 RUN apt-get update -qy && apt-get dist-upgrade -qy && \
     apt-get install -qy --no-install-recommends \
-	curl \
-	imagemagick \
+    ca-certificates \
+    curl \
+    imagemagick \
     unzip \
-	default-jre-headless \
-	&& apt-get -qqy autoremove && apt-get -qqy autoclean
+    default-jre-headless \
+    && apt-get -qqy autoremove && apt-get -qqy autoclean
+
+COPY LOC-ROOT-CA-1.crt /usr/local/share/ca-certificates/
+RUN update-ca-certificates
 
 # Install the patched openjpeg2 tools
 COPY --from=builder /build/*.deb /tmp/
