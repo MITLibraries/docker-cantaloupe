@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND="noninteractive"
 # Enable deb-src repos so we can retrieve the packages used to build libopenjp2:
 RUN sed -i -e '/^deb/p; s/^deb /deb-src /' /etc/apt/sources.list
 
-RUN apt-get update -qqy && apt-get dist-upgrade -qqy && apt-get install -qqy quilt devscripts && apt-get build-dep -qy libopenjp2-tools
+RUN apt-get update -qqy && apt-get dist-upgrade -qqy && apt-get install -qqy quilt devscripts ca-certificates ca-certificates-java && apt-get build-dep -qy libopenjp2-tools
 
 RUN adduser --system --group builder
 RUN install -d -o builder -g builder /build
@@ -40,7 +40,7 @@ VOLUME /imageroot
 # Update packages and install tools
 RUN apt-get update -qy && apt-get dist-upgrade -qy && \
     apt-get install -qy --no-install-recommends \
-    ca-certificates \
+    ca-certificates ca-certificates-java \
     curl \
     imagemagick \
     unzip \
